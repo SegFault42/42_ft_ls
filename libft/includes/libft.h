@@ -17,6 +17,8 @@
 # include <string.h>
 # include <stdlib.h>
 
+# define RC ft_putchar('\n');
+
 typedef struct		s_list
 {
 	void			*content;
