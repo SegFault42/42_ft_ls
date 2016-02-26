@@ -1,0 +1,14 @@
+#ifndef FT_LS
+# define FT_LS
+
+# include <dirent.h>
+# include <errno.h>
+# include <stdio.h>
+# include <sys/types.h>
+
+//--------------------Prototype fonctions---------------------
+
+//DIR *opendir(const char *name);
+//int readdir(DIR *dir, struct dirent *entry, struct dirent **result);
+
+#endif
