@@ -31,7 +31,7 @@ $(NAME):
 	@make -C ./libft/
 	@echo "\033[36mCompiling libft.a done !\033[0m"
 	@echo "\033[33mCompiling in .o ...\033[0m"
-	@gcc $(FLAG) -c $(SRC)
+	@gcc -c $(SRC)
 	@echo "\033[36mCompiling in .o done !\033[0m"
 	@gcc $(SRC) $(HEAD) -o $(NAME)
 	@echo "\033[33mCompiling ft_ls ...\033[0m"

@@ -32,24 +32,24 @@ HEAD = ./includes/
 all: $(NAME)
 
 $(NAME):
-	@echo "\033[33mCompiling in .o ...\033[0m"
+#	@echo "\033[33mCompiling in .o ...\033[0m"
 	@gcc -Wall -Wextra -Werror -c $(SRC) -I $(HEAD)
-	@echo "\033[33mCreating library ...\033[0m"
+#	@echo "\033[33mCreating library ...\033[0m"
 	@ar rc $(NAME) $(OBJS)
-	@echo "\033[33mIndexing library ...\033[0m"
+#	@echo "\033[33mIndexing library ...\033[0m"
 	@ranlib $(NAME)
-	@echo "\033[31mLibrary Created !\033[0m"
+#	@echo "\033[32mLibrary Created !\033[0m"
 
 mc: fclean all clean
 
 clean:
-	@echo "\033[31mdeleting all .o ...\033[0m"
+#	@echo "\033[31mdeleting all .o ...\033[0m"
 	@rm -f $(OBJS)
-	@echo "\033[32mThe folder is clean !\033[0m"
+#	@echo "\033[32mThe folder is clean !\033[0m"
 
 fclean:
-	@echo "\033[31mDeleting libft.a and all .o ...\033[0m"
+#	@echo "\033[31mDeleting libft.a and all .o ...\033[0m"
 	@rm -f $(NAME) $(OBJS)
-	@echo "\033[32mThe folder is clean\033[0m"
+#	@echo "\033[32mThe folder is clean\033[0m"
 
 re: fclean all

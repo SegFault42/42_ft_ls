@@ -5,7 +5,9 @@ int main(int argc, const char *argv[])
 	DIR *rep = NULL;
 	struct dirent *fichierlu = NULL;
 
-	if ((rep = opendir("./")) == NULL)
+	if (argc != 2)
+		return (EXIT_FAILURE);
+	if ((rep = opendir(argv[1])) == NULL)
 	{
 		perror("Error ");
 		return(EXIT_FAILURE);
