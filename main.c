@@ -5,19 +5,23 @@ int main(int argc, const char *argv[])
 	DIR *rep = NULL;
 	struct dirent *fichierlu = NULL;
 
-	if (argc != 2)
-		return (EXIT_FAILURE);
-	if ((rep = opendir(argv[1])) == NULL)
+	if (argc == 2 && (rep = opendir(argv[1])) == NULL)
 	{
 		perror("Error ");
 		return(EXIT_FAILURE);
 	}
-	while((fichierlu = readdir(rep)) != NULL)
+	else if (argc == 1 && (rep = opendir("./")) != NULL)
 	{
-		ft_putstr(fichierlu->d_name);
-		RC;
+		while((fichierlu = readdir(rep)) != NULL)
+			ft_putendl(fichierlu->d_name);
 	}
-
+	/*else if (argc == 2 && (rep = opendir(argv[1])) == NULL)*/
+	/*{*/
+		/*perror("Error ");*/
+		/*return(EXIT_FAILURE);*/
+	/*}*/
+	while((fichierlu = readdir(rep)) != NULL)
+		ft_putendl(fichierlu->d_name);
 	if (closedir(rep) == -1)
 	{
 		perror("Error ");

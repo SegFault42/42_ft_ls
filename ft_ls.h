@@ -13,4 +13,5 @@
 //DIR *opendir(const char *name);
 //int readdir(DIR *dir, struct dirent *entry, struct dirent **result);
 
+//int stat(const char *path, struct stat *buf);
 #endif

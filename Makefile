@@ -28,7 +28,7 @@ all: $(NAME)
 
 $(NAME):
 	@echo "\033[33mCompiling libft.a ...]\033[0m"
-	@make -C ./libft/
+	@-make -C ./libft/
 	@echo "\033[36mCompiling libft.a done !\033[0m"
 	@echo "\033[33mCompiling in .o ...\033[0m"
 	@gcc -c $(SRC)
