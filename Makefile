@@ -10,6 +10,7 @@
 #                                                                              #
 # **************************************************************************** #
 
+
 LIBFT_DIR = libft
 
 FLAG = -Wall -Wextra -Werror
@@ -28,7 +29,7 @@ all: $(NAME)
 
 $(NAME):
 	@echo "\033[33mCompiling libft.a ...]\033[0m"
-	@-make -C ./libft/
+	@make -s -C ./libft/
 	@echo "\033[36mCompiling libft.a done !\033[0m"
 	@echo "\033[33mCompiling in .o ...\033[0m"
 	@gcc -c $(SRC)
@@ -48,6 +49,6 @@ fclean:
 	@echo "\033[31mDeleting libft.a and all .o ...\033[0m"
 	@rm -f $(NAME) $(OBJS)
 	@echo "\033[32mThe folder is clean\033[0m"
-	@make fclean -C ./libft/
+	@make -s fclean -C ./libft/
 
 re: fclean all
