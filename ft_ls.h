@@ -4,9 +4,12 @@
 # include <dirent.h>
 # include <errno.h>
 # include <stdio.h>
-# include <sys/types.h>
 # include <stdlib.h>
 # include "./libft/includes/libft.h"
+#include <sys/types.h> 
+#include <sys/stat.h> 
+#include <unistd.h>
+
 
 //--------------------Prototype fonctions---------------------
 

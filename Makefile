@@ -6,7 +6,7 @@
 #    By: rabougue <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2015/12/10 19:16:51 by rabougue          #+#    #+#              #
-#    Updated: 2016/01/25 14:48:42 by rabougue         ###   ########.fr        #
+#    Updated: 2016/02/28 11:15:26 by rabougue         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -28,7 +28,7 @@ HEAD = ./libft/libft.a
 all: $(NAME)
 
 $(NAME):
-	@echo "\033[33mCompiling libft.a ...]\033[0m"
+	@echo "\033[33mCompiling libft.a ...\033[0m"
 	@make -s -C ./libft/
 	@echo "\033[36mCompiling libft.a done !\033[0m"
 	@echo "\033[33mCompiling in .o ...\033[0m"
