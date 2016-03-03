@@ -8,14 +8,29 @@ int main(int argc, const char *argv[])
 
 	if (argc != 1)
 		while (argv[i])
-			ft_putendl(argv[i++]);
+		{
+			if ((rep = opendir(argv[i])))
+			{
+				if (argc >= 3)
+				{
+					if (i != 1)
+						ft_putstr("\n");
+					ft_putstr(argv[i]);
+					ft_putstr(":\n");
+				}
+				while ((fichierlu = readdir(rep)) != NULL)
+					ft_putendl(fichierlu->d_name);
+			}
+			ft_putendl(argv[i]);
+			i++;
+		}
 	if (argc == 1 && (rep = opendir("./")) != NULL)
 	{
 		while((fichierlu = readdir(rep)) != NULL)
 		{
 			if (fichierlu->d_name[0] != '.')
 				ft_putendl(fichierlu->d_name);
-			/*printf("DT_BLK = %d\n",DT_BLK);*/
+   /*         printf("DT_BLK = %d\n",DT_BLK);*/
 			/*printf("DT_CHR = %d\n",DT_CHR);*/
 			/*printf("DT_DIR = %d\n",DT_DIR);*/
 			/*printf("DT_FIFO = %d\n",DT_FIFO);*/
