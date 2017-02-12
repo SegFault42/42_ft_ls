@@ -6,11 +6,11 @@
 /*   By: rabougue <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/11/28 18:12:19 by rabougue          #+#    #+#             */
-/*   Updated: 2015/11/28 18:37:05 by rabougue         ###   ########.fr       */
+/*   Updated: 2016/05/04 09:06:56 by rabougue         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "./includes/libft.h"
 
 void	ft_putchar(char c)
 {

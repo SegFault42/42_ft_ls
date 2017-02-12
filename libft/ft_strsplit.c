@@ -6,11 +6,11 @@
 /*   By: rabougue <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/12/11 13:39:24 by rabougue          #+#    #+#             */
-/*   Updated: 2015/12/16 19:41:47 by rabougue         ###   ########.fr       */
+/*   Updated: 2016/08/06 22:09:36 by rabougue         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "./includes/libft.h"
 
 static void	ft_split_count(char const *s, char c, int *j)
 {
@@ -35,7 +35,6 @@ static void	ft_split_tab(char const *s, char **str, char c, int *j)
 	int len;
 	int i;
 
-	len = 0;
 	i = 0;
 	while (s[i] != '\0')
 	{

@@ -6,11 +6,11 @@
 /*   By: rabougue <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/12/16 19:50:53 by rabougue          #+#    #+#             */
-/*   Updated: 2015/12/17 21:22:11 by rabougue         ###   ########.fr       */
+/*   Updated: 2016/08/06 22:09:00 by rabougue         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "./includes/libft.h"
 
 char	*ft_strrev(char *str)
 {
@@ -20,7 +20,6 @@ char	*ft_strrev(char *str)
 
 	i = 0;
 	j = 0;
-	a = 0;
 	if (str == NULL)
 		return (NULL);
 	while (str[i] != '\0')

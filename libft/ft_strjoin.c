@@ -6,11 +6,11 @@
 /*   By: rabougue <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/12/07 16:54:03 by rabougue          #+#    #+#             */
-/*   Updated: 2016/02/11 13:52:50 by rabougue         ###   ########.fr       */
+/*   Updated: 2016/05/04 09:17:35 by rabougue         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "./includes/libft.h"
 
 char	*ft_strjoin(char const *s1, char const *s2)
 {

@@ -6,16 +6,26 @@
 #    By: rabougue <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2015/12/10 19:16:51 by rabougue          #+#    #+#              #
-#    Updated: 2016/01/25 14:48:42 by rabougue         ###   ########.fr        #
+#    Updated: 2017/01/13 13:50:08 by rabougue         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
+RED = \033[48;5;9m
+GREEN = \033[48;5;10m
+LOL = \033[48;5;106m
+LIL = \033[48;5;129m
+END = \033[0m
+X = 0
+Y = 0
+
+PRE = ./ft_fprintf/sources/
+
 NAME = libft.a
 
-SRC = ft_memset.c ft_bzero.c ft_memcpy.c ft_memccpy.c ft_memmove.c ft_memchr.c\
+SRC = ft_memset.c ft_bzero.c ft_memcpy.c ft_memccpy.c ft_memmove.c ft_memchr.c \
 	  ft_memcmp.c ft_strlen.c ft_strdup.c ft_strcpy.c ft_strncpy.c ft_strcat.c \
-	  ft_strncat.c ft_strchr.c ft_strrchr.c ft_strstr.c ft_strnstr.c \
-	  ft_strcmp.c ft_strncmp.c ft_atoi.c ft_isalpha.c ft_isdigit.c ft_isalnum.c\
+	  ft_strncat.c ft_strchr.c ft_atoi.c ft_strrchr.c ft_strstr.c ft_strnstr.c \
+	  ft_strcmp.c ft_strncmp.c ft_isalpha.c ft_isdigit.c ft_isalnum.c \
 	  ft_isascii.c ft_isprint.c ft_toupper.c ft_tolower.c ft_memalloc.c \
 	  ft_memdel.c ft_strnew.c ft_strdel.c ft_strclr.c ft_striter.c \
 	  ft_striteri.c ft_strmap.c ft_strmapi.c ft_strequ.c ft_strnequ.c \
@@ -23,33 +33,51 @@ SRC = ft_memset.c ft_bzero.c ft_memcpy.c ft_memccpy.c ft_memmove.c ft_memchr.c\
 	  ft_putendl.c ft_putnbr.c ft_putchar_fd.c ft_putstr_fd.c ft_putendl_fd.c \
 	  ft_putnbr_fd.c ft_strsplit.c ft_strlcat.c ft_itoa.c ft_lstnew.c \
 	  ft_lstdelone.c ft_lstdel.c ft_lstadd.c ft_lstiter.c ft_lstmap.c \
-	  ft_swap.c ft_strrev.c ft_crypt.c ft_decrypt.c ft_debug.c \
+	  ft_swap.c ft_strrev.c ft_crypt.c ft_decrypt.c ft_debug.c get_next_line.c \
+	  ft_2d_tab_free.c ft_tab_len.c ft_count_line_in_file.c ft_sqrt.c ft_atol.c \
+	  ft_count_2d_tab.c ft_itoa_base.c ft_strclen.c ft_hexa_itoa.c \
+	  ft_put_long.c ft_ltoa.c ft_put_ulong.c ft_ltoa_base.c ft_ultoa.c \
+	  ft_hexa_ltoa.c ft_ultoa_base.c ft_size_ttoa.c ft_strndup.c\
+	  $(PRE)ft_fprintf.c $(PRE)percent_c.c \
+	  $(PRE)percent_d.c $(PRE)percent_s.c \
+	  $(PRE)tools.c \
+	  ft_print_2d_tab.c ft_check_int_overflow.c ft_count_char.c ft_strccmp.c \
+	  ft_strcdup.c ft_strclen.c ft_strccat.c get_next_line_lseek.c ft_isspace.c \
 
 OBJS = $(SRC:.c=.o)
 
-HEAD = ./includes/
+CC = clang
+
+FLAG = -Wall -Wextra -Werror -O3
+
+HEAD = ./includes/ ./ft_fprintf/includes/ft_fprintf.h
 
 all: $(NAME)
 
-$(NAME):
-#	@echo "\033[33mCompiling in .o ...\033[0m"
-	@gcc -Wall -Wextra -Werror -c $(SRC) -I $(HEAD)
-#	@echo "\033[33mCreating library ...\033[0m"
+$(NAME): $(OBJS) ./includes/libft.h
+	@$(CC) $(FLAG) -c $(SRC) -I $(HEAD)
 	@ar rc $(NAME) $(OBJS)
-#	@echo "\033[33mIndexing library ...\033[0m"
 	@ranlib $(NAME)
-#	@echo "\033[32mLibrary Created !\033[0m"
+
+%.o : %.c $(HEAD)
+	#@$(eval X=$(shell echo $$(($(X)+1))))
+	#@$(eval Y=$(shell echo $$(($(Y)+1))))
+	@echo "\x1b[$(X);0H                                                                                                        \r"
+	@echo "\x1b[48;5;$(X)m\r"
+	#@echo "$(GREEN)"
+	#@echo "$(LOL)"
+	#@echo "$(LIL)"
+	#@echo "\x1b[0;0H["
+	#@echo "\x1b[0;88H]"
+	@$(CC) -c $(FLAG) $< -o $@
 
 mc: fclean all clean
 
 clean:
-#	@echo "\033[31mdeleting all .o ...\033[0m"
-	@rm -f $(OBJS)
-#	@echo "\033[32mThe folder is clean !\033[0m"
+	@rm -f $(OBJS) ./percent_c.o ./percent_d.o ./percent_s.o ./ft_fprintf.o \
+	./tools.o
 
-fclean:
-#	@echo "\033[31mDeleting libft.a and all .o ...\033[0m"
-	@rm -f $(NAME) $(OBJS)
-#	@echo "\033[32mThe folder is clean\033[0m"
+fclean: clean
+	@rm -f $(NAME)
 
 re: fclean all

@@ -6,11 +6,11 @@
 /*   By: rabougue <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/12/03 10:34:14 by rabougue          #+#    #+#             */
-/*   Updated: 2015/12/15 22:06:39 by rabougue         ###   ########.fr       */
+/*   Updated: 2016/05/04 09:19:49 by rabougue         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "./includes/libft.h"
 
 static void	skip_blank(const char *s, int *i, int *len)
 {

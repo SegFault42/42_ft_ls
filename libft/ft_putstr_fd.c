@@ -6,23 +6,14 @@
 /*   By: rabougue <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/11/28 18:54:55 by rabougue          #+#    #+#             */
-/*   Updated: 2015/12/02 18:34:57 by rabougue         ###   ########.fr       */
+/*   Updated: 2016/11/19 22:17:12 by rabougue         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "./includes/libft.h"
 
 void	ft_putstr_fd(char const *s, int fd)
 {
-	int i;
-
-	i = 0;
 	if (s != NULL)
-	{
-		while (s[i] != '\0')
-		{
-			ft_putchar_fd(s[i], fd);
-			i++;
-		}
-	}
+		write(fd, s, ft_strlen(s));
 }

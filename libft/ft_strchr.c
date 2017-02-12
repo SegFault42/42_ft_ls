@@ -6,11 +6,11 @@
 /*   By: rabougue <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/12/01 13:56:26 by rabougue          #+#    #+#             */
-/*   Updated: 2015/12/07 16:53:18 by rabougue         ###   ########.fr       */
+/*   Updated: 2016/05/04 09:16:24 by rabougue         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "./includes/libft.h"
 
 char	*ft_strchr(const char *s, int c)
 {

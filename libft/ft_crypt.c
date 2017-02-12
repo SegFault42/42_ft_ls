@@ -6,11 +6,11 @@
 /*   By: rabougue <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/12/16 23:04:29 by rabougue          #+#    #+#             */
-/*   Updated: 2015/12/17 21:01:59 by rabougue         ###   ########.fr       */
+/*   Updated: 2016/05/04 09:02:36 by rabougue         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "./includes/libft.h"
 
 char	*ft_crypt(char *str)
 {

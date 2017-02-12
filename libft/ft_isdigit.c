@@ -6,9 +6,11 @@
 /*   By: rabougue <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/11/24 15:11:03 by rabougue          #+#    #+#             */
-/*   Updated: 2015/11/27 17:27:35 by rabougue         ###   ########.fr       */
+/*   Updated: 2016/05/04 09:03:52 by rabougue         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
+#include "./includes/libft.h"
 
 int	ft_isdigit(int c)
 {
