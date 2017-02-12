@@ -17,7 +17,7 @@ int main(int argc, char *argv[])
 	DIR				*directory = NULL;
 	struct dirent	*content_dir = NULL;
 
-	if (argc > 2)
+	if (argc < 2)
 		return EXIT_ERROR;
 	if ((directory = opendir(argv[1])) == NULL)
 	{
@@ -26,9 +26,11 @@ int main(int argc, char *argv[])
 	}
 	while ((content_dir = readdir(directory)) != NULL)
 	{
+		ft_fprintf(1, "d_ino = %d\n", content_dir->d_ino);
+		ft_fprintf(1, "d_off = %d\n", content_dir->d_off);
+		ft_fprintf(1, "reclen = %d\n", content_dir->d_reclen);
 		ft_fprintf(1, "name = %s\n", content_dir->d_name);
-		ft_fprintf(1, "type = %c\n", content_dir->d_type);
-		ft_fprintf(1, "reclen = %c\n", content_dir->d_reclen);
+		ft_fprintf(1, "type = %d\n", content_dir->d_type);
 		RC;
 	}
 	return EXIT_SUCCESS;

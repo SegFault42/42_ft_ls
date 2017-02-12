@@ -32,7 +32,7 @@ all: $(NAME)
 
 $(NAME): $(OBJS)
 	@make -s -C ./libft/
-	@$(CC) $(FLAG) $(LFT) $(OBJS) -o $(NAME)
+	@$(CC) $(FLAG) -o $(NAME) $(OBJS) $(LFT)
 	@printf "✅  Compilation done.\n"
 
 %.o : %.c $(INCLUDE) ./Makefile

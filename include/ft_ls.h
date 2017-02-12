@@ -19,6 +19,11 @@
 # include <sys/types.h>
 # include "../libft/includes/libft.h"
 
+# define	L_MIN	1
+# define	R_UP	2
+# define	A_MIN	4
+# define	R_MIN	8
+# define	T_MIN	16
 
 //--------------------Prototype fonctions---------------------
 
