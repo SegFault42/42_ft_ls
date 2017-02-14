@@ -36,7 +36,7 @@ $(NAME): $(OBJS)
 	@printf "✅  Compilation done.\n"
 
 %.o : %.c $(INCLUDE) ./Makefile
-	@printf "                                                               \r"
+	@printf " ✅                                                              \r"
 	@printf "✅  $(notdir $<)\r"
 	@$(CC) -c $(FLAG) $< -o $@
 

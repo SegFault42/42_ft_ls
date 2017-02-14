@@ -62,13 +62,8 @@ $(NAME): $(OBJS) ./includes/libft.h
 %.o : %.c $(HEAD)
 	#@$(eval X=$(shell echo $$(($(X)+1))))
 	#@$(eval Y=$(shell echo $$(($(Y)+1))))
-	@echo "\x1b[$(X);0H                                                                                                        \r"
-	@echo "\x1b[48;5;$(X)m\r"
-	#@echo "$(GREEN)"
-	#@echo "$(LOL)"
-	#@echo "$(LIL)"
-	#@echo "\x1b[0;0H["
-	#@echo "\x1b[0;88H]"
+	@printf "                                                                  \r"
+	@printf "$(notdir $<)\r"
 	@$(CC) -c $(FLAG) $< -o $@
 
 mc: fclean all clean
