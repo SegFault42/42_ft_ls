@@ -6,14 +6,12 @@
 /*   By: rabougue <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/12 05:48:29 by rabougue          #+#    #+#             */
-/*   Updated: 2017/02/27 17:23:51 by rabougue         ###   ########.fr       */
+/*   Updated: 2017/02/27 18:35:11 by rabougue         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/ft_ls.h"
 
-void		check_if_two_same_param()
-{}
 
 static uint8_t	parse_arg(char **argv)
 {
@@ -35,7 +33,13 @@ static uint8_t	parse_arg(char **argv)
 int main(int argc, char **argv)
 {
 	t_env	env;
+	t_file	file;
+	t_ctrl	ctrl_file;
 
+	ctrl_file.first = &file;
+	printf("ctrl_file.first = %p\n", ctrl_file.first);
+	printf("file = %p\n", &file);
+	ft_memset(&file, 0, sizeof(file));
 	ft_memset(&env, 0, sizeof(env));
 	env.arg_value = parse_arg(argv);
 	if (no_param() == EXIT_ERROR)

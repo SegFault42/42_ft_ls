@@ -6,7 +6,7 @@
 /*   By: rabougue <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/12 05:46:45 by rabougue          #+#    #+#             */
-/*   Updated: 2017/02/27 17:05:35 by rabougue         ###   ########.fr       */
+/*   Updated: 2017/02/27 17:36:03 by rabougue         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,17 @@
 # define	A_MIN	4
 # define	R_MIN	8
 # define	T_MIN	16
+
+typedef struct	s_file
+{
+	char		*name;
+	void		*next;
+}				t_file;
+
+typedef struct	s_ctrl
+{
+	t_file		*first;
+}				t_ctrl;
 
 typedef struct	s_env
 {
