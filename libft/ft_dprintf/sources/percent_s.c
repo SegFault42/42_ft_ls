@@ -1,25 +1,37 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_memalloc.c                                      :+:      :+:    :+:   */
+/*   percent_s.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: rabougue <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2015/11/29 15:34:57 by rabougue          #+#    #+#             */
-/*   Updated: 2017/02/12 05:32:58 by rabougue         ###   ########.fr       */
+/*   Created: 2016/08/14 15:06:29 by rabougue          #+#    #+#             */
+/*   Updated: 2017/02/21 22:33:50 by rabougue         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "./includes/libft.h"
+#include "../includes/ft_dprintf.h"
 
-void	*ft_memalloc(size_t size)
+void	percent_s(t_printf *print, va_list pa)
 {
-	char	*str;
+	char	*s;
 
-	str = NULL;
-	str = (void *)malloc(size);
-	if (str == NULL)
-		return (NULL);
-	ft_memset(str, 0, size);
-	return (str);
+	s = va_arg(pa, char *);
+	if (print->is_percent_s == 1)
+	{
+		if (s == 0)
+		{
+			ft_strcat(print->buff, "(null)");
+			print->i += 6;
+		}
+		else
+		{
+			ft_strcat(print->buff, s);
+			print->i += ft_strlen(s);
+		}
+	}
+	else if (s == 0)
+		print->buff_size += 6;
+	else
+		print->buff_size += ft_strlen(s);
 }

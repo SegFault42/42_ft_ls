@@ -6,26 +6,21 @@
 /*   By: rabougue <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/06/29 15:44:19 by rabougue          #+#    #+#             */
-/*   Updated: 2016/09/03 02:08:30 by rabougue         ###   ########.fr       */
+/*   Updated: 2017/02/23 21:59:19 by rabougue         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/ft_fprintf.h"
+#include "../includes/ft_dprintf.h"
 
-void	init_struct(t_printf *print)
+void	error(int error)
 {
-	print->buff = NULL;
-	print->buff_size = 0;
-	print->ret = 0;
-	print->is_percent_c = 0;
-	print->is_percent_s = 0;
-	print->is_percent_d = 0;
-	print->i = 0;
+	if (error == MALLOC_ERROR)
+		ft_putendl_fd("Memory allocation failure", STDERR_FILENO);
+	exit(EXIT_FAILURE);
 }
 
-void	print_buff(t_printf *print, int *fd)
+void	print_buff(t_printf *print, int fd)
 {
-	print->buff[print->i] = '\0';
-	ft_putstr_fd(print->buff, *fd);
-	free(print->buff);
+	ft_putstr_fd(print->buff, fd);
+	ft_strdel(&print->buff);
 }

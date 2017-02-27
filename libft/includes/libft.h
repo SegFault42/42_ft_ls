@@ -6,15 +6,13 @@
 /*   By: rabougue <rabougue@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/11/24 18:34:24 by rabougue          #+#    #+#             */
-/*   Updated: 2017/02/12 05:48:21 by rabougue         ###   ########.fr       */
+/*   Updated: 2017/02/21 22:33:08 by rabougue         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef LIBFT_H
 # define LIBFT_H
 
-# include <errno.h>
-# include <stdio.h>
 # include <unistd.h>
 # include <string.h>
 # include <stdlib.h>
@@ -22,7 +20,7 @@
 # include <limits.h>
 # include <stdint.h>
 # include <stdbool.h>
-# include "../ft_fprintf/includes/ft_fprintf.h"
+# include "../ft_dprintf/includes/ft_dprintf.h"
 # include "./colors.h"
 
 # define BUFF_SIZE 1
@@ -132,5 +130,6 @@ char				*ft_strcdup(const char *s1, char c);
 char				*ft_strccat(char *s1, const char *s2, char c);
 int					ft_isspace(char c);
 char				*ft_strndup(const char *s1, size_t nb);
+void				*ft_trymalloc(size_t size);
 
 #endif

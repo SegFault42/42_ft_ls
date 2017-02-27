@@ -6,7 +6,7 @@
 /*   By: rabougue <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/12 05:46:45 by rabougue          #+#    #+#             */
-/*   Updated: 2017/02/12 05:51:15 by rabougue         ###   ########.fr       */
+/*   Updated: 2017/02/27 17:05:35 by rabougue         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@
 # include <unistd.h>
 # include <sys/stat.h>
 # include <sys/types.h>
+# include <errno.h>
 # include "../libft/includes/libft.h"
 
 # define	L_MIN	1
@@ -29,5 +30,7 @@ typedef struct	s_env
 {
 	uint8_t		arg_value;
 }				t_env;
+
+int8_t	no_param();
 
 #endif

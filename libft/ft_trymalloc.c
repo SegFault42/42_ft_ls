@@ -1,40 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   percent_s.c                                        :+:      :+:    :+:   */
+/*   ft_trymalloc.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: rabougue <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2016/08/14 15:06:29 by rabougue          #+#    #+#             */
-/*   Updated: 2016/08/14 15:06:45 by rabougue         ###   ########.fr       */
+/*   Created: 2017/02/12 05:33:13 by rabougue          #+#    #+#             */
+/*   Updated: 2017/02/12 05:43:17 by rabougue         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/ft_fprintf.h"
+#include "./includes/libft.h"
 
-void	percent_s(t_printf *print, va_list pa)
+void	*ft_trymalloc(size_t size)
 {
-	char	*s;
+	char	*str;
 
-	s = va_arg(pa, char *);
-	if (print->is_percent_s == 1)
+	str = NULL;
+	if ((str = (void *)malloc(size)) == NULL)
 	{
-		if (s == 0)
-		{
-			ft_strcat(print->buff, "(null)");
-			print->i += 6;
-		}
-		else
-		{
-			ft_strcat(print->buff, s);
-			print->i += ft_strlen(s);
-		}
+		ft_putendl_fd(RED"ft_trymalloc : Memory allocation failure"END, 2);
+		exit(-1);
 	}
-	if (s == 0)
-	{
-		print->buff_size += 6;
-		return ;
-	}
-	else
-		print->buff_size += ft_strlen(s);
+	ft_memset(str, 0, size);
+	return (str);
 }
