@@ -6,7 +6,7 @@
 /*   By: rabougue <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/12 05:46:45 by rabougue          #+#    #+#             */
-/*   Updated: 2017/02/27 17:36:03 by rabougue         ###   ########.fr       */
+/*   Updated: 2017/02/28 23:08:50 by rabougue         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@
 typedef struct	s_file
 {
 	char		*name;
-	void		*next;
+	struct s_file		*next;
 }				t_file;
 
 typedef struct	s_ctrl
@@ -43,5 +43,16 @@ typedef struct	s_env
 }				t_env;
 
 int8_t	no_param();
+
+/*
+** lst.c
+*/
+void			add_head(t_ctrl *ctrl, char *str);
+void			add_tail(t_ctrl *ctrl, char *str);
+t_file			*create_maillon();
+t_file			*create_first_maillon(t_ctrl *ctrl);
+void			free_maillon(t_ctrl *ctrl);
+
+int8_t	no_param(t_ctrl *ctrl);
 
 #endif

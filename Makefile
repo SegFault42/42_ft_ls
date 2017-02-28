@@ -6,7 +6,7 @@
 #    By: rabougue <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2015/12/10 19:16:51 by rabougue          #+#    #+#              #
-#    Updated: 2017/02/27 16:41:36 by rabougue         ###   ########.fr        #
+#    Updated: 2017/02/28 22:15:59 by rabougue         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -20,7 +20,7 @@ NAME = ft_ls
 CC = gcc
 FLAG = -Wall -Wextra -Werror
 LFT = ./libft/libft.a
-SRCS = ./sources/main.c ./sources/no_param.c
+SRCS = ./sources/main.c ./sources/no_param.c ./sources/lst.c
 
 OBJS = $(SRCS:.c=.o)
 

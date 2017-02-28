@@ -6,21 +6,21 @@
 /*   By: rabougue <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/27 15:26:57 by rabougue          #+#    #+#             */
-/*   Updated: 2017/02/27 17:56:59 by rabougue         ###   ########.fr       */
+/*   Updated: 2017/02/28 22:32:03 by rabougue         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/ft_ls.h"
 
-
-
-int8_t	no_param()
+int8_t	no_param(t_ctrl *ctrl)
 {
 	DIR				*directory;
 	struct dirent	*content_dir;
+	t_file			*tmp;
 
 	directory = NULL;
 	content_dir = NULL;
+	tmp = ctrl->first;
 	if ((directory = opendir(".")) == NULL)
 	{
 		ft_dprintf(2, "%s\n", strerror(errno));
@@ -33,7 +33,9 @@ int8_t	no_param()
 		/*ft_dprintf(1, "d_ino = %d\n", content_dir->d_ino);*/
 		/*ft_dprintf(1, "d_off = %d\n", content_dir->d_off);*/
 		/*ft_dprintf(1, "reclen = %d\n", content_dir->d_reclen);*/
-		ft_dprintf(1, "%s\n", content_dir->d_name);
+		tmp->name = ft_strdup(content_dir->d_name);
+		add_tail(ctrl, NULL);
+		tmp = tmp->next;
 		/*ft_dprintf(1, "type = %d\n", content_dir->d_type);*/
 	}
 	return (EXIT_SUCCESS);
