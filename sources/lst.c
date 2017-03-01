@@ -6,7 +6,7 @@
 /*   By: rabougue <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/28 17:52:21 by rabougue          #+#    #+#             */
-/*   Updated: 2017/02/28 23:27:25 by rabougue         ###   ########.fr       */
+/*   Updated: 2017/03/02 00:34:26 by rabougue         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,109 +27,90 @@ void	free_maillon(t_ctrl *ctrl)
 	tmp->next = NULL;
 }
 
-t_file	*create_first_maillon(t_ctrl *ctrl)
-{
-	t_file *new;
-
-	if ((new = (t_file *)malloc(sizeof(new))) == NULL)
-	{
-		ft_dprintf(STDERR_FILENO, "Memory allocation failure ! (create_maillon)\n");
-		exit(EXIT_FAILURE);
-	}
-	ctrl->first = new;
-	new->next = NULL;
-	return (new);
-}
-
 t_file	*create_maillon()
 {
-	t_file *new;
+	t_file	*new;
 
 	if ((new = (t_file *)malloc(sizeof(new))) == NULL)
 	{
-		ft_dprintf(STDERR_FILENO, "Memory allocation failure ! (create_maillon)\n");
+		ft_dprintf(STDERR_FILENO,
+			"Memory allocation failure ! (create_maillon)\n");
 		exit(EXIT_FAILURE);
 	}
-	new->next = NULL;
 	return (new);
 }
 
 void	add_tail(t_ctrl *ctrl, char *str)
 {
-	t_file *new = (t_file *)malloc(sizeof(new));
-	t_file *tmp = NULL;
+	t_file	*new;
+	t_file	*tmp;
 
-	if (new == NULL)
+	new = create_maillon();
+	if (ctrl->first == NULL) // dans le cas ou aucun maillon est existe
+		ctrl->first = new;
+	else // si au moin un maillon existe
 	{
-		ft_dprintf(STDERR_FILENO, "Memory allocation failure ! (add_tail)\n");
-		exit(EXIT_FAILURE);
+		tmp = ctrl->first;
+		while (tmp->next)
+			tmp = tmp->next;
+		tmp->next = new;
 	}
 	new->next = NULL;
-	new->name = str;
-	tmp = ctrl->first;
-	while (tmp->next)
-		tmp = tmp->next;
-	tmp->next = new;
+	if ((new->name = ft_strdup(str)) == NULL)
+	{
+		ft_dprintf(STDERR_FILENO,
+		"Memory allocation failure ! (ft_strdup)\n");
+		exit(EXIT_FAILURE);
+	}
 }
 
 void	add_head(t_ctrl *ctrl, char *str)
 {
-	t_file *new;
+	t_file	*new;
 
 	new = create_maillon();
-
-	if (new == NULL)
+	if (ctrl->first == NULL) // dans le cas ou aucun maillon est existe
 	{
-		ft_dprintf(STDERR_FILENO, "Memory allocation failure ! (add_head)\n");
+		ctrl->first = new;
+		new->next = NULL;
+	}
+	else // si au moin un maillon existe
+	{
+		new->next = ctrl->first;
+		ctrl->first = new;
+	}
+	if ((new->name = ft_strdup(str)) == NULL)
+	{
+		ft_dprintf(STDERR_FILENO, "Memory allocation failure ! (ft_strdup)\n");
 		exit(EXIT_FAILURE);
 	}
-	new->next = ctrl->first;
-	ctrl->first = new;
-	new->name = strdup(str);
 }
 
-/*void	move_maillon(t_ctrl *ctrl, int old_place, int new_place)*/
-/*{*/
-	/*t_file	*tmp;*/
-	/*t_file	*tmp_old;*/
-	/*int		i;*/
+void	move_maillon(t_ctrl *ctrl, int old_place, int new_place)
+{
+	t_file	*tmp_first;
+	t_file	*tmp_next;
+	int		i;
 
-	/*tmp = ctrl->first;*/
-	/*i = 1;*/
-	/*while (i < old_place && tmp->next)*/
-	/*{*/
-		/*tmp = tmp->next;*/
-		/*++i;*/
-		/*printf("i = %d\n", i);*/
-		/*printf("name = %s\n", tmp->name);*/
-	/*}*/
-/*}*/
+	i = 1;
+	tmp_first = ctrl->first;
+	while (i < old_place - 1)
+	{
+		ft_debug();
+		tmp_first = tmp_first->next;
+		++i;
+	}
+	tmp_next = tmp_first->next;
+	ft_dprintf(STDOUT_FILENO, PURPLE"-%s-\n"END, tmp_next->name);
+	tmp_first->next = tmp_next->next;
+	ft_dprintf(STDOUT_FILENO, CYAN"-%s-\n"END, tmp_first->name);
+	while (i < new_place - 1)
+	{
+		tmp_first = tmp_first->next;
+		++i;
+	}
+	ft_dprintf(STDOUT_FILENO, CYAN"-%s-\n"END, tmp_first->name);
+	tmp_next->next = tmp_first->next;
+	tmp_first->next = tmp_next;
+}
 
-/*int	main()*/
-/*{*/
-	/*t_file	*list = NULL;*/
-	/*t_ctrl	*ctrl = NULL;*/
-	/*t_file *tmp = NULL;*/
-
-	/*ctrl = (t_ctrl *)malloc(sizeof(ctrl));*/
-	/*list = create_maillon();*/
-	/*if (list == NULL || ctrl == NULL)*/
-	/*{*/
-		/*printf("Memory allocation failure ! (main)\n");*/
-		/*exit(EXIT_FAILURE);*/
-	/*}*/
-	/*list->next = NULL;*/
-	/*ctrl->first = list;*/
-	/*list->name = strdup("un");*/
-	/*add_tail(ctrl, "deux");*/
-	/*add_tail(ctrl, "trois");*/
-	/*add_tail(ctrl, "quatre");*/
-	/*add_tail(ctrl, "cinq");*/
-	/*tmp = ctrl->first;*/
-	/*[>move_maillon(ctrl, 2, 3);<]*/
-	/*[>while (tmp)<]*/
-	/*[>{<]*/
-		/*[>printf("lol = %s->\n", tmp->name);<]*/
-		/*[>tmp = tmp->next;<]*/
-	/*[>}<]*/
-/*}*/

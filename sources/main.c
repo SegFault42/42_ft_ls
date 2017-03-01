@@ -6,12 +6,11 @@
 /*   By: rabougue <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/12 05:48:29 by rabougue          #+#    #+#             */
-/*   Updated: 2017/02/28 23:31:52 by rabougue         ###   ########.fr       */
+/*   Updated: 2017/03/01 22:54:53 by rabougue         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/ft_ls.h"
-
 
 static uint8_t	parse_arg(char **argv)
 {
@@ -30,42 +29,35 @@ static uint8_t	parse_arg(char **argv)
 	return (arg_value);
 }
 
-void	print_list(t_ctrl *ctrl)
+void			print_list(t_ctrl *ctrl)
 {
 	t_file	*tmp;
 
 	tmp = ctrl->first;
-	while (tmp->next)
+	while (tmp)
 	{
 		ft_dprintf(1, "%s\n", tmp->name);
 		tmp = tmp->next;
 	}
 }
 
-int main(int argc, char **argv)
+int				main(int argc, char **argv)
 {
 	t_env	env;
-	t_file	*file;
-	t_ctrl	ctrl_file;
+	t_ctrl	ctrl;
 
-	file = create_first_maillon(&ctrl_file);
-	ft_memset(&file, 0, sizeof(file));
+	ft_memset(&ctrl, 0, sizeof(ctrl));
 	ft_memset(&env, 0, sizeof(env));
 	env.arg_value = parse_arg(argv);
-	if (no_param(&ctrl_file) == EXIT_ERROR)
+	if (no_param(&ctrl) == EXIT_ERROR)
 		return (EXIT_ERROR);
-	ft_dprintf(1, RED"Print list = \n"END);
-	print_list(&ctrl_file);
-	while (ctrl_file.first->next)
-	{
-		free_maillon(&ctrl_file);
-	}
-	free(file);
+	print_list(&ctrl);
 	RC;
-	ft_dprintf(1, RED"Print list = \n"END);
-	print_list(&ctrl_file);
+	move_maillon(&ctrl, 1, 5);
+	RC;
+	print_list(&ctrl);
 	(void)argc;
 	(void)argv;
-	while (42){}
+	/*while (3){}*/
 	return (EXIT_SUCCESS);
 }

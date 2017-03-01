@@ -6,7 +6,7 @@
 /*   By: rabougue <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/12 05:46:45 by rabougue          #+#    #+#             */
-/*   Updated: 2017/02/28 23:08:50 by rabougue         ###   ########.fr       */
+/*   Updated: 2017/03/01 17:07:12 by rabougue         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,7 @@ void			add_tail(t_ctrl *ctrl, char *str);
 t_file			*create_maillon();
 t_file			*create_first_maillon(t_ctrl *ctrl);
 void			free_maillon(t_ctrl *ctrl);
+void			move_maillon(t_ctrl *ctrl, int old_place, int new_place);
 
 int8_t	no_param(t_ctrl *ctrl);
 
