@@ -6,7 +6,7 @@
 /*   By: rabougue <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/28 17:52:21 by rabougue          #+#    #+#             */
-/*   Updated: 2017/03/02 00:34:26 by rabougue         ###   ########.fr       */
+/*   Updated: 2017/03/02 15:53:20 by rabougue         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,11 +32,7 @@ t_file	*create_maillon()
 	t_file	*new;
 
 	if ((new = (t_file *)malloc(sizeof(new))) == NULL)
-	{
-		ft_dprintf(STDERR_FILENO,
-			"Memory allocation failure ! (create_maillon)\n");
-		exit(EXIT_FAILURE);
-	}
+		error(MALLOC_ERROR);
 	return (new);
 }
 
@@ -57,11 +53,7 @@ void	add_tail(t_ctrl *ctrl, char *str)
 	}
 	new->next = NULL;
 	if ((new->name = ft_strdup(str)) == NULL)
-	{
-		ft_dprintf(STDERR_FILENO,
-		"Memory allocation failure ! (ft_strdup)\n");
-		exit(EXIT_FAILURE);
-	}
+		error(MALLOC_ERROR);
 }
 
 void	add_head(t_ctrl *ctrl, char *str)
@@ -80,37 +72,34 @@ void	add_head(t_ctrl *ctrl, char *str)
 		ctrl->first = new;
 	}
 	if ((new->name = ft_strdup(str)) == NULL)
-	{
-		ft_dprintf(STDERR_FILENO, "Memory allocation failure ! (ft_strdup)\n");
-		exit(EXIT_FAILURE);
-	}
+		error(MALLOC_ERROR);
 }
 
-void	move_maillon(t_ctrl *ctrl, int old_place, int new_place)
+bool	add_after(t_ctrl *ctrl, int node, char *name)
 {
-	t_file	*tmp_first;
-	t_file	*tmp_next;
+	t_file	*tmp;
+	t_file	*new;
 	int		i;
 
-	i = 1;
-	tmp_first = ctrl->first;
-	while (i < old_place - 1)
+	i = 0;
+	tmp = ctrl->first;
+	while (i < node - 1 || node <= 0)
 	{
-		ft_debug();
-		tmp_first = tmp_first->next;
+		if (tmp->next == NULL || node <= 0)
+		{
+			ft_dprintf(STDIN_FILENO, "node index to big or to small");
+			return (FALSE);
+		}
+		tmp = tmp->next;
 		++i;
 	}
-	tmp_next = tmp_first->next;
-	ft_dprintf(STDOUT_FILENO, PURPLE"-%s-\n"END, tmp_next->name);
-	tmp_first->next = tmp_next->next;
-	ft_dprintf(STDOUT_FILENO, CYAN"-%s-\n"END, tmp_first->name);
-	while (i < new_place - 1)
-	{
-		tmp_first = tmp_first->next;
-		++i;
-	}
-	ft_dprintf(STDOUT_FILENO, CYAN"-%s-\n"END, tmp_first->name);
-	tmp_next->next = tmp_first->next;
-	tmp_first->next = tmp_next;
+	new = create_maillon();
+	if (tmp->next == NULL)
+		new->next = NULL;
+	else
+		new->next = tmp->next;
+	tmp->next = new;
+	if ((new->name = ft_strdup(name)) == NULL)
+		error(MALLOC_ERROR);
+	return (TRUE);
 }
-

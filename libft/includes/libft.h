@@ -6,7 +6,7 @@
 /*   By: rabougue <rabougue@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/11/24 18:34:24 by rabougue          #+#    #+#             */
-/*   Updated: 2017/02/21 22:33:08 by rabougue         ###   ########.fr       */
+/*   Updated: 2017/03/02 15:18:43 by rabougue         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,11 +23,12 @@
 # include "../ft_dprintf/includes/ft_dprintf.h"
 # include "./colors.h"
 
-# define BUFF_SIZE 1
-# define TRUE 1
-# define FALSE 0
-# define EXIT_ERROR -1
+# define BUFF_SIZE (1)
+# define TRUE (1)
+# define FALSE (0)
+# define EXIT_ERROR (-1)
 # define RC ft_putchar('\n');
+# define MALLOC_ERROR (1)
 
 typedef struct		s_list
 {
@@ -131,5 +132,6 @@ char				*ft_strccat(char *s1, const char *s2, char c);
 int					ft_isspace(char c);
 char				*ft_strndup(const char *s1, size_t nb);
 void				*ft_trymalloc(size_t size);
+void				ft_error(uint8_t error);
 
 #endif

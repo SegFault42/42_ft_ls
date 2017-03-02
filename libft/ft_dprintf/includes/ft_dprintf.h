@@ -6,7 +6,7 @@
 /*   By: rabougue <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/08/06 09:05:53 by rabougue          #+#    #+#             */
-/*   Updated: 2017/02/27 14:42:29 by rabougue         ###   ########.fr       */
+/*   Updated: 2017/03/02 15:19:21 by rabougue         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,8 +17,6 @@
 #include <stdio.h>
 #include <limits.h>
 # include "../../includes/libft.h"
-
-# define MALLOC_ERROR 1
 
 typedef struct	s_printf
 {

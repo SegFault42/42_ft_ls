@@ -6,7 +6,7 @@
 /*   By: rabougue <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/12 05:48:29 by rabougue          #+#    #+#             */
-/*   Updated: 2017/03/01 22:54:53 by rabougue         ###   ########.fr       */
+/*   Updated: 2017/03/02 18:39:15 by rabougue         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,13 @@ void			print_list(t_ctrl *ctrl)
 	tmp = ctrl->first;
 	while (tmp)
 	{
-		ft_dprintf(1, "%s\n", tmp->name);
+		if (tmp->next == NULL)
+			ft_dprintf(1, GREEN"%s\n"END, tmp->name);
+		else
+		{
+			ft_dprintf(1, GREEN"%s"END, tmp->name);
+			ft_dprintf(1, RED"->"END);
+		}
 		tmp = tmp->next;
 	}
 }
@@ -52,8 +58,7 @@ int				main(int argc, char **argv)
 	if (no_param(&ctrl) == EXIT_ERROR)
 		return (EXIT_ERROR);
 	print_list(&ctrl);
-	RC;
-	move_maillon(&ctrl, 1, 5);
+	/*add_after(&ctrl, 1, "lol");*/
 	RC;
 	print_list(&ctrl);
 	(void)argc;
