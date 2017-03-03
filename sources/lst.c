@@ -6,7 +6,7 @@
 /*   By: rabougue <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/28 17:52:21 by rabougue          #+#    #+#             */
-/*   Updated: 2017/03/02 15:53:20 by rabougue         ###   ########.fr       */
+/*   Updated: 2017/03/03 19:19:33 by rabougue         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,5 +101,6 @@ bool	add_after(t_ctrl *ctrl, int node, char *name)
 	tmp->next = new;
 	if ((new->name = ft_strdup(name)) == NULL)
 		error(MALLOC_ERROR);
+	printf("%s\n", name);
 	return (TRUE);
 }

@@ -6,7 +6,7 @@
 /*   By: rabougue <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/27 15:26:57 by rabougue          #+#    #+#             */
-/*   Updated: 2017/03/02 21:27:55 by rabougue         ###   ########.fr       */
+/*   Updated: 2017/03/03 19:24:49 by rabougue         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,9 +22,9 @@ bool	who_is_first(char *new_node, char *str)
 		if (new_node[i] != str[i])
 		{
 			if (new_node[i] < str[i])
-				return (false); // renvoie false si new_node est plus petit
+				return (true); // renvoie true si new_node est plus petit
 			else
-				return (true);// renvoie true si new_node est plus grand
+				return (false);// renvoie false si new_node est plus grand
 		}
 		++i;
 	}
@@ -33,32 +33,22 @@ bool	who_is_first(char *new_node, char *str)
 
 void	sort_lst(t_ctrl *ctrl, char *str)
 {
-	int		len_new;
-	int		len_before;
-	int		len_after;
 	t_file	*tmp;
-	int		i;
-	/*t_file	*new;*/
+	int		node;
+	bool	lol;
 
-	i = 0;
+	node = 1;
 	tmp = ctrl->first;
-	/*new = create_maillon();*/
-	/*if ((new->name = ft_strdup(str)) == NULL)*/
-		/*error(MALLOC_ERROR);*/
 	while (tmp)
 	{
-		if (who_is_first(str, tmp->name) == false)
+		if ((lol = who_is_first(str, tmp->name)) == true)
 		{
-			add_after(ctrl, i, str);
+			add_after(ctrl, node, str);
 			break ;
 		}
-		/*ft_dprintf(STDIN_FILENO, "%s\n", new->name);*/
+		++node;
 		tmp = tmp->next;
-		++i;
 	}
-	(void)len_new;
-	(void)len_before;
-	(void)len_after;
 }
 
 int8_t	no_param(t_ctrl *ctrl)
@@ -77,6 +67,7 @@ int8_t	no_param(t_ctrl *ctrl)
 	}
 	while ((content_dir = readdir(directory)) != NULL)
 	{
+		printf(CYAN"%s\n"END, content_dir->d_name);
 		if (content_dir->d_name[0] == '.')
 			continue ;
 		/*ft_dprintf(1, "d_ino = %d\n", content_dir->d_ino);*/
