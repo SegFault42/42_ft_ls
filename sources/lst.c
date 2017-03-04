@@ -6,7 +6,7 @@
 /*   By: rabougue <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/28 17:52:21 by rabougue          #+#    #+#             */
-/*   Updated: 2017/03/03 19:19:33 by rabougue         ###   ########.fr       */
+/*   Updated: 2017/03/04 13:54:45 by rabougue         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,6 +101,32 @@ bool	add_after(t_ctrl *ctrl, int node, char *name)
 	tmp->next = new;
 	if ((new->name = ft_strdup(name)) == NULL)
 		error(MALLOC_ERROR);
-	printf("%s\n", name);
 	return (TRUE);
+}
+
+void	add_before(t_ctrl *ctrl, int node, char *name)
+{
+	t_file	*tmp;
+	t_file	*new;
+
+	tmp = ctrl->first;
+	if (node == 1)
+	{
+		new = create_maillon();
+		if ((new->name = ft_strdup(name)) == NULL)
+			error(MALLOC_ERROR);
+		new->next = ctrl->first;
+		ctrl->first = new;
+	}
+	/*while (i < node - 1 || node <= 0)*/
+	/*{*/
+		/*if (tmp->next == NULL || node <= 0)*/
+		/*{*/
+			/*ft_dprintf(STDIN_FILENO, "node index to big or to small");*/
+			/*return (FALSE);*/
+		/*}*/
+		/*tmp = tmp->next;*/
+		/*++i;*/
+	/*}*/
+
 }

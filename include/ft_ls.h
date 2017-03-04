@@ -6,7 +6,7 @@
 /*   By: rabougue <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/12 05:46:45 by rabougue          #+#    #+#             */
-/*   Updated: 2017/03/03 19:13:40 by rabougue         ###   ########.fr       */
+/*   Updated: 2017/03/04 15:52:48 by rabougue         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@
 # define	A_MIN	4
 # define	R_MIN	8
 # define	T_MIN	16
+# define	ONE		32
 
 typedef struct	s_file
 {
@@ -53,6 +54,7 @@ t_file			*create_maillon();
 t_file			*create_first_maillon(t_ctrl *ctrl);
 void			free_maillon(t_ctrl *ctrl);
 bool			add_after(t_ctrl *ctrl, int node, char *str);
+void			add_before(t_ctrl *ctrl, int node, char *name);
 
 int8_t			no_param(t_ctrl *ctrl);
 void			print_list(t_ctrl *ctrl);

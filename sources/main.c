@@ -6,7 +6,7 @@
 /*   By: rabougue <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/12 05:48:29 by rabougue          #+#    #+#             */
-/*   Updated: 2017/03/02 18:39:15 by rabougue         ###   ########.fr       */
+/*   Updated: 2017/03/04 21:14:17 by rabougue         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,9 @@ static uint8_t	parse_arg(char **argv)
 			arg_value = L_MIN;
 		else if (ft_strcmp(argv[i], "-la") == 0)
 			arg_value = L_MIN | A_MIN;
-		ft_dprintf(1, "%s\n", argv[i]);
+		else if (ft_strcmp(argv[i], "-1") == 0)
+			arg_value |= ONE;
+		/*ft_dprintf(1, "%s\n", argv[i]);*/
 	}
 	return (arg_value);
 }
@@ -36,13 +38,13 @@ void			print_list(t_ctrl *ctrl)
 	tmp = ctrl->first;
 	while (tmp)
 	{
-		if (tmp->next == NULL)
-			ft_dprintf(1, GREEN"%s\n"END, tmp->name);
-		else
-		{
-			ft_dprintf(1, GREEN"%s"END, tmp->name);
-			ft_dprintf(1, RED"->"END);
-		}
+		/*if (tmp->next == NULL)*/
+			ft_dprintf(1, "%s\n", tmp->name);
+		/*else*/
+		/*{*/
+			/*ft_dprintf(1, GREEN"%s"END, tmp->name);*/
+			/*ft_dprintf(1, RED"->"END);*/
+		/*}*/
 		tmp = tmp->next;
 	}
 }
@@ -57,9 +59,8 @@ int				main(int argc, char **argv)
 	env.arg_value = parse_arg(argv);
 	if (no_param(&ctrl) == EXIT_ERROR)
 		return (EXIT_ERROR);
-	print_list(&ctrl);
 	/*add_after(&ctrl, 1, "lol");*/
-	RC;
+	/*RC;*/
 	print_list(&ctrl);
 	(void)argc;
 	(void)argv;
