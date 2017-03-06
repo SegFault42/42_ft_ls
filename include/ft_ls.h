@@ -20,17 +20,14 @@
 # include <errno.h>
 # include "../libft/includes/libft.h"
 
-# define	L_MIN	1
-# define	R_UP	2
-# define	A_MIN	4
-# define	R_MIN	8
-# define	T_MIN	16
-# define	ONE		32
+# define	MINUS_ONE	1
+# define	MINUS_A		2
+
 
 typedef struct	s_file
 {
 	char		*name;
-	struct s_file		*next;
+	struct s_file	*next;
 }				t_file;
 
 typedef struct	s_ctrl
@@ -42,6 +39,20 @@ typedef struct	s_env
 {
 	uint8_t		arg_value;
 }				t_env;
+
+typedef struct	s_argp
+{
+	char		*sign;
+	bool		active;
+	char		*descritpion;
+}				t_argp;
+
+t_argp	g_argp[3];
+//{
+	//{"a", 0, "print hide file"},
+	//{"1", 0, "One file per line"},
+	//{0, 0, 0}
+//};
 
 int8_t	no_param();
 
@@ -56,7 +67,7 @@ void			free_maillon(t_ctrl *ctrl);
 bool			add_after(t_ctrl *ctrl, int node, char *str);
 void			add_before(t_ctrl *ctrl, int node, char *name);
 
-int8_t			no_param(t_ctrl *ctrl);
+int8_t			no_param(t_ctrl *ctrl, t_env *env);
 void			print_list(t_ctrl *ctrl);
 
 #endif

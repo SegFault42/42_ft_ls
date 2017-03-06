@@ -18,15 +18,18 @@ static uint8_t	parse_arg(char **argv)
 	uint8_t	arg_value;
 
 	i = 0;
-	while (argv[++i])
+	arg_value = 0;
+	if (ft_strcmp(argv[1], "--") == 0 )
+		return (arg_value);
+	if (argv[1][0] == '-') // Si un - est au debut du premier argument
 	{
-		if (ft_strcmp(argv[i], "-l") == 0)
-			arg_value = L_MIN;
-		else if (ft_strcmp(argv[i], "-la") == 0)
-			arg_value = L_MIN | A_MIN;
-		else if (ft_strcmp(argv[i], "-1") == 0)
-			arg_value |= ONE;
-		/*ft_dprintf(1, "%s\n", argv[i]);*/
+		while (g_argp[i].sign)
+		{
+			if (ft_strstr(argv[1], g_argp[i].sign) != NULL)
+				g_argp[i].active = 1;
+	ft_dprintf(1, "sign = %s active = %d\n", g_argp[i].sign,  g_argp[i].active);
+			++i;
+		}
 	}
 	return (arg_value);
 }
@@ -38,15 +41,22 @@ void			print_list(t_ctrl *ctrl)
 	tmp = ctrl->first;
 	while (tmp)
 	{
-		/*if (tmp->next == NULL)*/
-			ft_dprintf(1, "%s\n", tmp->name);
-		/*else*/
-		/*{*/
-			/*ft_dprintf(1, GREEN"%s"END, tmp->name);*/
-			/*ft_dprintf(1, RED"->"END);*/
-		/*}*/
+		ft_dprintf(1, "%s\n", tmp->name);
 		tmp = tmp->next;
 	}
+}
+
+void	init_argp()
+{
+	g_argp[0].sign = ft_strdup("a");
+	g_argp[0].active = 0;
+	g_argp[0].descritpion = ft_strdup("print hide file");
+	g_argp[1].sign = ft_strdup("l");
+	g_argp[1].active = 0;
+	g_argp[1].descritpion = ft_strdup("One file per line");
+	g_argp[2].sign = 0;
+	g_argp[2].active = 0;
+	g_argp[2].descritpion = 0;
 }
 
 int				main(int argc, char **argv)
@@ -56,14 +66,12 @@ int				main(int argc, char **argv)
 
 	ft_memset(&ctrl, 0, sizeof(ctrl));
 	ft_memset(&env, 0, sizeof(env));
-	env.arg_value = parse_arg(argv);
-	if (no_param(&ctrl) == EXIT_ERROR)
-		return (EXIT_ERROR);
-	/*add_after(&ctrl, 1, "lol");*/
-	/*RC;*/
+	init_argp();
+	if (argc > 1)
+		parse_arg(argv);
+	if (no_param(&ctrl, &env) == EXIT_ERROR)
+		return (EXIT_FAILURE);
 	print_list(&ctrl);
 	(void)argc;
-	(void)argv;
-	/*while (3){}*/
 	return (EXIT_SUCCESS);
 }

@@ -47,10 +47,8 @@ void	sort_lst(t_ctrl *ctrl, char *str)
 	}
 	while (tmp)
 	{
-		/*ft_dprintf(1, CYAN"%s\n"END, str);*/
 		while (str[i] && str[i] == tmp->name[i])
 			++i;
-		/*ft_dprintf(1, YELLOW"%c, %c, %d\n"END, str[i], tmp->name[i], node);*/
 		if (str[i] < tmp->name[i])
 		{
 			add_before(ctrl, node, str);
@@ -74,7 +72,7 @@ void	sort_lst(t_ctrl *ctrl, char *str)
 	}
 }
 
-int8_t	no_param(t_ctrl *ctrl)
+int8_t	no_param(t_ctrl *ctrl, t_env *env)
 {
 	DIR				*directory;
 	struct dirent	*content_dir;
@@ -83,6 +81,7 @@ int8_t	no_param(t_ctrl *ctrl)
 	i = 0;
 	directory = NULL;
 	content_dir = NULL;
+	ft_dprintf(1, "sign = %s active = %d\n", g_argp[0].sign,  g_argp[0].active);
 	if ((directory = opendir(".")) == NULL)
 	{
 		ft_dprintf(2, "%s\n", strerror(errno));
@@ -90,13 +89,14 @@ int8_t	no_param(t_ctrl *ctrl)
 	}
 	while ((content_dir = readdir(directory)) != NULL)
 	{
-		/*printf(GREEN"lst =\033[0m \n");*/
-		/*print_list(ctrl);*/
-		/*ft_dprintf(1, CYAN"%s\n"END, content_dir->d_name);*/
-		if (content_dir->d_name[0] == '.')
-			continue ;
+		if (g_argp[0].active == 0)
+		{
+			if (content_dir->d_name[0] == '.')
+				continue ;
+		}
 		sort_lst(ctrl, content_dir->d_name);
 		++i;
 	}
 	return (EXIT_SUCCESS);
+	(void)env;
 }
