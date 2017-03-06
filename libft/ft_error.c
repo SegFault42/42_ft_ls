@@ -15,6 +15,6 @@
 void	ft_error(uint8_t error)
 {
 	if (error == MALLOC_ERROR)
-		ft_dprintf(STDERR_FILENO, END"Memory allocation failure !"END);
+		ft_dprintf(STDERR_FILENO, RED"Memory allocation failure !\n"END);
 	exit (EXIT_FAILURE);
 }

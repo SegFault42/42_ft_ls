@@ -74,14 +74,13 @@ void	sort_lst(t_ctrl *ctrl, char *str)
 
 int8_t	no_param(t_ctrl *ctrl, t_env *env)
 {
-	DIR				*directory;
 	struct dirent	*content_dir;
+	DIR				*directory;
 	int				i;
 
 	i = 0;
 	directory = NULL;
 	content_dir = NULL;
-	ft_dprintf(1, "sign = %s active = %d\n", g_argp[0].sign,  g_argp[0].active);
 	if ((directory = opendir(".")) == NULL)
 	{
 		ft_dprintf(2, "%s\n", strerror(errno));
@@ -96,6 +95,11 @@ int8_t	no_param(t_ctrl *ctrl, t_env *env)
 		}
 		sort_lst(ctrl, content_dir->d_name);
 		++i;
+	}
+	if (closedir(directory) == -1)
+	{
+		ft_dprintf(STDERR_FILENO, RED"%s\n"END, strerror(errno));
+		exit(EXIT_FAILURE);
 	}
 	return (EXIT_SUCCESS);
 	(void)env;

@@ -20,12 +20,15 @@ NAME = ft_ls
 CC = gcc
 FLAG = -Wall -Wextra -Werror
 LFT = ./libft/libft.a
-SRCS = ./sources/main.c ./sources/no_param.c ./sources/lst.c
+SRCS =	./sources/main.c\
+		./sources/no_param.c\
+		./sources/lst.c\
+		./sources/parse_arguments.c
 
 OBJS = $(SRCS:.c=.o)
 
 ###########################_RELINK_MODIFY_.h####################################
-INCLUDE = ./include/ft_ls.h
+INCLUDE = ./include/ft_ls.h ./libft/includes/libft.h
 ################################################################################
 
 all: $(NAME)
