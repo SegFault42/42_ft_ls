@@ -24,10 +24,12 @@
 # define	MINUS_A		2
 
 # define	SIZE_ARGP	(6)
+# define	HIDE_FILE	'.'
 
 typedef struct	s_file
 {
 	char		*name;
+	uint8_t		type;
 	struct s_file	*next;
 }				t_file;
 

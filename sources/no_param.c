@@ -76,9 +76,8 @@ int8_t	no_param(t_ctrl *ctrl, t_env *env)
 {
 	struct dirent	*content_dir;
 	DIR				*directory;
-	int				i;
+	/*struct stat		sb;*/
 
-	i = 0;
 	directory = NULL;
 	content_dir = NULL;
 	if ((directory = opendir(".")) == NULL)
@@ -90,11 +89,11 @@ int8_t	no_param(t_ctrl *ctrl, t_env *env)
 	{
 		if (g_argp[0].active == 0)
 		{
-			if (content_dir->d_name[0] == '.')
+			if (content_dir->d_name[0] == HIDE_FILE)
 				continue ;
 		}
+		/*ft_dprintf(1, PURPLE"d_type = %d\n"END, content_dir->d_type);*/
 		sort_lst(ctrl, content_dir->d_name);
-		++i;
 	}
 	if (closedir(directory) == -1)
 	{

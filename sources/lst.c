@@ -31,8 +31,9 @@ t_file	*create_maillon()
 {
 	t_file	*new;
 
-	if ((new = (t_file *)malloc(sizeof(new))) == NULL)
+	if ((new = (t_file *)malloc(sizeof(t_file))) == NULL)
 		error(MALLOC_ERROR);
+	ft_memset(new, 0, sizeof(t_file));
 	return (new);
 }
 
