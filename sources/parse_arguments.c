@@ -12,28 +12,32 @@
 
 #include "../include/ft_ls.h"
 
-uint8_t	parse_arg(char **argv)
+char **parse_arg(char **argv, int argc)
 {
 	uint8_t	i;
-	uint8_t	arg_value;
+	int		arg;
+	char	**arguments;
 
 	i = 0;
-	arg_value = 0;
-	if (ft_strcmp(argv[1], "--") == 0)
-		return (arg_value);
-	if (argv[1][0] == '-') // Si un - est au debut du premier argument
+	arg = 0;
+	arguments = (char **)malloc(sizeof(char *) * argc);
+	++argv;
+	while (argv[arg])
 	{
-		while (g_argp[i].sign)
+		if (argv[arg][0] == '-') // Si un - est au debut du premier argument
 		{
-			if (ft_strstr(argv[1], g_argp[i].sign) != NULL)
-				g_argp[i].active = 1;
-			++i;
+			while (g_argp[i].sign)
+			{
+				if (ft_strstr(argv[arg], g_argp[i].sign) != NULL)
+					g_argp[i].active = 1;
+				++i;
+			}
+			i = 0;
 		}
+		arguments[arg] = ft_strdup(argv[arg]);
+		++arg;
 	}
-	/*for (int i = 0; i < SIZE_ARGP; ++i)*/
-		/*ft_dprintf(1, GREEN"sign = %s, active = %d, desc = %s\n"END,*/
-		/*g_argp[i].sign, g_argp[i].active, g_argp[i].description);*/
-	return (arg_value);
+	return (arguments);
 }
 void	fill_argp(char *param, char *description, int index)
 {

@@ -12,6 +12,15 @@
 
 #include "../include/ft_ls.h"
 
+void	free_list(t_ctrl *ctrl)
+{
+	t_file	*tmp;
+
+	tmp = ctrl->first;
+	while (tmp->next)
+		free_maillon(ctrl);
+}
+
 void	free_maillon(t_ctrl *ctrl)
 {
 	t_file	*tmp;
@@ -20,10 +29,10 @@ void	free_maillon(t_ctrl *ctrl)
 	while (tmp->next->next)
 	{
 		tmp = tmp->next;
-		ft_dprintf(1, GREEN"%s\n"END, tmp->name);
+		/*ft_dprintf(1, GREEN"%s\n"END, tmp->name);*/
 	}
-	ft_strdel(&tmp->name);
-	free(tmp->next->next);
+	ft_strdel(&tmp->next->name);
+	free(tmp->next);
 	tmp->next = NULL;
 }
 

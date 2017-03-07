@@ -31,7 +31,7 @@ bool	who_is_first(char *new_node, char *str)
 	return (true);
 }
 
-void	sort_lst(t_ctrl *ctrl, char *str)
+void	sort_lst(t_ctrl *ctrl, struct dirent *content_dir)
 {
 	t_file	*tmp;
 	int		node;
@@ -42,29 +42,29 @@ void	sort_lst(t_ctrl *ctrl, char *str)
 	i = 0;
 	if (tmp == NULL)
 	{
-		add_head(ctrl, str);
+		add_head(ctrl, content_dir->d_name);
 		return ;
 	}
 	while (tmp)
 	{
-		while (str[i] && str[i] == tmp->name[i])
+		while (content_dir->d_name[i] && content_dir->d_name[i] == tmp->name[i])
 			++i;
-		if (str[i] < tmp->name[i])
+		if (content_dir->d_name[i] < tmp->name[i])
 		{
-			add_before(ctrl, node, str);
+			add_before(ctrl, node, content_dir->d_name);
 			return ;
 		}
 		else if (tmp->next == NULL)
 		{
-			add_tail(ctrl, str);
+			add_tail(ctrl, content_dir->d_name);
 			return ;
 		}
 		i = 0;
-		while (str[i] && str[i] == tmp->next->name[i])
+		while (content_dir->d_name[i] && content_dir->d_name[i] == tmp->next->name[i])
 			++i;
-		if (str[i] < tmp->next->name[i])
+		if (content_dir->d_name[i] < tmp->next->name[i])
 		{
-			add_after(ctrl, node, str);
+			add_after(ctrl, node, content_dir->d_name);
 			return ;
 		}
 		tmp = tmp->next;
@@ -72,7 +72,7 @@ void	sort_lst(t_ctrl *ctrl, char *str)
 	}
 }
 
-int8_t	no_param(t_ctrl *ctrl, t_env *env)
+int8_t	get_files(t_ctrl *ctrl, t_env *env, char *cur_dir)
 {
 	struct dirent	*content_dir;
 	DIR				*directory;
@@ -80,26 +80,29 @@ int8_t	no_param(t_ctrl *ctrl, t_env *env)
 
 	directory = NULL;
 	content_dir = NULL;
-	if ((directory = opendir(".")) == NULL)
+	if ((directory = opendir(cur_dir)) == NULL)
 	{
 		ft_dprintf(2, "%s\n", strerror(errno));
 		return (EXIT_ERROR);
 	}
 	while ((content_dir = readdir(directory)) != NULL)
 	{
-		if (g_argp[0].active == 0)
+		if (g_argp[MINUS_A].active == 0)
 		{
 			if (content_dir->d_name[0] == HIDE_FILE)
 				continue ;
 		}
-		/*ft_dprintf(1, PURPLE"d_type = %d\n"END, content_dir->d_type);*/
-		sort_lst(ctrl, content_dir->d_name);
+		if (g_argp[UPPER_R].active == 1 && content_dir->d_type == DT_DIR)
+			get_files(ctrl, env, content_dir->d_name);
+		sort_lst(ctrl, content_dir);
 	}
 	if (closedir(directory) == -1)
 	{
 		ft_dprintf(STDERR_FILENO, RED"%s\n"END, strerror(errno));
 		exit(EXIT_FAILURE);
 	}
+	print_list(ctrl);
+	/*free_list(ctrl);*/
 	return (EXIT_SUCCESS);
 	(void)env;
 }

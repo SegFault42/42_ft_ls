@@ -20,8 +20,12 @@
 # include <errno.h>
 # include "../libft/includes/libft.h"
 
-# define	MINUS_ONE	1
-# define	MINUS_A		2
+# define	MINUS_A		(0)
+# define	ONE			(1)
+# define	UPPER_R		(2)
+# define	MINUS_R		(3)
+# define	MINUS_T		(4)
+# define	MINUS_L		(5)
 
 # define	SIZE_ARGP	(6)
 # define	HIDE_FILE	'.'
@@ -29,7 +33,7 @@
 typedef struct	s_file
 {
 	char		*name;
-	uint8_t		type;
+	//uint8_t		type;
 	struct s_file	*next;
 }				t_file;
 
@@ -65,8 +69,8 @@ t_argp	g_argp[SIZE_ARGP];
 ** no_param.c
 */
 bool			who_is_first(char *new_node, char *str);
-int8_t			no_param(t_ctrl *ctrl, t_env *env);
-void			sort_lst(t_ctrl *ctrl, char *str);
+int8_t			get_files(t_ctrl *ctrl, t_env *env, char *cur_dir);
+void			sort_lst(t_ctrl *ctrl, struct dirent *content_dir);
 /*
 ** lst.c
 */
@@ -76,11 +80,12 @@ void			add_head(t_ctrl *ctrl, char *str);
 void			add_tail(t_ctrl *ctrl, char *str);
 void			free_maillon(t_ctrl *ctrl);
 t_file			*create_maillon();
+void			free_list(t_ctrl *ctrl);
 /*
 ** parse_arguments.c
 */
 void			fill_argp(char *param, char *description, int index);
-uint8_t			parse_arg(char **argv);
+char			**parse_arg(char **argv, int argc);
 void			init_argp();
 void			free_argp();
 
