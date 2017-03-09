@@ -12,12 +12,12 @@
 
 #include "./includes/libft.h"
 
-void	ft_2d_tab_free(char **tab, int size)
+void	ft_2d_tab_free(char **tab)
 {
 	int	i;
 
 	i = 0;
-	while (i < size)
+	while (tab[i])
 	{
 		free(tab[i]);
 		++i;

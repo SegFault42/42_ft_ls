@@ -29,10 +29,11 @@
 
 # define	SIZE_ARGP	(6)
 # define	HIDE_FILE	'.'
+# define	OPTION_VALUE	'-'
 
 typedef struct	s_file
 {
-	char		*name;
+	char		*name; // stock le nom du fichier
 	//uint8_t		type;
 	struct s_file	*next;
 }				t_file;
@@ -44,14 +45,14 @@ typedef struct	s_ctrl
 
 typedef struct	s_env
 {
-	uint8_t		arg_value;
+	uint8_t		multi_file; //
 }				t_env;
 
 typedef struct	s_argp
 {
-	char		*sign;
-	bool		active;
-	char		*description;
+	char		*sign; // option
+	bool		active; // present ou non
+	char		*description; // description de l'option
 }				t_argp;
 
 t_argp	g_argp[SIZE_ARGP];
@@ -64,6 +65,11 @@ t_argp	g_argp[SIZE_ARGP];
 	//{"l", 0, "print full info"},
 	//{0, 0, 0}
 //};
+/*
+** one_file_or_less.c
+*/
+char			*check_if_arg_only_option(char **arguments);
+bool	only_option(char **arguments, t_ctrl *ctrl, t_env *env);
 
 /*
 ** no_param.c

@@ -16,10 +16,18 @@ void	free_list(t_ctrl *ctrl)
 {
 	t_file	*tmp;
 
-	tmp = ctrl->first;
-	while (tmp->next)
-		free_maillon(ctrl);
+	if (ctrl->first != NULL)
+	{
+		tmp = ctrl->first;
+		while (tmp->next)
+			free_maillon(ctrl);
+		ft_strdel(&ctrl->first->name);
+		free(ctrl->first);
+		/*free(tmp);*/
+		ctrl->first = NULL;
+	}
 }
+
 
 void	free_maillon(t_ctrl *ctrl)
 {
@@ -116,10 +124,10 @@ bool	add_after(t_ctrl *ctrl, int node, char *name)
 
 void	add_before(t_ctrl *ctrl, int node, char *name)
 {
-	t_file	*tmp;
+	/*t_file	*tmp;*/
 	t_file	*new;
 
-	tmp = ctrl->first;
+	/*tmp = ctrl->first;*/
 	if (node == 1)
 	{
 		new = create_maillon();

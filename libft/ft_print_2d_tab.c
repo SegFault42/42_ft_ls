@@ -12,22 +12,19 @@
 
 #include "./includes/libft.h"
 
-void	ft_print_2d_tab(char **tab, int size_y)
+void	ft_print_2d_tab(char **tab)
 {
 	int	i;
-	int	j;
 
 	i = 0;
-	j = 0;
-	while (j < size_y)
+	if (tab == NULL)
+		ft_dprintf(1, "(NULL)\n");
+	else
 	{
-		while (tab[j][i] != '\0')
+		while (tab[i])
 		{
-			ft_putchar(tab[j][i]);
-			i++;
+			ft_dprintf(1, "%s\n", tab[i]);
+			++i;
 		}
-		ft_putchar('\n');
-		j++;
-		i = 0;
 	}
 }

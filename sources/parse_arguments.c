@@ -20,7 +20,7 @@ char **parse_arg(char **argv, int argc)
 
 	i = 0;
 	arg = 0;
-	arguments = (char **)malloc(sizeof(char *) * argc);
+	arguments = (char **)malloc(sizeof(char *) * argc + 1);
 	++argv;
 	while (argv[arg])
 	{
@@ -37,6 +37,7 @@ char **parse_arg(char **argv, int argc)
 		arguments[arg] = ft_strdup(argv[arg]);
 		++arg;
 	}
+	arguments[arg] = NULL;
 	return (arguments);
 }
 void	fill_argp(char *param, char *description, int index)

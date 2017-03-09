@@ -15,11 +15,7 @@
 char	*ft_strndup(const char *s1, size_t nb)
 {
 	char	*dst;
-	size_t	len;
 
-	len = ft_strlen(s1);
-	if (nb < len)
-		len = nb;
 	dst = (char *)malloc(sizeof(char) * (nb + 1));
 	if (dst == NULL)
 		return (NULL);

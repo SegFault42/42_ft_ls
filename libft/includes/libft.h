@@ -103,7 +103,7 @@ char				*ft_decrypt(char *str);
 void				ft_debug();
 int					get_next_line_lseek(int const fd, char **line, int *nb_char);
 int					get_next_line(int const fd, char **line);
-void				ft_2d_tab_free(char **tab, int size);
+void				ft_2d_tab_free(char **tab);
 int					ft_tab_len(char **tab);
 double				ft_sqrt(double a);
 long				ft_atol(const char *str);
@@ -121,7 +121,7 @@ char				*ft_ultoa_base(unsigned long value, int base);
 size_t				ft_size_ttoa(size_t n);
 
 char				**ft_memalloc_2d(size_t size_1, size_t size_2);
-void				ft_print_2d_tab(char **tab, int size_y);
+void				ft_print_2d_tab(char **tab);
 bool				check_int_overflow(long nb);
 int					ft_count_2d_tab(char **tab);
 int					ft_count_char(char *str, char c);

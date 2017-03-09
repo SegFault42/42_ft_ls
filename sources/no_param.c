@@ -92,8 +92,8 @@ int8_t	get_files(t_ctrl *ctrl, t_env *env, char *cur_dir)
 			if (content_dir->d_name[0] == HIDE_FILE)
 				continue ;
 		}
-		if (g_argp[UPPER_R].active == 1 && content_dir->d_type == DT_DIR)
-			get_files(ctrl, env, content_dir->d_name);
+		/*if (g_argp[UPPER_R].active == 1 && content_dir->d_type == DT_DIR)*/
+			/*get_files(ctrl, env, content_dir->d_name);*/
 		sort_lst(ctrl, content_dir);
 	}
 	if (closedir(directory) == -1)
@@ -102,7 +102,7 @@ int8_t	get_files(t_ctrl *ctrl, t_env *env, char *cur_dir)
 		exit(EXIT_FAILURE);
 	}
 	print_list(ctrl);
-	/*free_list(ctrl);*/
+	free_list(ctrl);
 	return (EXIT_SUCCESS);
 	(void)env;
 }
