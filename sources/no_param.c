@@ -76,7 +76,6 @@ int8_t	get_files(t_ctrl *ctrl, t_env *env, char *cur_dir)
 {
 	struct dirent	*content_dir;
 	DIR				*directory;
-	/*struct stat		sb;*/
 
 	directory = NULL;
 	content_dir = NULL;

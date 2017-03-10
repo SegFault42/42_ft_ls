@@ -41,7 +41,8 @@ int	count_nb_file(char **arguments)
 		return (0);
 	while (arguments[i])
 	{
-		if (arguments[i][0] != OPTION_VALUE)
+		if (arguments[i][0] != OPTION_VALUE || (arguments[i][0] == OPTION_VALUE &&
+		arguments[i][1] == '\0'))
 			++nb_file;
 		++i;
 	}
@@ -62,7 +63,9 @@ void	one_or_no_file(t_ctrl *ctrl, t_env *env, char **arguments, int nb_file)
 	{
 		while (arguments[i])
 		{
-			if (arguments[i][0] != OPTION_VALUE)
+			/*if (arguments[i][0] != OPTION_VALUE && arguments[i][1] == '\0')*/
+		if (arguments[i][0] != OPTION_VALUE || (arguments[i][0] == OPTION_VALUE &&
+		arguments[i][1] == '\0'))
 				if (get_files(ctrl, env, arguments[i]) == EXIT_ERROR)
 					exit (EXIT_FAILURE);
 			++i;
@@ -85,7 +88,9 @@ bool	only_option(char **arguments, t_ctrl *ctrl, t_env *env)
 	{
 		while (arguments[i])
 		{
-			if (arguments[i][0] != OPTION_VALUE)
+			/*if (arguments[i][0] != OPTION_VALUE)*/
+		if (arguments[i][0] != OPTION_VALUE || (arguments[i][0] == OPTION_VALUE &&
+		arguments[i][1] == '\0'))
 			{
 				ft_dprintf(1, "%s:\n", arguments[i]);
 				if (get_files(ctrl, env, arguments[i]) == EXIT_ERROR)
@@ -97,6 +102,5 @@ bool	only_option(char **arguments, t_ctrl *ctrl, t_env *env)
 			++i;
 		}
 	}
-		return (EXIT_SUCCESS);
-	/*}*/
+	return (EXIT_SUCCESS);
 }

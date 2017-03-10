@@ -46,7 +46,7 @@ int				main(int argc, char **argv)
 	ft_memset(&ctrl, 0, sizeof(t_ctrl));
 	ft_memset(&env, 0, sizeof(t_env));
 	init_argp();
-	if (argc > 1 && ft_strcmp(argv[1], "--") != 0)
+	/*if (argc > 1)*/
 		arguments = parse_arg(argv, argc -1);
 	if (only_option(arguments, &ctrl, &env) == EXIT_SUCCESS)
 		quit(arguments, &ctrl);

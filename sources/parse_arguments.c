@@ -12,19 +12,49 @@
 
 #include "../include/ft_ls.h"
 
+char	**sort_param(char **arguments, int argc)
+{
+	char	*tmp;
+	int		find;
+	int		i;
+
+	find = 1;
+	/*ft_dprintf(1, GREEN"argc = %d\n"END, argc);*/
+	while (find)
+	{
+		find = 0;
+		i = -1;
+		while (++i < argc - 1)
+		{
+			if (ft_strcmp(arguments[i], arguments[i + 1]) > 0)
+			{
+				tmp = arguments[i];
+				arguments[i] = arguments[i + 1];
+				arguments[i + 1] = tmp;
+				find = 1;
+			}
+		}
+	}
+	return (arguments);
+}
+
 char **parse_arg(char **argv, int argc)
 {
 	uint8_t	i;
 	int		arg;
 	char	**arguments;
+	bool	finish_option;
 
 	i = 0;
 	arg = 0;
+	finish_option = false;
 	arguments = (char **)malloc(sizeof(char *) * argc + 1);
 	++argv;
 	while (argv[arg])
 	{
-		if (argv[arg][0] == '-') // Si un - est au debut du premier argument
+		if (ft_strcmp(argv[i], "--") == 0)
+			finish_option = true;
+		if (argv[arg][0] == '-' && finish_option == false) // Si un - est au debut du premier argument
 		{
 			while (g_argp[i].sign)
 			{
@@ -38,6 +68,13 @@ char **parse_arg(char **argv, int argc)
 		++arg;
 	}
 	arguments[arg] = NULL;
+	arguments = sort_param(arguments, argc);
+	i = 0;
+	/*while (arguments[i])*/
+	/*{*/
+		/*ft_dprintf(1, RED"%s\n"END, arguments[i]);*/
+		/*++i;*/
+	/*}*/
 	return (arguments);
 }
 void	fill_argp(char *param, char *description, int index)
