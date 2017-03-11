@@ -19,7 +19,6 @@ char	**sort_param(char **arguments, int argc)
 	int		i;
 
 	find = 1;
-	/*ft_dprintf(1, GREEN"argc = %d\n"END, argc);*/
 	while (find)
 	{
 		find = 0;
@@ -43,18 +42,14 @@ char **parse_arg(char **argv, int argc)
 	uint8_t	i;
 	int		arg;
 	char	**arguments;
-	bool	finish_option;
 
 	i = 0;
 	arg = 0;
-	finish_option = false;
 	arguments = (char **)malloc(sizeof(char *) * argc + 1);
 	++argv;
 	while (argv[arg])
 	{
-		if (ft_strcmp(argv[i], "--") == 0)
-			finish_option = true;
-		if (argv[arg][0] == '-' && finish_option == false) // Si un - est au debut du premier argument
+		if (argv[arg][0] == '-' && g_argp[END_OPTION].active == 0)
 		{
 			while (g_argp[i].sign)
 			{
@@ -68,8 +63,9 @@ char **parse_arg(char **argv, int argc)
 		++arg;
 	}
 	arguments[arg] = NULL;
-	arguments = sort_param(arguments, argc);
-	i = 0;
+	if (argc > 0)
+		arguments = sort_param(arguments, argc);
+	/*i = 0;*/
 	/*while (arguments[i])*/
 	/*{*/
 		/*ft_dprintf(1, RED"%s\n"END, arguments[i]);*/
@@ -95,6 +91,7 @@ void	init_argp()
 	fill_argp("r", "reverse sort", 3);
 	fill_argp("t", "sort by time (new first)", 4);
 	fill_argp("l", "print full info", 5);
+	fill_argp("--", "end getting option", 6);
 }
 
 void	free_argp()

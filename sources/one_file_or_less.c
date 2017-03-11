@@ -73,6 +73,24 @@ void	one_or_no_file(t_ctrl *ctrl, t_env *env, char **arguments, int nb_file)
 	}
 }
 
+bool	check_if_is_option(char *arguments, t_env *env)
+{
+	int	i;
+
+	i = 0;
+	if (ft_strcmp(arguments, "--") == 0)
+		return(true);
+	/*else if (ft_strcmp(arguments, ".") == 0)*/
+		/*return (false);*/
+	while (ft_strcmp(env->arguments[i], "--") != 0)
+	{
+		if (ft_strcmp(arguments, env->arguments[i]) == 0)
+			return (true);
+		++i;
+	}
+	return (false);
+}
+
 bool	only_option(char **arguments, t_ctrl *ctrl, t_env *env)
 {
 	char	*dir;
@@ -88,9 +106,8 @@ bool	only_option(char **arguments, t_ctrl *ctrl, t_env *env)
 	{
 		while (arguments[i])
 		{
-			/*if (arguments[i][0] != OPTION_VALUE)*/
-		if (arguments[i][0] != OPTION_VALUE || (arguments[i][0] == OPTION_VALUE &&
-		arguments[i][1] == '\0'))
+			/*if (check_if_is_option(arguments[i], env) == false)*/
+			if (arguments[i][0] != OPTION_VALUE || (arguments[i][0] == OPTION_VALUE && arguments[i][1] == '\0'))
 			{
 				ft_dprintf(1, "%s:\n", arguments[i]);
 				if (get_files(ctrl, env, arguments[i]) == EXIT_ERROR)

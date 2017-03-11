@@ -36,6 +36,22 @@ void	quit(char **arguments, t_ctrl *ctrl)
 	(void)ctrl;
 }
 
+void	save_arguments(t_env *env, char **argv, int argc)
+{
+	int	i;
+
+	i = 0;
+	if ((env->arguments = (char **)ft_memalloc(sizeof(char *) * argc + 1)) == NULL)
+		ft_error(MALLOC_ERROR);
+	while (argv[i])
+	{
+		env->arguments[i] = argv[i];
+		++i;
+	}
+	/*free(env->arguments);*/
+	(void)argc;
+}
+
 int				main(int argc, char **argv)
 {
 	t_env	env;
@@ -47,7 +63,8 @@ int				main(int argc, char **argv)
 	ft_memset(&env, 0, sizeof(t_env));
 	init_argp();
 	/*if (argc > 1)*/
-		arguments = parse_arg(argv, argc -1);
+	save_arguments(&env, argv, argc);
+	arguments = parse_arg(argv, argc -1);
 	if (only_option(arguments, &ctrl, &env) == EXIT_SUCCESS)
 		quit(arguments, &ctrl);
 	return (EXIT_SUCCESS);

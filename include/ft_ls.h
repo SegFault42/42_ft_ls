@@ -26,8 +26,9 @@
 # define	MINUS_R		(3)
 # define	MINUS_T		(4)
 # define	MINUS_L		(5)
+# define	END_OPTION	(6)
 
-# define	SIZE_ARGP	(6)
+# define	SIZE_ARGP	(7)
 # define	HIDE_FILE	'.'
 # define	OPTION_VALUE	'-'
 
@@ -45,7 +46,7 @@ typedef struct	s_ctrl
 
 typedef struct	s_env
 {
-	uint8_t		multi_file; //
+	char		**arguments;
 }				t_env;
 
 typedef struct	s_argp
@@ -63,6 +64,7 @@ t_argp	g_argp[SIZE_ARGP];
 	//{"r", 0, "reverse sort"},
 	//{"t", 0, "sort by time (new first)"},
 	//{"l", 0, "print full info"},
+	//{"--", 0, "end getting option"},
 	//{0, 0, 0}
 //};
 /*

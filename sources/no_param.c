@@ -81,8 +81,10 @@ int8_t	get_files(t_ctrl *ctrl, t_env *env, char *cur_dir)
 	content_dir = NULL;
 	if ((directory = opendir(cur_dir)) == NULL)
 	{
-		ft_dprintf(2, "%s\n", strerror(errno));
-		return (EXIT_ERROR);
+		/*ft_dprintf(2, "%s\n", strerror(errno));*/
+		/*return (EXIT_ERROR);*/
+		ft_dprintf(2, "ls: %s: %s\n", cur_dir, strerror(errno));
+		return (EXIT_FAILURE);
 	}
 	while ((content_dir = readdir(directory)) != NULL)
 	{
