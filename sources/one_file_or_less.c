@@ -107,11 +107,15 @@ bool	only_option(char **arguments, t_ctrl *ctrl, t_env *env)
 		while (arguments[i])
 		{
 			/*if (check_if_is_option(arguments[i], env) == false)*/
+			/*ft_dprintf(1, YELLOW"arguments[i] = %s\n"END, arguments[i]);*/
 			if (arguments[i][0] != OPTION_VALUE || (arguments[i][0] == OPTION_VALUE && arguments[i][1] == '\0'))
 			{
-				ft_dprintf(1, "%s:\n", arguments[i]);
-				if (get_files(ctrl, env, arguments[i]) == EXIT_ERROR)
-					exit (EXIT_FAILURE);
+				if (is_regular_file(arguments[i]) == EXIT_FAILURE)
+				{
+					ft_dprintf(1, "%s:\n", arguments[i]);
+					if (get_files(ctrl, env, arguments[i]) == EXIT_ERROR)
+						exit (EXIT_FAILURE);
+				}
 				--nb_file;
 				if (nb_file > 0)
 					ft_dprintf(1, "\n");

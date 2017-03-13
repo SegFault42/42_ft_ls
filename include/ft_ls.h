@@ -71,7 +71,7 @@ t_argp	g_argp[SIZE_ARGP];
 ** one_file_or_less.c
 */
 char			*check_if_arg_only_option(char **arguments);
-bool	only_option(char **arguments, t_ctrl *ctrl, t_env *env);
+bool			only_option(char **arguments, t_ctrl *ctrl, t_env *env);
 
 /*
 ** no_param.c
@@ -97,8 +97,8 @@ char			**parse_arg(char **argv, int argc);
 void			init_argp();
 void			free_argp();
 
-
-
 void			print_list(t_ctrl *ctrl);
+void			print_list_reverse(t_ctrl *ctrl);
+bool	is_regular_file(char *cur_dir);
 
 #endif
