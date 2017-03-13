@@ -20,17 +20,16 @@
 # include <errno.h>
 # include "../libft/includes/libft.h"
 
-# define	MINUS_A			(0)
-# define	ONE				(1)
-# define	UPPER_R			(2)
-# define	MINUS_R			(3)
-# define	MINUS_T			(4)
-# define	MINUS_L			(5)
-# define	END_OPTION		(6)
+# define	MINUS_A		(0)
+# define	ONE			(1)
+# define	UPPER_R		(2)
+# define	MINUS_R		(3)
+# define	MINUS_T		(4)
+# define	MINUS_L		(5)
+# define	END_OPTION	(6)
 
-# define	SIZE_ARGP		(7)
-
-# define	HIDE_FILE		'.'
+# define	SIZE_ARGP	(7)
+# define	HIDE_FILE	'.'
 # define	OPTION_VALUE	'-'
 
 typedef struct	s_file
@@ -69,16 +68,37 @@ t_argp	g_argp[SIZE_ARGP];
 	//{0, 0, 0}
 //};
 /*
-** **********************************init.c************************************
+** one_file_or_less.c
 */
-void	init(t_ctrl *ctrl);
+char			*check_if_arg_only_option(char **arguments);
+bool			only_option(char **arguments, t_ctrl *ctrl, t_env *env);
+
 /*
-** **********************************quit.c************************************
+** no_param.c
 */
-void	free_argp();
+bool			who_is_first(char *new_node, char *str);
+int8_t			get_files(t_ctrl *ctrl, t_env *env, char *cur_dir);
+void			sort_lst(t_ctrl *ctrl, struct dirent *content_dir);
 /*
-** ******************************parsing_argv.c************************************
+** lst.c
 */
-void	get_option(char **argv, int argc);
+void			add_before(t_ctrl *ctrl, int node, char *name);
+bool			add_after(t_ctrl *ctrl, int node, char *str);
+void			add_head(t_ctrl *ctrl, char *str);
+void			add_tail(t_ctrl *ctrl, char *str);
+void			free_maillon(t_ctrl *ctrl);
+t_file			*create_maillon();
+void			free_list(t_ctrl *ctrl);
+/*
+** parse_arguments.c
+*/
+void			fill_argp(char *param, char *description, int index);
+char			**parse_arg(char **argv, int argc);
+void			init_argp();
+void			free_argp();
+
+void			print_list(t_ctrl *ctrl);
+void			print_list_reverse(t_ctrl *ctrl);
+bool	is_regular_file(char *cur_dir);
 
 #endif

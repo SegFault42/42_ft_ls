@@ -20,17 +20,16 @@ NAME = ft_ls
 CC = gcc
 FLAG = -Wall -Wextra -Werror
 LFT = ./libft/libft.a
-SRCS =	./source/main.c\
-		./source/init.c\
-		./source/quit.c\
-		./source/parsing_argv.c
+SRCS =	./sources/main.c\
+		./sources/no_param.c\
+		./sources/lst.c\
+		./sources/parse_arguments.c\
+		./sources/one_file_or_less.c
 
 OBJS = $(SRCS:.c=.o)
 
-INCLUDE = -I ./include \
-		  -I ./libft
 ###########################_RELINK_MODIFY_.h####################################
-RELINK = ./include/ft_ls.h
+INCLUDE = ./include/ft_ls.h ./libft/includes/libft.h
 ################################################################################
 
 all: $(NAME)
@@ -40,10 +39,10 @@ $(NAME): $(OBJS)
 	@$(CC) $(FLAG) -o $(NAME) $(OBJS) $(LFT)
 	@printf "✅  Compilation done.\n"
 
-%.o : %.c $(RELINK) ./Makefile
+%.o : %.c $(INCLUDE) ./Makefile
 	@printf " ✅                                                              \r"
 	@printf "✅  $(notdir $<)\r"
-	@$(CC) -c $(FLAG) $< -o $@ $(INCLUDE)
+	@$(CC) -c $(FLAG) $< -o $@
 
 clean:
 	@printf "                                                               \r"
