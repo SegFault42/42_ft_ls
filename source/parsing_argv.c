@@ -4,7 +4,8 @@ extern t_argp g_argp[];
 
 static void	usage(char option)
 {
-	ft_dprintf(2, "ls: illegal option -- %c\nusage: ls [-Ralrt1] [file ...]\n",
+	ft_dprintf(2,
+	"ft_ls: illegal option -- %c\nusage: ./ft_ls [-Ralrt1] [file ...]\n",
 	option);
 	exit(EXIT_FAILURE);
 }
@@ -13,24 +14,23 @@ static void	check_if_option_exist(char *argument)
 {
 	int	i;
 	int	j;
+	int	ok;
 
 	i = 1;
+	ok = 0;
 	while (argument[i])
 	{
 		j = 0;
 		while (g_argp[j].sign)
 		{
-			/*ft_dprintf(1, "sign = %c, argument[j] = %c\n", g_argp[j].sign[0], argument[i]);*/
 			if (g_argp[j].sign[0] == argument[i])
-			{
-				++i;
-				continue ;
-			}
+				ok = 1;
 			++j;
-			if (j >= SIZE_ARGP)
-				usage(argument[i]);
 		}
+		if (ok == 0)
+			usage(argument[i]);
 		++i;
+		ok = 0;
 	}
 }
 
@@ -45,10 +45,10 @@ void	get_option(char **argv)
 	arg = 1;
 	while (argv[arg])
 	{
-		check_if_option_exist(argv[arg]);
 		i = 0;
 		if (argv[arg][0] == '-' && g_argp[END_OPTION].active == 0)
 		{
+			check_if_option_exist(argv[arg]);
 			while (g_argp[i].sign)
 			{
 				if (ft_strstr(argv[arg], g_argp[i].sign) != NULL)
