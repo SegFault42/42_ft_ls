@@ -33,41 +33,30 @@
 # define	HIDE_FILE		'.'
 # define	OPTION_VALUE	'-'
 
-typedef struct	s_file
+typedef struct		s_file
 {
-	char		*name; // stock le nom du fichier
+	char			*name; // stock le nom du fichier
 	//uint8_t		type;
 	struct s_file	*next;
-}				t_file;
+}					t_file;
 
-typedef struct	s_ctrl
+typedef struct		s_ctrl
 {
-	t_file		*first;
-}				t_ctrl;
+	t_file			*first;
+}					t_ctrl;
 
-typedef struct	s_env
+typedef struct		s_env
 {
-	char		**arguments;
-}				t_env;
+	char			**arguments;
+}					t_env;
 
-typedef struct	s_argp
+typedef struct		s_argp
 {
-	char		*sign; // option
-	bool		active; // present ou non
-	char		*description; // description de l'option
-}				t_argp;
+	char			*sign; // option
+	bool			active; // present ou non
+	char			*description; // description de l'option
+}					t_argp;
 
-t_argp	g_argp[SIZE_ARGP];
-//{
-	//{"a", 0, "print hide file"},
-	//{"1", 0, "One file per line"},
-	//{"R", 0, "list subdirectory recursively"},
-	//{"r", 0, "reverse sort"},
-	//{"t", 0, "sort by time (new first)"},
-	//{"l", 0, "print full info"},
-	//{"--", 0, "end getting option"},
-	//{0, 0, 0}
-//};
 /*
 ** **********************************init.c************************************
 */
@@ -75,10 +64,9 @@ void	init(t_ctrl *ctrl);
 /*
 ** **********************************quit.c************************************
 */
-void	free_argp();
 /*
 ** ******************************parsing_argv.c************************************
 */
-void	get_option(char **argv, int argc);
+void	get_option(char **argv);
 
 #endif
