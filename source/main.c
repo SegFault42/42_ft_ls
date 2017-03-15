@@ -27,14 +27,15 @@ t_argp	g_argp[] =
 int	main(int argc, char **argv)
 {
 	t_ctrl	ctrl;
+	t_env	env;
 	int		i;
 
 	i = 0;
-	init(&ctrl);
+	init(&ctrl, &env);
 	get_option(argv);
+	sort_argv(&env, argv, argc);
 	// sort argv
-	for (int j = 0; j < SIZE_ARGP; ++j)
-		ft_dprintf(1, "%s = %d\n", g_argp[j].sign, g_argp[j].active);
+	/*quit(&env);*/
 	return (EXIT_SUCCESS);
 	(void)argc;
 }

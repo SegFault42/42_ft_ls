@@ -47,7 +47,9 @@ typedef struct		s_ctrl
 
 typedef struct		s_env
 {
-	char			**arguments;
+	//char			**arguments;
+	char			**files;
+	char			**directory;
 }					t_env;
 
 typedef struct		s_argp
@@ -60,13 +62,18 @@ typedef struct		s_argp
 /*
 ** **********************************init.c************************************
 */
-void	init(t_ctrl *ctrl);
+void	init(t_ctrl *ctrl, t_env *env);
 /*
-** **********************************quit.c************************************
-*/
-/*
-** ******************************parsing_argv.c************************************
+** ******************************parsing_argv.c********************************
 */
 void	get_option(char **argv);
+/*
+** ********************************sort_argv.c*********************************
+*/
+void	sort_argv(t_env *env, char **argv, int argc);
+/*
+** ********************************sort_argv.c*********************************
+*/
+void	quit(t_env *env);
 
 #endif

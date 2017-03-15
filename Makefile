@@ -23,7 +23,8 @@ LFT = ./libft/libft.a
 SRCS =	./source/main.c\
 		./source/init.c\
 		./source/quit.c\
-		./source/parsing_argv.c
+		./source/parsing_argv.c\
+		./source/sort_argv.c
 
 OBJS = $(SRCS:.c=.o)
 
