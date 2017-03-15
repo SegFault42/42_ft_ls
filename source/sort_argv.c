@@ -3,7 +3,7 @@
 #define DIR 1
 #define REG 0
 
-char	**sort_param(char **arguments, int argc)
+static void	sort_param(char **arguments)
 {
 	char	*tmp;
 	int		find;
@@ -13,8 +13,8 @@ char	**sort_param(char **arguments, int argc)
 	while (find)
 	{
 		find = 0;
-		i = -1;
-		while (++i < argc - 1)
+		i = 0;
+		while (arguments[i + 1])
 		{
 			if (ft_strcmp(arguments[i], arguments[i + 1]) > 0)
 			{
@@ -23,9 +23,9 @@ char	**sort_param(char **arguments, int argc)
 				arguments[i + 1] = tmp;
 				find = 1;
 			}
+			++i;
 		}
 	}
-	return (arguments);
 }
 
 static int		count_where_is_first_file(char **argv)
@@ -44,7 +44,7 @@ static int		count_where_is_first_file(char **argv)
 	return (i);
 }
 
-uint8_t	is_reg_or_dir(char *argument)
+static uint8_t	is_reg_or_dir(char *argument)
 {
 	struct stat	file_stat;
 
@@ -58,7 +58,12 @@ uint8_t	is_reg_or_dir(char *argument)
 	return (REG);
 }
 
-void	stock_reg_and_dir(t_env *env, char **argv, int argc)
+/*
+** stock tout les fichier regulier dans env->files et tout les dossiers dans
+** env->directory
+*/
+
+static void	stock_reg_and_dir(t_env *env, char **argv, int argc)
 {
 	int		first_file;
 	int		cp_first_file;
@@ -86,9 +91,12 @@ void	stock_reg_and_dir(t_env *env, char **argv, int argc)
 	}
 }
 
-void	sort_argv(t_env *env, char **argv, int argc)
+void		sort_argv(t_env *env, char **argv, int argc)
 {
 	stock_reg_and_dir(env, argv, argc);
+	sort_param(env->files);
+	sort_param(env->directory);
+
 	ft_dprintf(1, "files :\n");
 	int	k = 0;
 	while (env->files[k])
