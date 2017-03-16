@@ -34,8 +34,8 @@ int	main(int argc, char **argv)
 	init(&ctrl, &env);
 	get_option(argv);
 	sort_argv(&env, argv, argc);
-
-	quit(&env);
+	print(&env);
+	/*quit(&env, argc);*/
 	return (EXIT_SUCCESS);
 	(void)argc;
 }

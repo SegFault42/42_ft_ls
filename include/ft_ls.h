@@ -74,6 +74,30 @@ void	sort_argv(t_env *env, char **argv, int argc);
 /*
 ** ********************************sort_argv.c*********************************
 */
-void	quit(t_env *env);
+void	quit(t_env *env, int argc);
+/*
+** ************************************print.c*********************************
+*/
+void	print(t_env *env);
+/*
+** **************************************lst.c*********************************
+*/
+void	print_list(t_ctrl *ctrl);
+void	print_list_reverse(t_ctrl *ctrl);
+void	free_list(t_ctrl *ctrl);
+void	free_maillon(t_ctrl *ctrl);
+t_file	*create_maillon();
+void	add_tail(t_ctrl *ctrl, char *str);
+void	add_head(t_ctrl *ctrl, char *str);
+bool	add_after(t_ctrl *ctrl, int node, char *name);
+void	add_before(t_ctrl *ctrl, int node, char *name);
+/*
+** **********************************directory.c*******************************
+*/
+void	directory(char **directory);
+void	print_directory(char *directory);
+void	sort_lst(t_ctrl *ctrl, struct dirent *content_dir);
+
+uint8_t	is_reg_or_dir(char *argument);
 
 #endif

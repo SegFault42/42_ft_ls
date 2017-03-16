@@ -24,7 +24,10 @@ SRCS =	./source/main.c\
 		./source/init.c\
 		./source/quit.c\
 		./source/parsing_argv.c\
-		./source/sort_argv.c
+		./source/sort_argv.c\
+		./source/print.c\
+		./source/lst.c\
+		./source/directory.c\
 
 OBJS = $(SRCS:.c=.o)
 

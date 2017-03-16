@@ -44,7 +44,7 @@ static int		count_where_is_first_file(char **argv)
 	return (i);
 }
 
-static uint8_t	is_reg_or_dir(char *argument)
+uint8_t	is_reg_or_dir(char *argument)
 {
 	struct stat	file_stat;
 
@@ -93,23 +93,15 @@ static void	stock_reg_and_dir(t_env *env, char **argv, int argc)
 
 void		sort_argv(t_env *env, char **argv, int argc)
 {
-	stock_reg_and_dir(env, argv, argc);
-	sort_param(env->files);
-	sort_param(env->directory);
-
-	ft_dprintf(1, "files :\n");
-	int	k = 0;
-	while (env->files[k])
+	if ((count_where_is_first_file(argv) - argc) == 0)
 	{
-		ft_dprintf(1, "%s\n", env->files[k]);
-		++k;
+		stock_reg_and_dir(env, argv, argc + 1);
+		env->directory[0] = ft_strdup(".");
 	}
-	RC;
-	ft_dprintf(1, "directory :\n");
-	k = 0;
-	while (env->directory[k])
-	{
-		ft_dprintf(1, "%s\n", env->directory[k]);
-		++k;
-	}
+	else
+		stock_reg_and_dir(env, argv, argc);
+	if (env->files[0] != NULL)
+		sort_param(env->files);
+	if (env->directory[0] != NULL)
+		sort_param(env->directory);
 }
