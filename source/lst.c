@@ -26,32 +26,60 @@ void			print_list(t_ctrl *ctrl)
 
 void			print_list_reverse(t_ctrl *ctrl)
 {
-	int		i;
-	int		j;
 	t_file	*tmp;
+	int		nb_node = 0;
+	char	**path;
+	int		i = 0;
 
-	i = 0;
-	j = 0;
 	tmp = ctrl->first;
 	while (tmp)
 	{
 		tmp = tmp->next;
-		++i;
+		++nb_node;
 	}
-	--i;
-	while (i >= 0)
+	path = (char **)ft_memalloc(sizeof(char *) * nb_node + 1);
+	tmp = ctrl->first;
+	while (tmp)
 	{
-		tmp = ctrl->first;
-		while (j < i)
-		{
-			tmp = tmp->next;
-			++j;
-		}
-		ft_dprintf(1, "%s\n", tmp->name);
-		--i;
-		j = 0;
+		path[i] = tmp->name;
+		++i;
+		tmp = tmp->next;
+	}
+	path[i] = NULL;
+	while (--nb_node >= 0)
+	{
+		ft_dprintf(1, "%s\n", path[nb_node]);
 	}
 }
+
+/*void			print_list_reverse(t_ctrl *ctrl)*/
+/*{*/
+	/*int		i;*/
+	/*int		j;*/
+	/*t_file	*tmp;*/
+
+	/*i = 0;*/
+	/*j = 0;*/
+	/*tmp = ctrl->first;*/
+	/*while (tmp)*/
+	/*{*/
+		/*tmp = tmp->next;*/
+		/*++i;*/
+	/*}*/
+	/*--i;*/
+	/*while (i >= 0)*/
+	/*{*/
+		/*tmp = ctrl->first;*/
+		/*while (j < i)*/
+		/*{*/
+			/*tmp = tmp->next;*/
+			/*++j;*/
+		/*}*/
+		/*ft_dprintf(1, "%s\n", tmp->name);*/
+		/*--i;*/
+		/*j = 0;*/
+	/*}*/
+/*}*/
 
 void	free_list(t_ctrl *ctrl)
 {

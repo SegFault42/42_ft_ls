@@ -94,12 +94,14 @@ void	print_directory(char *directory)
 			if (content_dir->d_name[0] == HIDE_FILE)
 				continue ;
 		}
-		/*if (content_dir->d_type == DT_DIR && g_argp[UPPER_R].active == 1)*/
-		/*{*/
-			/*ft_dprintf(1, "name = %s, type = %d\n", content_dir->d_name, content_dir->d_type);*/
+		if (content_dir->d_type == DT_DIR && g_argp[UPPER_R].active == 1)
+		{
+			directory = ft_strjoin(directory, "/");
+			directory = ft_strjoin(directory, content_dir->d_name);
+			/*ft_dprintf(1, "name = %s\n", directory);*/
 			/*sleep(1);*/
-			/*print_directory(content_dir->d_name);*/
-		/*}*/
+			print_directory(directory);
+		}
 		sort_lst(&ctrl, content_dir);
 	}
 	if (closedir(dir) == -1)
@@ -114,5 +116,6 @@ void	print_directory(char *directory)
 		else
 			print_list_reverse(&ctrl);
 	}
+	free_list(&ctrl);
 }
 
