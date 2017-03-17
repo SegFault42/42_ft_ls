@@ -73,49 +73,97 @@ uint8_t	check_file_type(char *argument)
 	/*return (path);*/
 /*}*/
 
+static int8_t	open_directory(DIR **dir, char *directory)
+{
+	if ((*dir = opendir(directory)) == NULL)
+	{
+		ft_dprintf(2, "ls: %s: %s\n", directory, strerror(errno));
+		return (EXIT_ERROR);
+	}
+	return (EXIT_SUCCESS);
+}
+
+static void	close_directory(DIR **dir)
+{
+	if (closedir(*dir) == -1)
+	{
+		ft_dprintf(STDERR_FILENO, RED"%s\n"END, strerror(errno));
+		exit(EXIT_FAILURE);
+	}
+}
+
+static void	print_lst(t_ctrl *ctrl)
+{
+	if (ctrl->first != NULL)
+	{
+		if (g_argp[MINUS_R].active == 0)
+			print_list(ctrl);
+		else
+			print_list_reverse(ctrl);
+	}
+}
+
+static bool	check_minus_a(struct dirent *content_dir)
+{
+	if (g_argp[MINUS_A].active == 0)
+	{
+		if (content_dir->d_name[0] == HIDE_FILE)
+			return (true);
+	}
+	return (false);
+}
+
 void	print_directory(char *directory)
 {
 	struct dirent	*content_dir;
 	DIR				*dir;
 	t_ctrl			ctrl;
+	t_ctrl			lst_r_upper;
+	t_file			*tmp;
+	/*char			*path;*/
 
 	content_dir = NULL;
 	dir = NULL;
 	ft_memset(&ctrl, 0, sizeof(t_ctrl));
-	if ((dir = opendir(directory)) == NULL)
-	{
-		ft_dprintf(2, "ls: %s: %s\n", directory, strerror(errno));
+	ft_memset(&lst_r_upper, 0, sizeof(t_ctrl));
+	tmp = lst_r_upper.first;
+	if (open_directory(&dir, directory) == EXIT_ERROR)
 		return ;
-	}
-	while ((content_dir = readdir(dir)) != NULL)
+	if (g_argp[UPPER_R].active == 1)
 	{
-		if (g_argp[MINUS_A].active == 0)
+		while ((content_dir = readdir(dir)) != NULL)
 		{
-			if (content_dir->d_name[0] == HIDE_FILE)
+			if (check_minus_a(content_dir) == true)
 				continue ;
+			sort_lst(&lst_r_upper, content_dir);
 		}
-		if (content_dir->d_type == DT_DIR && g_argp[UPPER_R].active == 1)
+			print_lst(&lst_r_upper);
+		/*while (tmp->next != NULL)*/
+		/*{*/
+			/*ft_dprintf(1, "%s\n", tmp->name);*/
+			/*tmp = tmp->next;*/
+		/*}*/
+			/*print_lst(&lst_r_upper);*/
+		/*path = ft_strjoin(directory, "/");*/
+		/*path = ft_strjoin(path, lst_r_upper.first->name);*/
+		/*if (check_file_type(path) == DIRE)*/
+		/*{*/
+			/*ft_dprintf(1, "%s:\n", path);*/
+			/*print_lst(&lst_r_upper);*/
+			/*print_directory(path);*/
+		/*}*/
+		/*else */
+	}
+	else
+	{
+		while ((content_dir = readdir(dir)) != NULL)
 		{
-			directory = ft_strjoin(directory, "/");
-			directory = ft_strjoin(directory, content_dir->d_name);
-			/*ft_dprintf(1, "name = %s\n", directory);*/
-			/*sleep(1);*/
-			print_directory(directory);
+			if (check_minus_a(content_dir) == true)
+				continue ;
+			sort_lst(&ctrl, content_dir);
 		}
-		sort_lst(&ctrl, content_dir);
 	}
-	if (closedir(dir) == -1)
-	{
-		ft_dprintf(STDERR_FILENO, RED"%s\n"END, strerror(errno));
-		exit(EXIT_FAILURE);
-	}
-	if (ctrl.first != NULL)
-	{
-		if (g_argp[MINUS_R].active == 0)
-			print_list(&ctrl);
-		else
-			print_list_reverse(&ctrl);
-	}
+	print_lst(&ctrl);
 	free_list(&ctrl);
+	close_directory(&dir);
 }
-
