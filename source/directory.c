@@ -120,30 +120,40 @@ static void	recursive(char *dir_name)
 	DIR				*d;
 	int				path_length;
 	char			path[PATH_MAX];
+	t_ctrl			lst;
 
 	open_directory(&d, dir_name);
+	ft_memset(&lst, 0, sizeof(t_ctrl));
 	while (1)
 	{
 		entry = readdir(d);
+		/*if (check_minus_a(entry) == true)*/
+			/*continue ;*/
 		if (entry == NULL) // si il n'y a plus de dossier a ouvrir
 			break;
 		d_name = entry->d_name;
-		printf("%s/%s\n", dir_name, d_name);
+		if (check_minus_a(entry) == false && entry->d_name[0] != '.')
+		{
+			sort_lst(&lst, entry);
+			/*ft_dprintf(1, "%s\n", d_name);*/
+		}
 		if (entry->d_type & DT_DIR)
 		{
-			if (strcmp (d_name, "..") != 0 && strcmp (d_name, ".") != 0)
+			if (ft_strcmp (d_name, "..") != 0 && ft_strcmp (d_name, ".") != 0)
 			{
-				path_length = snprintf (path, PATH_MAX, "%s/%s", dir_name, d_name);
-				printf ("%s\n", path);
+				path_length = snprintf(path, PATH_MAX, "%s/%s", dir_name, d_name);
+				sort_lst(&lst, entry);
+				/*ft_dprintf (1, "%s\n", path);*/
 				if (path_length >= PATH_MAX)
 				{
-					fprintf (stderr, "Path length has got too long.\n");
+					ft_dprintf(STDERR_FILENO, "Path length has got too long.\n");
 					exit (EXIT_FAILURE);
 				}
 				recursive(path);
 			}
 		}
 	}
+	print_list(&lst);
 	close_directory(&d);
 }
 void	upper_r(char *directory)
