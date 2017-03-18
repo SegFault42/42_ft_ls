@@ -12,7 +12,7 @@
 
 #include "./includes/libft.h"
 
-void	ft_error(uint8_t error)
+void	ft_critical_error(uint8_t error)
 {
 	if (error == MALLOC_ERROR)
 		ft_dprintf(STDERR_FILENO, RED"Memory allocation failure !\n"END);

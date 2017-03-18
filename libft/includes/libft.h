@@ -28,7 +28,16 @@
 # define FALSE (0)
 # define EXIT_ERROR (-1)
 # define RC ft_putchar('\n');
+
+/*
+** define for ft_error function
+*/
+
 # define MALLOC_ERROR (1)
+
+/*
+** end comment
+*/
 
 typedef struct		s_list
 {
@@ -132,7 +141,7 @@ char				*ft_strccat(char *s1, const char *s2, char c);
 int					ft_isspace(char c);
 char				*ft_strndup(const char *s1, size_t nb);
 void				*ft_trymalloc(size_t size);
-void				ft_error(uint8_t error);
+void				ft_critical_error(uint8_t error);
 void				ft_set_2d_tab(char **tab, int size);
 
 #endif

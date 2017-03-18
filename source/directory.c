@@ -113,56 +113,95 @@ static bool	check_minus_a(struct dirent *content_dir)
 	return (false);
 }
 
+static void	recursive(char *dir_name)
+{
+	struct dirent	*entry;
+	char			*d_name;
+	DIR				*d;
+	int				path_length;
+	char			path[PATH_MAX];
+
+	open_directory(&d, dir_name);
+	while (1)
+	{
+		entry = readdir(d);
+		if (entry == NULL) // si il n'y a plus de dossier a ouvrir
+			break;
+		d_name = entry->d_name;
+		printf("%s/%s\n", dir_name, d_name);
+		if (entry->d_type & DT_DIR)
+		{
+			if (strcmp (d_name, "..") != 0 && strcmp (d_name, ".") != 0)
+			{
+				path_length = snprintf (path, PATH_MAX, "%s/%s", dir_name, d_name);
+				printf ("%s\n", path);
+				if (path_length >= PATH_MAX)
+				{
+					fprintf (stderr, "Path length has got too long.\n");
+					exit (EXIT_FAILURE);
+				}
+				recursive(path);
+			}
+		}
+	}
+	close_directory(&d);
+}
+void	upper_r(char *directory)
+{
+	struct dirent	*content_dir;
+	DIR				*dir;
+	t_ctrl			lst_r_upper;
+	t_file			*tmp;
+	char			*path = NULL;
+
+	path = strdup(directory);
+	ft_memset(&lst_r_upper, 0, sizeof(t_ctrl));
+	if (open_directory(&dir, directory) == EXIT_ERROR)
+		return ;
+	while ((content_dir = readdir(dir)) != NULL)
+	{
+		if (check_minus_a(content_dir) == true)
+			continue ;
+		sort_lst(&lst_r_upper, content_dir);
+	}
+	print_lst(&lst_r_upper);
+	close_directory(&dir);
+	tmp = lst_r_upper.first;
+	while (tmp->next)
+	{
+		if (check_file_type(tmp->name) == DIRE)
+		{
+			path = ft_strjoin(path, "/");
+			path = ft_strjoin(path, tmp->name);
+			ft_dprintf(1, RED"%s\n"END, path);
+			upper_r(path);
+		}
+		tmp = tmp->next;
+	}
+}
+
 void	print_directory(char *directory)
 {
 	struct dirent	*content_dir;
 	DIR				*dir;
 	t_ctrl			ctrl;
-	t_ctrl			lst_r_upper;
-	t_file			*tmp;
+	/*t_file			*tmp;*/
 	/*char			*path;*/
 
 	content_dir = NULL;
 	dir = NULL;
 	ft_memset(&ctrl, 0, sizeof(t_ctrl));
-	ft_memset(&lst_r_upper, 0, sizeof(t_ctrl));
-	tmp = lst_r_upper.first;
 	if (open_directory(&dir, directory) == EXIT_ERROR)
 		return ;
 	if (g_argp[UPPER_R].active == 1)
-	{
-		while ((content_dir = readdir(dir)) != NULL)
-		{
-			if (check_minus_a(content_dir) == true)
-				continue ;
-			sort_lst(&lst_r_upper, content_dir);
-		}
-			print_lst(&lst_r_upper);
-		/*while (tmp->next != NULL)*/
-		/*{*/
-			/*ft_dprintf(1, "%s\n", tmp->name);*/
-			/*tmp = tmp->next;*/
-		/*}*/
-			/*print_lst(&lst_r_upper);*/
-		/*path = ft_strjoin(directory, "/");*/
-		/*path = ft_strjoin(path, lst_r_upper.first->name);*/
-		/*if (check_file_type(path) == DIRE)*/
-		/*{*/
-			/*ft_dprintf(1, "%s:\n", path);*/
-			/*print_lst(&lst_r_upper);*/
-			/*print_directory(path);*/
-		/*}*/
-		/*else */
-	}
+		recursive(directory);
 	else
-	{
 		while ((content_dir = readdir(dir)) != NULL)
 		{
 			if (check_minus_a(content_dir) == true)
 				continue ;
 			sort_lst(&ctrl, content_dir);
 		}
-	}
 	print_lst(&ctrl);
 	free_list(&ctrl);
 	close_directory(&dir);
