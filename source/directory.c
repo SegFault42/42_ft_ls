@@ -113,49 +113,56 @@ static bool	check_minus_a(struct dirent *content_dir)
 	return (false);
 }
 
-static void	recursive(char *dir_name)
+void		print_all_directory(char *path)
 {
 	struct dirent	*entry;
-	char			*d_name;
-	DIR				*d;
-	int				path_length;
-	char			path[PATH_MAX];
-	t_ctrl			lst;
+	DIR				*dir;
 
-	open_directory(&d, dir_name);
-	ft_memset(&lst, 0, sizeof(t_ctrl));
-	while (1)
+	if (open_directory(&dir, path) == EXIT_ERROR)
+		return ;
+	while ((entry = readdir(dir)) != NULL)
 	{
-		entry = readdir(d);
-		/*if (check_minus_a(entry) == true)*/
-			/*continue ;*/
-		if (entry == NULL) // si il n'y a plus de dossier a ouvrir
-			break;
+		if (check_minus_a(entry) == true)
+			continue ;
+		ft_dprintf(1, "%s\n", entry->d_name);
+	}
+	close_directory(&dir);
+}
+
+static void	recursive(char *directory)
+{
+	struct dirent	*entry;
+	DIR				*dir;
+	char			*d_name;
+	int				 path_length;
+	char			 path[PATH_MAX];
+
+	if (open_directory(&dir, directory) == EXIT_ERROR)
+		return ;
+	print_all_directory(directory);
+	RC;
+	while ((entry = readdir(dir)))
+	{
 		d_name = entry->d_name;
-		if (check_minus_a(entry) == false && entry->d_name[0] != '.')
-		{
-			sort_lst(&lst, entry);
-			/*ft_dprintf(1, "%s\n", d_name);*/
-		}
+		/*ft_dprintf(1, "%s/%s\n", directory, d_name);*/
 		if (entry->d_type & DT_DIR)
 		{
-			if (ft_strcmp (d_name, "..") != 0 && ft_strcmp (d_name, ".") != 0)
+			if (ft_strcmp(d_name, "..") != 0 && ft_strcmp(d_name, ".") != 0)
 			{
-				path_length = snprintf(path, PATH_MAX, "%s/%s", dir_name, d_name);
-				sort_lst(&lst, entry);
-				/*ft_dprintf (1, "%s\n", path);*/
+				path_length = snprintf(path, PATH_MAX, "%s/%s", directory, d_name);
+				ft_dprintf(1, "%s:\n", path);
 				if (path_length >= PATH_MAX)
-				{
-					ft_dprintf(STDERR_FILENO, "Path length has got too long.\n");
 					exit (EXIT_FAILURE);
-				}
+				// print la list du repertoire
+				/*print_all_directory(path);*/
+				/*ft_dprintf(1, YELLOW"%s\n"END, path);*/
 				recursive(path);
 			}
 		}
 	}
-	print_list(&lst);
-	close_directory(&d);
+	closedir(dir);
 }
+
 void	upper_r(char *directory)
 {
 	struct dirent	*content_dir;
@@ -164,7 +171,7 @@ void	upper_r(char *directory)
 	t_file			*tmp;
 	char			*path = NULL;
 
-	path = strdup(directory);
+	path = ft_strdup(directory);
 	ft_memset(&lst_r_upper, 0, sizeof(t_ctrl));
 	if (open_directory(&dir, directory) == EXIT_ERROR)
 		return ;
@@ -206,12 +213,14 @@ void	print_directory(char *directory)
 	if (g_argp[UPPER_R].active == 1)
 		recursive(directory);
 	else
+	{
 		while ((content_dir = readdir(dir)) != NULL)
 		{
 			if (check_minus_a(content_dir) == true)
 				continue ;
 			sort_lst(&ctrl, content_dir);
 		}
+	}
 	print_lst(&ctrl);
 	free_list(&ctrl);
 	close_directory(&dir);
