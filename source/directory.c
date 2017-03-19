@@ -5,6 +5,33 @@
 
 extern t_argp	g_argp[];
 
+void	sort_lst_dir(t_ctrl *ctrl, char *path)
+{
+	t_file	*tmp;
+	int	i;
+	int	node;
+
+	node = 1;
+	i = 0;
+	tmp = ctrl->first;
+	if (tmp == NULL)
+	{
+		add_head(ctrl, path);
+		return ;
+	}
+	while (tmp)
+	{
+		while (path[i] && path[i] == tmp->name[i])
+			++i;
+		if (path[i] < tmp->name[i])
+		{
+			add_before(ctrl, node, path);
+			return ;
+		}
+		++node;
+	}
+}
+
 void	sort_lst(t_ctrl *ctrl, struct dirent *content_dir)
 {
 	t_file	*tmp;
@@ -117,16 +144,21 @@ void		print_all_directory(char *path)
 {
 	struct dirent	*entry;
 	DIR				*dir;
+	t_ctrl			lst;
 
+	ft_memset(&lst, 0, sizeof(t_ctrl));
 	if (open_directory(&dir, path) == EXIT_ERROR)
 		return ;
 	while ((entry = readdir(dir)) != NULL)
 	{
 		if (check_minus_a(entry) == true)
 			continue ;
-		ft_dprintf(1, "%s\n", entry->d_name);
+		sort_lst(&lst, entry);
+		/*ft_dprintf(1, "%s\n", entry->d_name);*/
 	}
 	close_directory(&dir);
+	print_lst(&lst);
+	free_list(&lst);
 }
 
 static void	recursive(char *directory)
@@ -136,7 +168,9 @@ static void	recursive(char *directory)
 	char			*d_name;
 	int				 path_length;
 	char			 path[PATH_MAX];
-	
+	t_ctrl			lst;
+
+	ft_memset(&lst, 0, sizeof(t_ctrl));
 	if (open_directory(&dir, directory) == EXIT_ERROR)
 		return ;
 	print_all_directory(directory);
@@ -151,6 +185,7 @@ static void	recursive(char *directory)
 			if (ft_strcmp(d_name, "..") != 0 && ft_strcmp(d_name, ".") != 0)
 			{
 				path_length = snprintf(path, PATH_MAX, "%s/%s", directory, d_name);
+				sort_lst(&lst, entry);
 				RC;
 				ft_dprintf(1, "%s:\n", path);
 				if (path_length >= PATH_MAX)
@@ -158,7 +193,9 @@ static void	recursive(char *directory)
 				// print la list du repertoire
 				/*print_all_directory(path);*/
 				/*ft_dprintf(1, YELLOW"%s\n"END, path);*/
-				recursive(path);
+				print_lst(&lst);
+				free_list(&lst);
+				/*recursive(path);*/
 			}
 		}
 	}
