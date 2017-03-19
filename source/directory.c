@@ -136,20 +136,22 @@ static void	recursive(char *directory)
 	char			*d_name;
 	int				 path_length;
 	char			 path[PATH_MAX];
-
+	
 	if (open_directory(&dir, directory) == EXIT_ERROR)
 		return ;
 	print_all_directory(directory);
-	RC;
 	while ((entry = readdir(dir)))
 	{
 		d_name = entry->d_name;
 		/*ft_dprintf(1, "%s/%s\n", directory, d_name);*/
+		if (check_minus_a(entry) == true)
+			continue ;
 		if (entry->d_type & DT_DIR)
 		{
 			if (ft_strcmp(d_name, "..") != 0 && ft_strcmp(d_name, ".") != 0)
 			{
 				path_length = snprintf(path, PATH_MAX, "%s/%s", directory, d_name);
+				RC;
 				ft_dprintf(1, "%s:\n", path);
 				if (path_length >= PATH_MAX)
 					exit (EXIT_FAILURE);
