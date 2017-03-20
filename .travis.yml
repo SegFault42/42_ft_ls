@@ -1,0 +1,17 @@
+os:
+   - osx
+
+before_install:
+    - pip install --upgrade pip
+
+install:
+    - pip install pytest
+
+build:
+    - make
+
+script:
+    - py.test .
+
+notiffication:
+    - email: false

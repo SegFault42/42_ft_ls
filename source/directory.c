@@ -28,6 +28,20 @@ void	sort_lst_dir(t_ctrl *ctrl, char *path)
 			add_before(ctrl, node, path);
 			return ;
 		}
+		else if (tmp->next == NULL)
+		{
+			add_tail(ctrl, path);
+			return ;
+		}
+		i = 0;
+		while (path[i] && path[i] == tmp->next->name[i])
+			++i;
+		if (path[i] < tmp->next->name[i])
+		{
+			add_after(ctrl, node, path);
+			return ;
+		}
+		tmp = tmp->next;
 		++node;
 	}
 }
@@ -81,24 +95,6 @@ uint8_t	check_file_type(char *argument)
 		return (REG);
 	return (DIRE);
 }
-
-/*char	*get_path(char *cur_dir)*/
-/*{*/
-	/*char	*path;*/
-	/*int		i;*/
-
-	/*i = ft_strlen(cur_dir) -1 ;*/
-	/*path = NULL;*/
-	/*while (cur_dir[i] != '/' && i > 0)*/
-	/*{*/
-		/*--i;*/
-	/*}*/
-	/*if (i == 0)*/
-		/*path = ft_strdup(".");*/
-	/*else*/
-		/*path = ft_strndup(cur_dir, i);*/
-	/*return (path);*/
-/*}*/
 
 static int8_t	open_directory(DIR **dir, char *directory)
 {
@@ -154,7 +150,6 @@ void		print_all_directory(char *path)
 		if (check_minus_a(entry) == true)
 			continue ;
 		sort_lst(&lst, entry);
-		/*ft_dprintf(1, "%s\n", entry->d_name);*/
 	}
 	close_directory(&dir);
 	print_lst(&lst);
@@ -169,6 +164,7 @@ static void	recursive(char *directory)
 	int				 path_length;
 	char			 path[PATH_MAX];
 	t_ctrl			lst;
+	t_file			*tmp;
 
 	ft_memset(&lst, 0, sizeof(t_ctrl));
 	if (open_directory(&dir, directory) == EXIT_ERROR)
@@ -177,7 +173,6 @@ static void	recursive(char *directory)
 	while ((entry = readdir(dir)))
 	{
 		d_name = entry->d_name;
-		/*ft_dprintf(1, "%s/%s\n", directory, d_name);*/
 		if (check_minus_a(entry) == true)
 			continue ;
 		if (entry->d_type & DT_DIR)
@@ -185,19 +180,21 @@ static void	recursive(char *directory)
 			if (ft_strcmp(d_name, "..") != 0 && ft_strcmp(d_name, ".") != 0)
 			{
 				path_length = snprintf(path, PATH_MAX, "%s/%s", directory, d_name);
-				sort_lst(&lst, entry);
+				sort_lst_dir(&lst, path);
 				RC;
-				ft_dprintf(1, "%s:\n", path);
+				/*ft_dprintf(1, "%s:\n", path);*/
 				if (path_length >= PATH_MAX)
 					exit (EXIT_FAILURE);
-				// print la list du repertoire
-				/*print_all_directory(path);*/
-				/*ft_dprintf(1, YELLOW"%s\n"END, path);*/
-				print_lst(&lst);
-				free_list(&lst);
 				/*recursive(path);*/
 			}
 		}
+	}
+	tmp = lst.first;
+	print_lst(&lst);
+	while (tmp)
+	{
+		recursive(tmp->name);
+		tmp= tmp->next;
 	}
 	closedir(dir);
 }
