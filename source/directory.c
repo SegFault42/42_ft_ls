@@ -193,6 +193,7 @@ static void	recursive(char *directory)
 	print_lst(&lst);
 	while (tmp)
 	{
+		
 		recursive(tmp->name);
 		tmp= tmp->next;
 	}
