@@ -50,6 +50,7 @@ void			print_list_reverse(t_ctrl *ctrl)
 	{
 		ft_dprintf(1, "%s\n", path[nb_node]);
 	}
+	ft_2d_tab_free(path);
 }
 
 /*void			print_list_reverse(t_ctrl *ctrl)*/
@@ -104,10 +105,7 @@ void	free_maillon(t_ctrl *ctrl)
 
 	tmp = ctrl->first;
 	while (tmp->next->next)
-	{
 		tmp = tmp->next;
-		/*ft_dprintf(1, GREEN"%s\n"END, tmp->name);*/
-	}
 	ft_strdel(&tmp->next->name);
 	free(tmp->next);
 	tmp->next = NULL;

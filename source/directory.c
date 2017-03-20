@@ -46,6 +46,47 @@ void	sort_lst_dir(t_ctrl *ctrl, char *path)
 	}
 }
 
+void	sort_lst_dir_rev(t_ctrl *ctrl, char *path)
+{
+	t_file	*tmp;
+	int	i;
+	int	node;
+
+	node = 1;
+	i = 0;
+	tmp = ctrl->first;
+	if (tmp == NULL)
+	{
+		add_head(ctrl, path);
+		return ;
+	}
+	while (tmp)
+	{
+		while (path[i] && path[i] == tmp->name[i])
+			++i;
+		if (path[i] > tmp->name[i])
+		{
+			add_before(ctrl, node, path);
+			return ;
+		}
+		else if (tmp->next == NULL)
+		{
+			add_tail(ctrl, path);
+			return ;
+		}
+		i = 0;
+		while (path[i] && path[i] == tmp->next->name[i])
+			++i;
+		if (path[i] > tmp->next->name[i])
+		{
+			add_after(ctrl, node, path);
+			return ;
+		}
+		tmp = tmp->next;
+		++node;
+	}
+}
+
 void	sort_lst(t_ctrl *ctrl, struct dirent *content_dir)
 {
 	t_file	*tmp;
@@ -153,7 +194,7 @@ void		print_all_directory(char *path)
 	}
 	close_directory(&dir);
 	print_lst(&lst);
-	free_list(&lst);
+	/*free_list(&lst);*/
 }
 
 static void	recursive(char *directory)
@@ -180,58 +221,25 @@ static void	recursive(char *directory)
 			if (ft_strcmp(d_name, "..") != 0 && ft_strcmp(d_name, ".") != 0)
 			{
 				path_length = snprintf(path, PATH_MAX, "%s/%s", directory, d_name);
-				sort_lst_dir(&lst, path);
-				RC;
-				/*ft_dprintf(1, "%s:\n", path);*/
+				if (g_argp[MINUS_R].active == 1)
+					sort_lst_dir_rev(&lst, path);
+				else
+					sort_lst_dir(&lst, path);
 				if (path_length >= PATH_MAX)
 					exit (EXIT_FAILURE);
-				/*recursive(path);*/
 			}
 		}
 	}
 	tmp = lst.first;
-	print_lst(&lst);
 	while (tmp)
 	{
-		
+		RC;
+		ft_dprintf(1, "%s:\n", tmp->name);
 		recursive(tmp->name);
 		tmp= tmp->next;
 	}
 	closedir(dir);
-}
-
-void	upper_r(char *directory)
-{
-	struct dirent	*content_dir;
-	DIR				*dir;
-	t_ctrl			lst_r_upper;
-	t_file			*tmp;
-	char			*path = NULL;
-
-	path = ft_strdup(directory);
-	ft_memset(&lst_r_upper, 0, sizeof(t_ctrl));
-	if (open_directory(&dir, directory) == EXIT_ERROR)
-		return ;
-	while ((content_dir = readdir(dir)) != NULL)
-	{
-		if (check_minus_a(content_dir) == true)
-			continue ;
-		sort_lst(&lst_r_upper, content_dir);
-	}
-	print_lst(&lst_r_upper);
-	close_directory(&dir);
-	tmp = lst_r_upper.first;
-	while (tmp->next)
-	{
-		if (check_file_type(tmp->name) == DIRE)
-		{
-			path = ft_strjoin(path, "/");
-			path = ft_strjoin(path, tmp->name);
-			ft_dprintf(1, RED"%s\n"END, path);
-			upper_r(path);
-		}
-		tmp = tmp->next;
-	}
+	free_list(&lst);
 }
 
 void	print_directory(char *directory)
@@ -239,8 +247,6 @@ void	print_directory(char *directory)
 	struct dirent	*content_dir;
 	DIR				*dir;
 	t_ctrl			ctrl;
-	/*t_file			*tmp;*/
-	/*char			*path;*/
 
 	content_dir = NULL;
 	dir = NULL;
@@ -259,6 +265,6 @@ void	print_directory(char *directory)
 		}
 	}
 	print_lst(&ctrl);
-	free_list(&ctrl);
+	/*free_list(&ctrl);*/
 	close_directory(&dir);
 }
