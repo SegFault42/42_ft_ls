@@ -49,8 +49,8 @@ OBJS = $(SRC:.c=.o)
 
 CC = clang
 
-FLAG = -Weverything -O3
-#FLAG = -Wall -Wextra -Werror -O3
+#FLAG = -Weverything -O3
+FLAG = -Wall -Wextra -Werror -O3
 
 HEAD = ./includes/ ./ft_dprintf/includes/ft_dprintf.h
 

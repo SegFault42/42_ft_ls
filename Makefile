@@ -20,14 +20,17 @@ NAME = ft_ls
 CC = gcc
 FLAG = -Wall -Wextra -Werror
 LFT = ./libft/libft.a
-SRCS =	./source/main.c\
-		./source/init.c\
-		./source/quit.c\
-		./source/parsing_argv.c\
-		./source/sort_argv.c\
-		./source/print.c\
-		./source/lst.c\
+SRCS =	./source/lst.c\
+		./source/check.c\
 		./source/directory.c\
+		./source/init.c\
+		./source/main.c\
+		./source/parsing_argv.c\
+		./source/print.c\
+		./source/quit.c\
+		./source/recursive.c\
+		./source/sort.c\
+		./source/sort_argv.c\
 
 OBJS = $(SRCS:.c=.o)
 

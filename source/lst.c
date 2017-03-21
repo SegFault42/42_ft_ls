@@ -12,6 +12,19 @@
 
 #include "../include/ft_ls.h"
 
+extern t_argp	g_argp[];
+
+void	print_lst(t_ctrl *ctrl)
+{
+	if (ctrl->first != NULL)
+	{
+		if (g_argp[MINUS_R].active == 0)
+			print_list(ctrl);
+		else
+			print_list_reverse(ctrl);
+	}
+}
+
 void			print_list(t_ctrl *ctrl)
 {
 	t_file	*tmp;

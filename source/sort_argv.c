@@ -1,8 +1,5 @@
 #include "../include/ft_ls.h"
 
-#define DIR 1
-#define REG 0
-
 static void	sort_param(char **arguments)
 {
 	char	*tmp;
@@ -44,20 +41,6 @@ static int		count_where_is_first_file(char **argv)
 	return (i);
 }
 
-uint8_t	is_reg_or_dir(char *argument)
-{
-	struct stat	file_stat;
-
-	if (stat(argument, &file_stat) < 0)
-	{
-		ft_dprintf(1, "ft_ls: %s: %s\n", argument, strerror(errno));
-		return (-1);
-	}
-	if (S_ISDIR(file_stat.st_mode))
-		return (DIR);
-	return (REG);
-}
-
 /*
 ** stock tout les fichier regulier dans env->files et tout les dossiers dans
 ** env->directory
@@ -85,7 +68,7 @@ static void	stock_reg_and_dir(t_env *env, char **argv, int argc)
 	{
 		if ((ret = is_reg_or_dir(argv[cp_first_file])) == REG)
 			env->files[++i] = argv[cp_first_file];
-		else if (ret == DIR)
+		else if (ret == DIRE)
 			env->directory[++j] = argv[cp_first_file];
 		++cp_first_file;
 	}
