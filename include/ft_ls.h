@@ -40,7 +40,7 @@
 typedef struct		s_file
 {
 	char			*name; // stock le nom du fichier
-	//uint8_t		type;
+	int				timestamp;
 	struct s_file	*next;
 }					t_file;
 

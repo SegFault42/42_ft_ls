@@ -5,6 +5,7 @@ extern t_argp	g_argp[];
 static void	print_regular_files(t_env *env)
 {
 	int	i;
+	/*struct stat		file_stat;*/
 
 	if (g_argp[MINUS_R].active == 1)
 	{
@@ -17,6 +18,9 @@ static void	print_regular_files(t_env *env)
 		i = 0;
 		while (env->files[i])
 		{
+			/*stat(env->files[i], &file_stat);*/
+			/*ft_dprintf(1, GREEN"%s\n", env->files[i]);*/
+			/*ft_dprintf(1, YELLOW"atime = %s\n"END, ctime(&file_stat.st_ctime));*/
 			ft_dprintf(1, "%s\n", env->files[i]);
 			++i;
 		}
@@ -32,19 +36,36 @@ void	browse_directory(char **dir)
 
 	i = 0;
 	len_tab = ft_count_2d_tab(dir);
-	while (dir[i])
+	if (g_argp[MINUS_R].active == 1)
 	{
-		if (len_tab > 1)
+		i = ft_count_2d_tab(dir);
+		while (--i >= 0)
 		{
-			ft_dprintf(1, "%s:\n", dir[i]);
-			print_directory(dir[i]);
+			if (len_tab > 1)
+			{
+				ft_dprintf(1, "%s:\n", dir[i]);
+				print_directory(dir[i]);
+			}
+			else
+				print_directory(dir[i]);
+			/*if (dir[i] != NULL)*/
+				/*RC;*/
 		}
-		else
-			print_directory(dir[i]);
-		++i;
-		if (dir[i] != NULL)
-			RC;
 	}
+	else
+		while (dir[i])
+		{
+			if (len_tab > 1)
+			{
+				ft_dprintf(1, "%s:\n", dir[i]);
+				print_directory(dir[i]);
+			}
+			else
+				print_directory(dir[i]);
+			++i;
+			if (dir[i] != NULL)
+				RC;
+		}
 }
 
 void	print(t_env *env)
