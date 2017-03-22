@@ -40,7 +40,7 @@
 typedef struct		s_file
 {
 	char			*name; // stock le nom du fichier
-	int				timestamp;
+	size_t			timestamp;
 	struct s_file	*next;
 }					t_file;
 
@@ -92,10 +92,10 @@ void				print_list_reverse(t_ctrl *ctrl);
 void				free_list(t_ctrl *ctrl);
 void				free_maillon(t_ctrl *ctrl);
 t_file				*create_maillon();
-void				add_tail(t_ctrl *ctrl, char *str);
-void				add_head(t_ctrl *ctrl, char *str);
-bool				add_after(t_ctrl *ctrl, int node, char *name);
-void				add_before(t_ctrl *ctrl, int node, char *name);
+void				add_tail(t_ctrl *ctrl, char *str, int value);
+void				add_head(t_ctrl *ctrl, char *str, int value);
+bool				add_after(t_ctrl *ctrl, int node, char *name, int value);
+void				add_before(t_ctrl *ctrl, int node, char *name, int value);
 /*
 ** **********************************directory.c*******************************
 */
@@ -116,6 +116,7 @@ void				recursive(char *directory);
 ** ************************************sort.c*********************************
 */
 void				sort_lst_dir(t_ctrl *ctrl, char *path);
+void				sort_by_time(t_ctrl *ctrl, size_t value, char *name);
 void				sort_lst_dir_rev(t_ctrl *ctrl, char *path);
 void				sort_lst(t_ctrl *ctrl, struct dirent *content_dir);
 

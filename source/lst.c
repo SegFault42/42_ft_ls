@@ -134,7 +134,7 @@ t_file	*create_maillon()
 	return (new);
 }
 
-void	add_tail(t_ctrl *ctrl, char *str)
+void	add_tail(t_ctrl *ctrl, char *str, int value)
 {
 	t_file	*new;
 	t_file	*tmp;
@@ -150,11 +150,14 @@ void	add_tail(t_ctrl *ctrl, char *str)
 		tmp->next = new;
 	}
 	new->next = NULL;
-	if ((new->name = ft_strdup(str)) == NULL)
-		error(MALLOC_ERROR);
+	if (str != NULL)
+		if ((new->name = ft_strdup(str)) == NULL)
+			error(MALLOC_ERROR);
+	if (value != 0)
+		new->timestamp = value;
 }
 
-void	add_head(t_ctrl *ctrl, char *str)
+void	add_head(t_ctrl *ctrl, char *str, int value)
 {
 	t_file	*new;
 
@@ -169,11 +172,14 @@ void	add_head(t_ctrl *ctrl, char *str)
 		new->next = ctrl->first;
 		ctrl->first = new;
 	}
-	if ((new->name = ft_strdup(str)) == NULL)
-		error(MALLOC_ERROR);
+	if (str != NULL)
+		if ((new->name = ft_strdup(str)) == NULL)
+			error(MALLOC_ERROR);
+	if (value != 0)
+		new->timestamp = value;
 }
 
-bool	add_after(t_ctrl *ctrl, int node, char *name)
+bool	add_after(t_ctrl *ctrl, int node, char *name, int value)
 {
 	t_file	*tmp;
 	t_file	*new;
@@ -197,12 +203,15 @@ bool	add_after(t_ctrl *ctrl, int node, char *name)
 	else
 		new->next = tmp->next;
 	tmp->next = new;
-	if ((new->name = ft_strdup(name)) == NULL)
-		error(MALLOC_ERROR);
+	if (name != NULL)
+		if ((new->name = ft_strdup(name)) == NULL)
+			error(MALLOC_ERROR);
+	if (value != 0)
+		new->timestamp = value;
 	return (TRUE);
 }
 
-void	add_before(t_ctrl *ctrl, int node, char *name)
+void	add_before(t_ctrl *ctrl, int node, char *name, int value)
 {
 	/*t_file	*tmp;*/
 	t_file	*new;
@@ -211,8 +220,11 @@ void	add_before(t_ctrl *ctrl, int node, char *name)
 	if (node == 1)
 	{
 		new = create_maillon();
-		if ((new->name = ft_strdup(name)) == NULL)
-			error(MALLOC_ERROR);
+		if (name != NULL)
+			if ((new->name = ft_strdup(name)) == NULL)
+				error(MALLOC_ERROR);
+		if (value != 0)
+			new->timestamp = value;
 		new->next = ctrl->first;
 		ctrl->first = new;
 	}

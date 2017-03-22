@@ -27,7 +27,7 @@ void	print_directory(char *directory)
 	struct dirent	*content_dir;
 	DIR				*dir;
 	t_ctrl			ctrl;
-	/*struct stat		file_stat;*/
+	struct stat		file_stat;
 
 	content_dir = NULL;
 	dir = NULL;
@@ -42,11 +42,16 @@ void	print_directory(char *directory)
 		{
 			if (check_minus_a(content_dir) == true)
 				continue ;
-			/*stat(content_dir->d_name, &file_stat);*/
-			/*ft_dprintf(1, GREEN"%s\n", content_dir->d_name);*/
-			/*ft_dprintf(1, YELLOW"atime = %s\n"END, ctime(&file_stat.st_atime));*/
-			/*ft_dprintf(1, YELLOW"%s\n"END, file_stat.);*/
-			sort_lst(&ctrl, content_dir);
+			if (file_stat.st_mode & S_IFLNK)
+				lstat(content_dir->d_name, &file_stat);
+			else
+				stat(content_dir->d_name, &file_stat);
+			if (g_argp[MINUS_T].active == 1)
+			{
+				sort_by_time(&ctrl, file_stat.st_mtimespec.tv_sec, content_dir->d_name);
+			}
+			else
+				sort_lst(&ctrl, content_dir);
 		}
 		print_lst(&ctrl);
 		/*free_list(&ctrl);*/

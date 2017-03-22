@@ -4,9 +4,11 @@ extern t_argp	g_argp[];
 
 static void	print_regular_files(t_env *env)
 {
-	int	i;
-	/*struct stat		file_stat;*/
+	int				i;
+	t_ctrl			ctrl;
+	struct stat		file_stat;
 
+	ft_memset(&ctrl, 0, sizeof(t_ctrl));
 	if (g_argp[MINUS_R].active == 1)
 	{
 		i = ft_count_2d_tab(env->files);
@@ -18,12 +20,19 @@ static void	print_regular_files(t_env *env)
 		i = 0;
 		while (env->files[i])
 		{
-			/*stat(env->files[i], &file_stat);*/
-			/*ft_dprintf(1, GREEN"%s\n", env->files[i]);*/
-			/*ft_dprintf(1, YELLOW"atime = %s\n"END, ctime(&file_stat.st_ctime));*/
-			ft_dprintf(1, "%s\n", env->files[i]);
+			if (file_stat.st_mode & S_IFLNK)
+				lstat(env->files[i], &file_stat);
+			else
+				stat(env->files[i], &file_stat);
+			/*ft_dprintf(1, "%s = %d\n", env->files[i], file_stat.st_mtimespec.tv_sec);*/
+			if (g_argp[MINUS_T].active == 1)
+				sort_by_time(&ctrl, file_stat.st_mtimespec.tv_sec, env->files[i]);
+			else
+				/*sort_lst(&ctrl, content_dir);*/
+				ft_dprintf(1, "%s\n", env->files[i]);
 			++i;
 		}
+		print_lst(&ctrl);
 	}
 	if (env->directory[0] != NULL)
 		RC ;

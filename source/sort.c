@@ -1,5 +1,42 @@
 #include "../include/ft_ls.h"
 
+void	sort_by_time(t_ctrl *ctrl, size_t value, char *name)
+{
+	t_file	*tmp;
+	int	i;
+	int	node;
+
+	node = 1;
+	i = 0;
+	tmp = ctrl->first;
+	if (tmp == NULL)
+	{
+		add_head(ctrl, name, value);
+		return ;
+	}
+	while (tmp)
+	{
+		if (value > tmp->timestamp)
+		{
+			add_before(ctrl, node, name, value);
+			return ;
+		}
+		else if (tmp->next == NULL)
+		{
+			add_tail(ctrl, name, value);
+			return ;
+		}
+		if (value > tmp->next->timestamp)
+		{
+			add_after(ctrl, node, name, value);
+			return ;
+		}
+		tmp = tmp->next;
+		++node;
+	}
+	
+}
+
 void	sort_lst_dir(t_ctrl *ctrl, char *path)
 {
 	t_file	*tmp;
@@ -11,7 +48,7 @@ void	sort_lst_dir(t_ctrl *ctrl, char *path)
 	tmp = ctrl->first;
 	if (tmp == NULL)
 	{
-		add_head(ctrl, path);
+		add_head(ctrl, path, 0);
 		return ;
 	}
 	while (tmp)
@@ -20,12 +57,12 @@ void	sort_lst_dir(t_ctrl *ctrl, char *path)
 			++i;
 		if (path[i] < tmp->name[i])
 		{
-			add_before(ctrl, node, path);
+			add_before(ctrl, node, path, 0);
 			return ;
 		}
 		else if (tmp->next == NULL)
 		{
-			add_tail(ctrl, path);
+			add_tail(ctrl, path, 0);
 			return ;
 		}
 		i = 0;
@@ -33,7 +70,7 @@ void	sort_lst_dir(t_ctrl *ctrl, char *path)
 			++i;
 		if (path[i] < tmp->next->name[i])
 		{
-			add_after(ctrl, node, path);
+			add_after(ctrl, node, path, 0);
 			return ;
 		}
 		tmp = tmp->next;
@@ -52,7 +89,7 @@ void	sort_lst_dir_rev(t_ctrl *ctrl, char *path)
 	tmp = ctrl->first;
 	if (tmp == NULL)
 	{
-		add_head(ctrl, path);
+		add_head(ctrl, path, 0);
 		return ;
 	}
 	while (tmp)
@@ -61,12 +98,12 @@ void	sort_lst_dir_rev(t_ctrl *ctrl, char *path)
 			++i;
 		if (path[i] > tmp->name[i])
 		{
-			add_before(ctrl, node, path);
+			add_before(ctrl, node, path, 0);
 			return ;
 		}
 		else if (tmp->next == NULL)
 		{
-			add_tail(ctrl, path);
+			add_tail(ctrl, path, 0);
 			return ;
 		}
 		i = 0;
@@ -74,7 +111,7 @@ void	sort_lst_dir_rev(t_ctrl *ctrl, char *path)
 			++i;
 		if (path[i] > tmp->next->name[i])
 		{
-			add_after(ctrl, node, path);
+			add_after(ctrl, node, path, 0);
 			return ;
 		}
 		tmp = tmp->next;
@@ -93,7 +130,7 @@ void	sort_lst(t_ctrl *ctrl, struct dirent *content_dir)
 	i = 0;
 	if (tmp == NULL)
 	{
-		add_head(ctrl, content_dir->d_name);
+		add_head(ctrl, content_dir->d_name, 0);
 		return ;
 	}
 	while (tmp)
@@ -102,12 +139,12 @@ void	sort_lst(t_ctrl *ctrl, struct dirent *content_dir)
 			++i;
 		if (content_dir->d_name[i] < tmp->name[i])
 		{
-			add_before(ctrl, node, content_dir->d_name);
+			add_before(ctrl, node, content_dir->d_name, 0);
 			return ;
 		}
 		else if (tmp->next == NULL)
 		{
-			add_tail(ctrl, content_dir->d_name);
+			add_tail(ctrl, content_dir->d_name, 0);
 			return ;
 		}
 		i = 0;
@@ -115,7 +152,7 @@ void	sort_lst(t_ctrl *ctrl, struct dirent *content_dir)
 			++i;
 		if (content_dir->d_name[i] < tmp->next->name[i])
 		{
-			add_after(ctrl, node, content_dir->d_name);
+			add_after(ctrl, node, content_dir->d_name, 0);
 			return ;
 		}
 		tmp = tmp->next;
