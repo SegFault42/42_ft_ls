@@ -13,7 +13,7 @@ def test_myoutput1(capsys): # or use "capfd" for fd-level
 	str2 = os.system("ls .")
 	assert str1 == str2
 
-ef test_myoutput2(capsys): # or use "capfd" for fd-level
+def test_myoutput2(capsys): # or use "capfd" for fd-level
 	reset_sandbox()
 	os.system("touch sandbox/aaa sandbox/bbb sandbox/ccc")
 	str1 = os.system("./ft_ls -1")
