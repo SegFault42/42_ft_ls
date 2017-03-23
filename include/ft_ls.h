@@ -75,6 +75,7 @@ void				get_option(char **argv);
 ** ********************************sort_argv.c*********************************
 */
 void				sort_argv(t_env *env, char **argv, int argc);
+void				sort_param(char **arguments);
 /*
 ** ********************************sort_argv.c*********************************
 */
@@ -96,6 +97,8 @@ void				add_tail(t_ctrl *ctrl, char *str, int value);
 void				add_head(t_ctrl *ctrl, char *str, int value);
 bool				add_after(t_ctrl *ctrl, int node, char *name, int value);
 void				add_before(t_ctrl *ctrl, int node, char *name, int value);
+void				sort_lst_dir(t_ctrl *ctrl, char *path);
+size_t				count_nb_node(t_ctrl *ctrl);
 /*
 ** **********************************directory.c*******************************
 */

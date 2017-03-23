@@ -62,6 +62,8 @@ $(NAME): $(OBJS) ./includes/libft.h
 	@ranlib $(NAME)
 
 %.o : %.c $(HEAD)
+	@printf " ✅                                                              \r"
+	@printf "✅  $(notdir $<)\r"
 	$(CC) -c $(FLAG) $< -o $@
 
 mc: fclean all clean

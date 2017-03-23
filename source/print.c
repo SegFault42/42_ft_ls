@@ -20,16 +20,18 @@ static void	print_regular_files(t_env *env)
 		i = 0;
 		while (env->files[i])
 		{
+			/*ft_dprintf(1, "%s = %d\n", env->files[i], file_stat.st_mtimespec.tv_sec);*/
 			if (file_stat.st_mode & S_IFLNK)
 				lstat(env->files[i], &file_stat);
 			else
 				stat(env->files[i], &file_stat);
-			/*ft_dprintf(1, "%s = %d\n", env->files[i], file_stat.st_mtimespec.tv_sec);*/
 			if (g_argp[MINUS_T].active == 1)
 				sort_by_time(&ctrl, file_stat.st_mtimespec.tv_sec, env->files[i]);
 			else
-				/*sort_lst(&ctrl, content_dir);*/
+			{
+				/*sort_lst_dir(&ctrl, env->files[i]);*/
 				ft_dprintf(1, "%s\n", env->files[i]);
+			}
 			++i;
 		}
 		print_lst(&ctrl);

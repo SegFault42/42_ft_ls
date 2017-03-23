@@ -21,6 +21,42 @@ void	close_directory(DIR **dir)
 	}
 }
 
+void	particular_minus_t(t_ctrl *ctrl)
+{
+	int		i;
+	char	**tab;
+	t_file	*tmp;
+	t_ctrl	ctr;
+	struct stat		file_stat;
+
+	ft_memset(&ctr, 0, sizeof(t_ctrl));
+	i = count_nb_node(ctrl);
+	tab = (char **)ft_memalloc(sizeof(char *) * i + 1);
+	tmp = ctrl->first;
+	ft_set_2d_tab(tab, i + 1);
+	i = 0;
+	if (tmp != NULL)
+	{
+		while (tmp)
+		{
+			tab[i] = tmp->name;
+			tmp = tmp->next;
+			++i;
+		}
+		sort_param(tab);
+	}
+	i = 0;
+	while (tab[i])
+	{
+		if (file_stat.st_mode & S_IFLNK)
+			lstat(tab[i], &file_stat);
+		else
+			stat(tab[i], &file_stat);
+		sort_by_time(&ctr, file_stat.st_mtimespec.tv_sec, tab[i]);
+		++i;
+	}
+	print_lst(&ctr);
+}
 
 void	print_directory(char *directory)
 {
@@ -46,14 +82,19 @@ void	print_directory(char *directory)
 				lstat(content_dir->d_name, &file_stat);
 			else
 				stat(content_dir->d_name, &file_stat);
-			if (g_argp[MINUS_T].active == 1)
-			{
-				sort_by_time(&ctrl, file_stat.st_mtimespec.tv_sec, content_dir->d_name);
-			}
-			else
+			/*if (g_argp[MINUS_T].active == 1)*/
+			/*{*/
+				/*sort_by_time(&ctrl, file_stat.st_mtimespec.tv_sec, content_dir->d_name);*/
+			/*}*/
+			/*else*/
 				sort_lst(&ctrl, content_dir);
 		}
-		print_lst(&ctrl);
+		if (g_argp[MINUS_T].active == 1)
+		{
+			particular_minus_t(&ctrl);
+		}
+		else
+			print_lst(&ctrl);
 		/*free_list(&ctrl);*/
 	}
 	close_directory(&dir);

@@ -1,6 +1,6 @@
 #include "../include/ft_ls.h"
 
-static void	sort_param(char **arguments)
+void	sort_param(char **arguments)
 {
 	char	*tmp;
 	int		find;
