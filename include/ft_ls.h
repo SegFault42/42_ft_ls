@@ -105,6 +105,7 @@ size_t				count_nb_node(t_ctrl *ctrl);
 void				close_directory(DIR **dir);
 int8_t				open_directory(DIR **dir, char *directory);
 void				print_directory(char *directory);
+void				particular_minus_t(t_ctrl *ctrl);
 /*
 ** ************************************check.c*********************************
 */

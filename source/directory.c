@@ -52,7 +52,7 @@ void	particular_minus_t(t_ctrl *ctrl)
 			lstat(tab[i], &file_stat);
 		else
 			stat(tab[i], &file_stat);
-		sort_by_time(&ctr, file_stat.st_mtimespec.tv_sec, tab[i]);
+		sort_by_time(&ctr, file_stat.st_atimespec.tv_sec, tab[i]);
 		++i;
 	}
 	print_lst(&ctr);
@@ -90,9 +90,7 @@ void	print_directory(char *directory)
 				sort_lst(&ctrl, content_dir);
 		}
 		if (g_argp[MINUS_T].active == 1)
-		{
 			particular_minus_t(&ctrl);
-		}
 		else
 			print_lst(&ctrl);
 		/*free_list(&ctrl);*/

@@ -17,8 +17,13 @@ static void		print_all_directory(char *path)
 			continue ;
 		sort_lst(&lst, entry);
 	}
+	if (g_argp[MINUS_T].active == 1)
+	{
+		particular_minus_t(&lst);
+	}
+	else
+		print_lst(&lst);
 	close_directory(&dir);
-	print_lst(&lst);
 	/*free_list(&lst);*/
 }
 
