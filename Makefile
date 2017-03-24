@@ -31,6 +31,7 @@ SRCS =	./source/lst.c\
 		./source/recursive.c\
 		./source/sort.c\
 		./source/sort_argv.c\
+		./source/minus_l.c\
 
 OBJS = $(SRCS:.c=.o)
 

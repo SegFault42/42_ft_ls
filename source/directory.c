@@ -64,6 +64,7 @@ void	print_directory(char *directory)
 	DIR				*dir;
 	t_ctrl			ctrl;
 	struct stat		file_stat;
+	char			*file;
 
 	content_dir = NULL;
 	dir = NULL;
@@ -78,16 +79,16 @@ void	print_directory(char *directory)
 		{
 			if (check_minus_a(content_dir) == true)
 				continue ;
+			file = ft_strjoin(directory, "/");
+			file = ft_strjoin(file, content_dir->d_name);
+			ft_dprintf(1, GREEN"dir = %s"END, file);
+			minus_l(file);
+			RC;
 			if (file_stat.st_mode & S_IFLNK)
 				lstat(content_dir->d_name, &file_stat);
 			else
 				stat(content_dir->d_name, &file_stat);
-			/*if (g_argp[MINUS_T].active == 1)*/
-			/*{*/
-				/*sort_by_time(&ctrl, file_stat.st_mtimespec.tv_sec, content_dir->d_name);*/
-			/*}*/
-			/*else*/
-				sort_lst(&ctrl, content_dir);
+			sort_lst(&ctrl, content_dir);
 		}
 		if (g_argp[MINUS_T].active == 1)
 			particular_minus_t(&ctrl);

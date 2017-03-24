@@ -17,6 +17,8 @@
 # include <unistd.h>
 # include <sys/stat.h>
 # include <sys/types.h>
+# include <sys/xattr.h>
+# include <sys/acl.h>
 # include <errno.h>
 # include <time.h>
 # include "../libft/includes/libft.h"
@@ -117,11 +119,15 @@ uint8_t				is_reg_or_dir(char *argument);
 */
 void				recursive(char *directory);
 /*
-** ************************************sort.c*********************************
+** ************************************sort.c**********************************
 */
 void				sort_lst_dir(t_ctrl *ctrl, char *path);
 void				sort_by_time(t_ctrl *ctrl, size_t value, char *name);
 void				sort_lst_dir_rev(t_ctrl *ctrl, char *path);
 void				sort_lst(t_ctrl *ctrl, struct dirent *content_dir);
+/*
+** **********************************minus_l.c*********************************
+*/
+void	minus_l(char *file);
 
 #endif

@@ -33,10 +33,10 @@ void	print_lst(t_ctrl *ctrl)
 {
 	if (ctrl->first != NULL)
 	{
-		if (g_argp[MINUS_R].active == 0)
-			print_list(ctrl);
-		else
+		if (g_argp[MINUS_R].active == 1)
 			print_list_reverse(ctrl);
+		else
+			print_list(ctrl);
 	}
 }
 
