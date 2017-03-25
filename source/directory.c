@@ -58,7 +58,7 @@ void	particular_minus_t(t_ctrl *ctrl)
 	print_lst(&ctr);
 }
 
-void	print_directory(char *directory)
+void	print_directory(char *directory, t_env *env)
 {
 	struct dirent	*content_dir;
 	DIR				*dir;
@@ -79,16 +79,20 @@ void	print_directory(char *directory)
 		{
 			if (check_minus_a(content_dir) == true)
 				continue ;
-			file = ft_strjoin(directory, "/");
-			file = ft_strjoin(file, content_dir->d_name);
-			ft_dprintf(1, GREEN"dir = %s"END, file);
-			minus_l(file);
+			if (g_argp[MINUS_L].active == 1)
+			{
+				file = ft_strjoin(directory, "/");
+				file = ft_strjoin(file, content_dir->d_name);
+				ft_dprintf(1, GREEN"dir = %s"END, file);
+				minus_l(file, env);
+			}
 			RC;
 			if (file_stat.st_mode & S_IFLNK)
 				lstat(content_dir->d_name, &file_stat);
 			else
 				stat(content_dir->d_name, &file_stat);
 			sort_lst(&ctrl, content_dir);
+			ft_strdel(&env->file.info);
 		}
 		if (g_argp[MINUS_T].active == 1)
 			particular_minus_t(&ctrl);

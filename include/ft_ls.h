@@ -21,6 +21,8 @@
 # include <sys/acl.h>
 # include <errno.h>
 # include <time.h>
+# include <pwd.h>
+# include <grp.h>
 # include "../libft/includes/libft.h"
 
 # define MINUS_A		(0)
@@ -43,6 +45,7 @@ typedef struct		s_file
 {
 	char			*name; // stock le nom du fichier
 	size_t			timestamp;
+	char			*info;
 	struct s_file	*next;
 }					t_file;
 
@@ -56,6 +59,7 @@ typedef struct		s_env
 	//char			**arguments;
 	char			**files;
 	char			**directory;
+	t_file			file;
 }					t_env;
 
 typedef struct		s_argp
@@ -106,7 +110,7 @@ size_t				count_nb_node(t_ctrl *ctrl);
 */
 void				close_directory(DIR **dir);
 int8_t				open_directory(DIR **dir, char *directory);
-void				print_directory(char *directory);
+void				print_directory(char *directory, t_env *env);
 void				particular_minus_t(t_ctrl *ctrl);
 /*
 ** ************************************check.c*********************************
@@ -128,6 +132,6 @@ void				sort_lst(t_ctrl *ctrl, struct dirent *content_dir);
 /*
 ** **********************************minus_l.c*********************************
 */
-void	minus_l(char *file);
+void	minus_l(char *file, t_env *env);
 
 #endif

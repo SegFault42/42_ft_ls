@@ -40,41 +40,41 @@ static void	print_regular_files(t_env *env)
 		RC ;
 }
 
-void	browse_directory(char **dir)
+void	browse_directory(t_env *env)
 {
 	int	i;
 	int	len_tab;
 
 	i = 0;
-	len_tab = ft_count_2d_tab(dir);
+	len_tab = ft_count_2d_tab(env->directory);
 	if (g_argp[MINUS_R].active == 1)
 	{
-		i = ft_count_2d_tab(dir);
+		i = ft_count_2d_tab(env->directory);
 		while (--i >= 0)
 		{
 			if (len_tab > 1)
 			{
-				ft_dprintf(1, "%s:\n", dir[i]);
-				print_directory(dir[i]);
+				ft_dprintf(1, "%s:\n", env->directory[i]);
+				print_directory(env->directory[i], env);
 			}
 			else
-				print_directory(dir[i]);
-			/*if (dir[i] != NULL)*/
+				print_directory(env->directory[i], env);
+			/*if (env->directory[i] != NULL)*/
 				/*RC;*/
 		}
 	}
 	else
-		while (dir[i])
+		while (env->directory[i])
 		{
 			if (len_tab > 1)
 			{
-				ft_dprintf(1, "%s:\n", dir[i]);
-				print_directory(dir[i]);
+				ft_dprintf(1, "%s:\n", env->directory[i]);
+				print_directory(env->directory[i], env);
 			}
 			else
-				print_directory(dir[i]);
+				print_directory(env->directory[i], env);
 			++i;
-			if (dir[i] != NULL)
+			if (env->directory[i] != NULL)
 				RC;
 		}
 }
@@ -84,5 +84,5 @@ void	print(t_env *env)
 	if (env->files[0] != NULL)
 		print_regular_files(env);
 	if (env->directory[0] != NULL)
-		browse_directory(env->directory);
+		browse_directory(env);
 }
