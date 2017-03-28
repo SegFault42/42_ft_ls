@@ -35,6 +35,7 @@ static void	print_regular_files(t_env *env)
 			++i;
 		}
 		print_lst(&ctrl);
+		free_list(&ctrl);
 	}
 	if (env->directory[0] != NULL)
 		RC ;

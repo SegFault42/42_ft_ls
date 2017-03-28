@@ -41,6 +41,8 @@
 # define REG			(0)
 # define DIRE			(1)
 
+//char	g_info[255] = {0};
+
 typedef struct		s_file
 {
 	char			*name; // stock le nom du fichier

@@ -24,7 +24,7 @@ static void		print_all_directory(char *path)
 	else
 		print_lst(&lst);
 	close_directory(&dir);
-	/*free_list(&lst);*/
+	free_list(&lst);
 }
 
 void	recursive(char *directory)

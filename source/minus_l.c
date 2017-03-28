@@ -1,5 +1,7 @@
 #include "../include/ft_ls.h"
 
+char	g_info[255] = {0};
+
 static void	get_chmod(char **info, struct stat *file_stat)
 {
 	if (S_ISDIR(file_stat->st_mode))
@@ -34,7 +36,7 @@ static void	get_acl(char *file, char **info)
 	else if (acl_get_file(file, ACL_TYPE_EXTENDED))
 		ft_strcat(*info, "+ ");
 	else
-		ft_strcat(*info, " ");
+		ft_strcat(*info, "  ");
 }
 
 static void	get_link_groupe(char **info, struct stat *file_stat)
@@ -64,8 +66,10 @@ static void	get_link_groupe(char **info, struct stat *file_stat)
 	ft_strcat(*info, " ");
 	ft_strcat(*info, split[2]);
 	ft_strcat(*info, " ");
-	ft_strcat(*info, split[4]);
+	ft_strncat(*info, split[3], 5);
 	ft_strcat(*info, " ");
+	ft_strccat(*info, split[4], '\n');
+	ft_2d_tab_free(split);
 }
 
 void	minus_l(char *file, t_env *env)
@@ -74,6 +78,7 @@ void	minus_l(char *file, t_env *env)
 
 	if ((env->file.info = (char *)ft_memalloc(sizeof(char) * 256)) == NULL)
 		ft_critical_error(MALLOC_ERROR);
+	ft_memset(g_info, 0, 255);
 	if (S_ISLNK(file_stat.st_mode))
 		lstat(file, &file_stat);
 	else
@@ -81,7 +86,7 @@ void	minus_l(char *file, t_env *env)
 	get_chmod(&env->file.info, &file_stat);
 	get_acl(file, &env->file.info);
 	get_link_groupe(&env->file.info, &file_stat);
-	ft_dprintf(1, YELLOW"%s\n"END, env->file.info);
-
-	/*ft_dprintf(1, "%s = %d", info, ft_strlen(info));*/
+	ft_memcpy(g_info, env->file.info, 255);
+	if (env->file.info != NULL)
+		free(env->file.info);
 }

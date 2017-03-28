@@ -13,6 +13,7 @@
 #include "../include/ft_ls.h"
 
 extern t_argp	g_argp[];
+extern char g_info[255];
 
 size_t	count_nb_node(t_ctrl *ctrl)
 {
@@ -47,68 +48,72 @@ void			print_list(t_ctrl *ctrl)
 	tmp = ctrl->first;
 	while (tmp)
 	{
+		if (g_argp[MINUS_L]. active == 1)
+			ft_dprintf(1, "%s ", tmp->info);
 		ft_dprintf(1, "%s\n", tmp->name);
 		tmp = tmp->next;
 	}
 }
 
-void			print_list_reverse(t_ctrl *ctrl)
-{
-	t_file	*tmp;
-	int		nb_node = 0;
-	char	**path;
-	int		i = 0;
-
-	tmp = ctrl->first;
-	while (tmp)
-	{
-		tmp = tmp->next;
-		++nb_node;
-	}
-	path = (char **)ft_memalloc(sizeof(char *) * nb_node + 1);
-	tmp = ctrl->first;
-	while (tmp)
-	{
-		path[i] = tmp->name;
-		++i;
-		tmp = tmp->next;
-	}
-	path[i] = NULL;
-	while (--nb_node >= 0)
-	{
-		ft_dprintf(1, "%s\n", path[nb_node]);
-	}
-	ft_2d_tab_free(path);
-}
-
 /*void			print_list_reverse(t_ctrl *ctrl)*/
 /*{*/
-	/*int		i;*/
-	/*int		j;*/
 	/*t_file	*tmp;*/
+	/*int		nb_node = 0;*/
+	/*char	**path;*/
+	/*int		i = 0;*/
 
-	/*i = 0;*/
-	/*j = 0;*/
 	/*tmp = ctrl->first;*/
 	/*while (tmp)*/
 	/*{*/
 		/*tmp = tmp->next;*/
-		/*++i;*/
+		/*++nb_node;*/
 	/*}*/
-	/*--i;*/
-	/*while (i >= 0)*/
+	/*path = (char **)ft_memalloc(sizeof(char *) * nb_node + 1);*/
+	/*tmp = ctrl->first;*/
+	/*while (tmp)*/
 	/*{*/
-		/*tmp = ctrl->first;*/
-		/*while (j < i)*/
-		/*{*/
-			/*tmp = tmp->next;*/
-			/*++j;*/
-		/*}*/
-		/*ft_dprintf(1, "%s\n", tmp->name);*/
-		/*--i;*/
-		/*j = 0;*/
+		/*path[i] = tmp->name;*/
+		/*++i;*/
+		/*tmp = tmp->next;*/
 	/*}*/
+	/*path[i] = NULL;*/
+	/*while (--nb_node >= 0)*/
+	/*{*/
+		/*ft_dprintf(1, "%s\n", path[nb_node]);*/
+	/*}*/
+	/*ft_2d_tab_free(path);*/
 /*}*/
+
+void			print_list_reverse(t_ctrl *ctrl)
+{
+	int		i;
+	int		j;
+	t_file	*tmp;
+
+	i = 0;
+	j = 0;
+	tmp = ctrl->first;
+	while (tmp)
+	{
+		tmp = tmp->next;
+		++i;
+	}
+	--i;
+	while (i >= 0)
+	{
+		tmp = ctrl->first;
+		while (j < i)
+		{
+			tmp = tmp->next;
+			++j;
+		}
+		if (g_argp[MINUS_L]. active == 1)
+			ft_dprintf(1, "%s ", tmp->info);
+		ft_dprintf(1, "%s\n", tmp->name);
+		--i;
+		j = 0;
+	}
+}
 
 void	free_list(t_ctrl *ctrl)
 {
@@ -170,6 +175,11 @@ void	add_tail(t_ctrl *ctrl, char *str, int value)
 			error(MALLOC_ERROR);
 	if (value != 0)
 		new->timestamp = value;
+	if (g_info[0] != '\0' && g_argp[MINUS_L]. active == 1)
+	{
+		new->info = (char *)ft_memalloc(sizeof(char) * 255);
+		ft_memcpy(new->info, g_info, 255);
+	}
 }
 
 void	add_head(t_ctrl *ctrl, char *str, int value)
@@ -192,6 +202,11 @@ void	add_head(t_ctrl *ctrl, char *str, int value)
 			error(MALLOC_ERROR);
 	if (value != 0)
 		new->timestamp = value;
+	if (g_info[0] != '\0' && g_argp[MINUS_L]. active == 1)
+	{
+		new->info = (char *)ft_memalloc(sizeof(char) * 255);
+		ft_memcpy(new->info, g_info, 255);
+	}
 }
 
 bool	add_after(t_ctrl *ctrl, int node, char *name, int value)
@@ -223,6 +238,11 @@ bool	add_after(t_ctrl *ctrl, int node, char *name, int value)
 			error(MALLOC_ERROR);
 	if (value != 0)
 		new->timestamp = value;
+	if (g_info[0] != '\0' && g_argp[MINUS_L]. active == 1)
+	{
+		new->info = (char *)ft_memalloc(sizeof(char) * 255);
+		ft_memcpy(new->info, g_info, 255);
+	}
 	return (TRUE);
 }
 
@@ -240,6 +260,11 @@ void	add_before(t_ctrl *ctrl, int node, char *name, int value)
 				error(MALLOC_ERROR);
 		if (value != 0)
 			new->timestamp = value;
+		if (g_info[0] != '\0' && g_argp[MINUS_L]. active == 1)
+		{
+			new->info = (char *)ft_memalloc(sizeof(char) * 255);
+			ft_memcpy(new->info, g_info, 255);
+		}
 		new->next = ctrl->first;
 		ctrl->first = new;
 	}
