@@ -1,6 +1,7 @@
 #include "../include/ft_ls.h"
 
 char	g_info[255] = {0};
+size_t	g_nb_blocks = 0;
 
 static void	get_chmod(char **info, struct stat *file_stat)
 {
@@ -36,7 +37,7 @@ static void	get_acl(char *file, char **info)
 	else if (acl_get_file(file, ACL_TYPE_EXTENDED))
 		ft_strcat(*info, "+ ");
 	else
-		ft_strcat(*info, "  ");
+		ft_strcat(*info, "| ");// le pipe sera remplacer par un espace.
 }
 
 static void	get_link_groupe(char **info, struct stat *file_stat)
@@ -68,7 +69,7 @@ static void	get_link_groupe(char **info, struct stat *file_stat)
 	ft_strcat(*info, " ");
 	ft_strncat(*info, split[3], 5);
 	ft_strcat(*info, " ");
-	ft_strccat(*info, split[4], '\n');
+	/*ft_strccat(*info, split[4], '\n');*/
 	ft_2d_tab_free(split);
 }
 
@@ -89,4 +90,5 @@ void	minus_l(char *file, t_env *env)
 	ft_memcpy(g_info, env->file.info, 255);
 	if (env->file.info != NULL)
 		free(env->file.info);
+	g_nb_blocks += file_stat.st_blocks;
 }

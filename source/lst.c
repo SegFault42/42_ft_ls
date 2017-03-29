@@ -13,7 +13,8 @@
 #include "../include/ft_ls.h"
 
 extern t_argp	g_argp[];
-extern char g_info[255];
+extern char		g_info[255];
+extern size_t	g_nb_blocks;
 
 size_t	count_nb_node(t_ctrl *ctrl)
 {
@@ -46,13 +47,16 @@ void			print_list(t_ctrl *ctrl)
 	t_file	*tmp;
 
 	tmp = ctrl->first;
+	if (g_argp[MINUS_L]. active == 1)
+		ft_dprintf(1, "total %d\n", g_nb_blocks);
 	while (tmp)
 	{
 		if (g_argp[MINUS_L]. active == 1)
-			ft_dprintf(1, "%s ", tmp->info);
+			ft_dprintf(1, "%s", tmp->info);
 		ft_dprintf(1, "%s\n", tmp->name);
 		tmp = tmp->next;
 	}
+	g_nb_blocks = 0;
 }
 
 /*void			print_list_reverse(t_ctrl *ctrl)*/

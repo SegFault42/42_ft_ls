@@ -1,7 +1,7 @@
 #include "../include/ft_ls.h"
 
 extern t_argp	g_argp[];
-extern char g_info[255];
+extern char		g_info[255];
 
 int8_t	open_directory(DIR **dir, char *directory)
 {
@@ -61,69 +61,65 @@ void	particular_minus_t(t_ctrl *ctrl)
 	/*free_list(&ctr);*/
 }
 
-void	rewrite_info_padded(t_ctrl *ctrl, int pad)
+void	rewrite_info_padded(t_ctrl *ctrl, size_t *padding)
 {
 	t_file		*tmp;
-	/*char		*tmp_str;*/
-	char		**tab;
+	char		**split;
 	int			i;
-	int			nb_space;
 
-	i = 0;
 	tmp = ctrl->first;
-	while (tmp->next)
+	while (tmp)
 	{
-		/*tmp_str = ft_strdup(tmp->info);*/
-		tab = ft_strsplit(tmp->info, ' ');
-		ft_memset(tmp->info, 0, 256);
-		while (tab[i])
+		i = 0;
+		split = ft_strsplit(tmp->info, ' ');
+		ft_memset(tmp->info, 0, sizeof(tmp->info));
+		while (split[i])
 		{
-			if (i == 1)
+			if (i == 2 || i == 3)
 			{
-				nb_space = pad - ft_strlen(tab[i]);
-				while (nb_space > 0)
-				{
-					ft_strcat(tmp->info, " ");
-					--nb_space;
-				}
+				ft_strcat(tmp->info, split[i]);
+				ft_strxcat(tmp->info, " ", (padding[i] - ft_strlen(split[i])));
+				if (i == 2 || i == 3)
+					ft_strcat(tmp->info, " "); // double espace apres string
 			}
-			ft_strcat(tmp->info, tab[i]);
-			ft_strcat(tmp->info, " ");
+			else
+			{
+				ft_strxcat(tmp->info, " ", (padding[i] - ft_strlen(split[i])));
+				ft_strcat(tmp->info, split[i]);
+			}
+			ft_strcat(tmp->info, " "); // espace entre chaque tab
 			++i;
 		}
-		ft_dprintf(1, RED"%s\n"END, tmp->info);
-		break ;
+		if (tmp->info[10] == '|')
+			tmp->info[10] = ' ';
+		tmp = tmp->next;
+		ft_2d_tab_free(split);
 	}
-	(void)pad;
-	(void)nb_space;
 }
 
 void	padding_l(t_ctrl *ctrl)
 {
 	t_file		*tmp;
-	int			i;
-	int			tmp_c;
-	static int	nb_char = 0;
+	char		**split;
+	size_t			padding[8];
+	int				i;
 
-	i = 12;
-	tmp = ctrl->first;
-	tmp_c = 0;
-	while (tmp->next)
+	i = -1;
+	ft_memset(&padding, 0, sizeof(padding));
+	while (++i < 8)
 	{
-		ft_dprintf(1, YELLOW"%s\n"END, &tmp->info[i]);
-		while (tmp->info[i] != ' ')
+		tmp = ctrl->first;
+		while (tmp)
 		{
-			++i;
-			++tmp_c;
+			split = ft_strsplit(tmp->info, ' ');
+			if (ft_strlen(split[i]) > padding[i])
+			padding[i] = ft_strlen(split[i]);
+			ft_2d_tab_free(split);
+			tmp = tmp->next;
 		}
-		if (tmp_c > nb_char)
-			nb_char = tmp_c;
-		tmp = tmp->next;
-		i = 12;
-		tmp_c = 0;
 	}
-	ft_dprintf(1, ORANGE"%d\n"END, nb_char);
-	rewrite_info_padded(ctrl, nb_char);
+	rewrite_info_padded(ctrl, padding);
+	(void)ctrl;
 }
 
 void	print_directory(char *directory, t_env *env)

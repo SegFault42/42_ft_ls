@@ -143,5 +143,6 @@ char				*ft_strndup(const char *s1, size_t nb);
 void				*ft_trymalloc(size_t size);
 void				ft_critical_error(uint8_t error);
 void				ft_set_2d_tab(char **tab, int size);
+void				ft_strxcat(char *dest, char *src, int x);
 
 #endif

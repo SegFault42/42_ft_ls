@@ -41,6 +41,8 @@
 # define REG			(0)
 # define DIRE			(1)
 
+# define TIMESTAMP		(0)
+
 //char	g_info[255] = {0};
 
 typedef struct		s_file
@@ -62,6 +64,7 @@ typedef struct		s_env
 	char			**files;
 	char			**directory;
 	t_file			file;
+	size_t			nb_blocks;
 }					t_env;
 
 typedef struct		s_argp
