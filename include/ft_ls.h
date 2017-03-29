@@ -137,6 +137,7 @@ void				sort_lst(t_ctrl *ctrl, struct dirent *content_dir);
 /*
 ** **********************************minus_l.c*********************************
 */
-void	minus_l(char *file, t_env *env);
+void				minus_l(char *file, t_env *env);
+void				padding_l(t_ctrl *ctrl);
 
 #endif

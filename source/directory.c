@@ -151,10 +151,16 @@ void	print_directory(char *directory, t_env *env)
 				minus_l(file, env);
 			}
 			/*RC;*/
-			if (file_stat.st_mode & S_IFLNK)
+			/*if (file_stat.st_mode == S_IFLNK)*/
+			/*{*/
+				/*[>ft_dprintf(1, GREEN"%s\n"END, content_dir->d_name);<]*/
 				lstat(content_dir->d_name, &file_stat);
-			else
-				stat(content_dir->d_name, &file_stat);
+			/*}*/
+			/*else*/
+			/*{*/
+				/*stat(content_dir->d_name, &file_stat);*/
+				/*[>ft_dprintf(1, CYAN"%s\n"END, content_dir->d_name);<]*/
+			/*}*/
 			sort_lst(&ctrl, content_dir);
 			/*ft_strdel(&env->file.info);*/
 		}

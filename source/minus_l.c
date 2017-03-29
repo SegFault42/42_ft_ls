@@ -46,7 +46,9 @@ static void	get_link_groupe(char **info, struct stat *file_stat)
 	struct group	*groupe;
 	char			*itoa;
 	char			**split;
+	int				six_month;
 
+	six_month = 15778476; // 6 month in second
 	name = getpwuid(file_stat->st_uid);
 	groupe = getgrgid(file_stat->st_gid);
 	itoa = ft_itoa(file_stat->st_nlink);
@@ -62,14 +64,15 @@ static void	get_link_groupe(char **info, struct stat *file_stat)
 	ft_strdel(&itoa);
 	ft_strcat(*info, " ");
 	split = ft_strsplit(ctime(&file_stat->st_mtime), ' ');
-	/*ft_strcat(*info, ctime(&file_stat->st_mtime));*/
 	ft_strcat(*info, split[1]);
 	ft_strcat(*info, " ");
 	ft_strcat(*info, split[2]);
 	ft_strcat(*info, " ");
-	ft_strncat(*info, split[3], 5);
+	if (file_stat->st_mtime < (time(0) - six_month))
+		ft_strccat(*info, split[4], '\n');
+	else
+		ft_strncat(*info, split[3], 5);
 	ft_strcat(*info, " ");
-	/*ft_strccat(*info, split[4], '\n');*/
 	ft_2d_tab_free(split);
 }
 
@@ -80,10 +83,11 @@ void	minus_l(char *file, t_env *env)
 	if ((env->file.info = (char *)ft_memalloc(sizeof(char) * 256)) == NULL)
 		ft_critical_error(MALLOC_ERROR);
 	ft_memset(g_info, 0, 255);
-	if (S_ISLNK(file_stat.st_mode))
-		lstat(file, &file_stat);
-	else
-		stat(file, &file_stat);
+	/*if (S_ISLNK(file_stat.st_mode))*/
+		/*lstat(file, &file_stat);*/
+	/*else*/
+		/*stat(file, &file_stat);*/
+	lstat(file, &file_stat);
 	get_chmod(&env->file.info, &file_stat);
 	get_acl(file, &env->file.info);
 	get_link_groupe(&env->file.info, &file_stat);

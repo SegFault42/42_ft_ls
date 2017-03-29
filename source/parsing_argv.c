@@ -42,6 +42,27 @@ static void	check_if_option_exist(char *argument)
 	}
 }
 
+#define OPTION_ONE	0
+#define OPTION_L	1
+
+void	shutdown_option(char **argv)
+{
+	/*int	option[2];*/
+	int	i;
+
+	i = 0;
+	if (g_argp[MINUS_L].active == 1 && g_argp[ONE].active == 1)
+	{
+		while (argv[i + 1] || argv[i + 1][0] == '-')
+		{
+			if (argv[i] != NULL && ft_strcmp(argv[i], "--") == 0)
+				break ;
+			++i;
+		}
+	}
+	ft_dprintf(1, "%d\n", i);
+}
+
 /*
 ** get_option()
 ** recupere toute les option dans argv et active un booleen dans g_argp
@@ -68,4 +89,5 @@ void		get_option(char **argv)
 		}
 		++arg;
 	}
+	/*shutdown_option(argv);*/
 }

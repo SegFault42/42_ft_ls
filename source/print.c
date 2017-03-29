@@ -7,6 +7,7 @@ static void	print_regular_files(t_env *env)
 	int				i;
 	t_ctrl			ctrl;
 	struct stat		file_stat;
+	/*char			*file;*/
 
 	ft_memset(&ctrl, 0, sizeof(t_ctrl));
 	if (g_argp[MINUS_R].active == 1)
@@ -20,6 +21,12 @@ static void	print_regular_files(t_env *env)
 		i = 0;
 		while (env->files[i])
 		{
+			/*if (g_argp[MINUS_L].active == 1)*/
+			/*{*/
+				/*file = ft_strjoin("./", env->files[i]);*/
+				/*ft_dprintf(1, "%s\n", file);*/
+				/*minus_l(file, env);*/
+			/*}*/
 			/*ft_dprintf(1, "%s = %d\n", env->files[i], file_stat.st_mtimespec.tv_sec);*/
 			if (file_stat.st_mode & S_IFLNK)
 				lstat(env->files[i], &file_stat);
@@ -34,6 +41,8 @@ static void	print_regular_files(t_env *env)
 			}
 			++i;
 		}
+		/*if (g_argp[MINUS_L].active == 1)*/
+			/*padding_l(&ctrl);*/
 		print_lst(&ctrl);
 		free_list(&ctrl);
 	}
