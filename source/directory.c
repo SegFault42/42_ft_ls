@@ -130,6 +130,9 @@ void	print_directory(char *directory, t_env *env)
 	struct stat		file_stat;
 	char			*file;
 
+	char	buf[PATH_MAX];
+	int		size_buf;
+
 	content_dir = NULL;
 	dir = NULL;
 	ft_memset(&ctrl, 0, sizeof(t_ctrl));
@@ -143,6 +146,7 @@ void	print_directory(char *directory, t_env *env)
 		{
 			if (check_minus_a(content_dir) == true)
 				continue ;
+			stat(content_dir->d_name, &file_stat);
 			if (g_argp[MINUS_L].active == 1)
 			{
 				file = ft_strjoin(directory, "/");
@@ -154,7 +158,14 @@ void	print_directory(char *directory, t_env *env)
 			/*if (file_stat.st_mode == S_IFLNK)*/
 			/*{*/
 				/*[>ft_dprintf(1, GREEN"%s\n"END, content_dir->d_name);<]*/
-				lstat(content_dir->d_name, &file_stat);
+			if (file_stat.st_mode & S_IFLNK)
+			{
+				if ((size_buf = readlink(file, buf, sizeof(buf) - 1)) != -1)
+				{
+					buf[size_buf] = '\0';
+					ft_dprintf(1, "%s\n", buf);
+				}
+			}
 			/*}*/
 			/*else*/
 			/*{*/
