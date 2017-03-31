@@ -128,7 +128,7 @@ void	print_directory(char *directory, t_env *env)
 	DIR				*dir;
 	t_ctrl			ctrl;
 	struct stat		file_stat;
-	char			*file;
+	char			*file = NULL;
 
 	char	buf[PATH_MAX];
 	int		size_buf;
@@ -146,18 +146,11 @@ void	print_directory(char *directory, t_env *env)
 		{
 			if (check_minus_a(content_dir) == true)
 				continue ;
-			stat(content_dir->d_name, &file_stat);
+			file = ft_strjoin(directory, "/");
+			file = ft_strjoin(file, content_dir->d_name);
+			lstat(file, &file_stat);
 			if (g_argp[MINUS_L].active == 1)
-			{
-				file = ft_strjoin(directory, "/");
-				file = ft_strjoin(file, content_dir->d_name);
-				/*ft_dprintf(1, GREEN"dir = %s"END, file);*/
 				minus_l(file, env);
-			}
-			/*RC;*/
-			/*if (file_stat.st_mode == S_IFLNK)*/
-			/*{*/
-				/*[>ft_dprintf(1, GREEN"%s\n"END, content_dir->d_name);<]*/
 			if (file_stat.st_mode & S_IFLNK)
 			{
 				if ((size_buf = readlink(file, buf, sizeof(buf) - 1)) != -1)
@@ -166,13 +159,9 @@ void	print_directory(char *directory, t_env *env)
 					ft_dprintf(1, "%s\n", buf);
 				}
 			}
-			/*}*/
-			/*else*/
-			/*{*/
-				/*stat(content_dir->d_name, &file_stat);*/
-				/*[>ft_dprintf(1, CYAN"%s\n"END, content_dir->d_name);<]*/
-			/*}*/
 			sort_lst(&ctrl, content_dir);
+			if (file)
+				ft_strdel(&file);
 			/*ft_strdel(&env->file.info);*/
 		}
 		if (g_argp[MINUS_L].active == 1)

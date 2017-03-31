@@ -50,6 +50,7 @@ typedef struct		s_file
 	char			*name; // stock le nom du fichier
 	size_t			timestamp;
 	char			*info;
+	char			*link;
 	struct s_file	*next;
 }					t_file;
 
