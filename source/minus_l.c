@@ -68,7 +68,9 @@ static void	get_link_groupe(char **info, struct stat *file_stat)
 	ft_strcat(*info, " ");
 	ft_strcat(*info, split[2]);
 	ft_strcat(*info, " ");
-	if (file_stat->st_mtime < (time(0) - six_month))
+	if (file_stat->st_mtime > time(0))
+		ft_strccat(*info, split[4], '\n');
+	else if (file_stat->st_mtime < (time(0) - six_month))
 		ft_strccat(*info, split[4], '\n');
 	else
 		ft_strncat(*info, split[3], 5);
@@ -83,10 +85,6 @@ void	minus_l(char *file, t_env *env)
 	if ((env->file.info = (char *)ft_memalloc(sizeof(char) * 256)) == NULL)
 		ft_critical_error(MALLOC_ERROR);
 	ft_memset(g_info, 0, 255);
-	/*if (S_ISLNK(file_stat.st_mode))*/
-		/*lstat(file, &file_stat);*/
-	/*else*/
-		/*stat(file, &file_stat);*/
 	lstat(file, &file_stat);
 	get_chmod(&env->file.info, &file_stat);
 	get_acl(file, &env->file.info);

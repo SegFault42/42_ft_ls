@@ -6,7 +6,7 @@
 /*   By: rabougue <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/28 17:52:21 by rabougue          #+#    #+#             */
-/*   Updated: 2017/03/04 13:54:45 by rabougue         ###   ########.fr       */
+/*   Updated: 2017/04/01 23:18:21 by rabougue         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,9 +28,10 @@ void	fill_node(t_ctrl *ctrl, int node, char *link)
 		while (tmp->next)
 			tmp = tmp->next;
 	}
-	else
+	else if (node > 1)
 		while (i < node)
 		{
+			ft_dprintf(1, "%d\n", node);
 			if (tmp->next == NULL)
 			{
 				ft_dprintf(2, RED"Error fill_node\n"END);
@@ -80,7 +81,7 @@ void			print_list(t_ctrl *ctrl)
 		if (g_argp[MINUS_L]. active == 1)
 			ft_dprintf(1, "%s", tmp->info);
 		ft_dprintf(1, "%s", tmp->name);
-		if (tmp->link != NULL)
+		if (tmp->link != NULL && g_argp[MINUS_L]. active == 1)
 			ft_dprintf(1, " -> %s\n", tmp->link);
 		else
 			ft_dprintf(1, "\n");

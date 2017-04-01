@@ -6,7 +6,7 @@
 /*   By: rabougue <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/12 05:46:45 by rabougue          #+#    #+#             */
-/*   Updated: 2017/03/04 15:52:48 by rabougue         ###   ########.fr       */
+/*   Updated: 2017/04/01 20:18:24 by rabougue         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -141,5 +141,10 @@ void				sort_lst(t_ctrl *ctrl, struct dirent *content_dir, char *link);
 void				minus_l(char *file, t_env *env);
 void				padding_l(t_ctrl *ctrl);
 void				fill_node(t_ctrl *ctrl, int node, char *link);
+/*
+** **********************************minus_l.c*********************************
+*/
+void				padding_l(t_ctrl *ctrl);
+void				rewrite_info_padded(t_ctrl *ctrl, size_t *padding);
 
 #endif

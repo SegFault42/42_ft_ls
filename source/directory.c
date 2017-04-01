@@ -56,72 +56,11 @@ void	particular_minus_t(t_ctrl *ctrl)
 		sort_by_time(&ctr, file_stat.st_atimespec.tv_sec, tab[i]);
 		++i;
 	}
+	if (g_argp[MINUS_L].active == 1)
+		padding_l(&ctr);
 	print_lst(&ctr);
 	/*ft_2d_tab_free(tab);*/
 	/*free_list(&ctr);*/
-}
-
-void	rewrite_info_padded(t_ctrl *ctrl, size_t *padding)
-{
-	t_file		*tmp;
-	char		**split;
-	int			i;
-
-	tmp = ctrl->first;
-	while (tmp)
-	{
-		i = 0;
-		split = ft_strsplit(tmp->info, ' ');
-		ft_memset(tmp->info, 0, sizeof(tmp->info));
-		while (split[i])
-		{
-			if (i == 2 || i == 3 || i == 6)
-			{
-				if (i == 6 && ft_strlen(split[6]) == 1)
-					ft_strcat(tmp->info, " ");
-				ft_strcat(tmp->info, split[i]);
-				ft_strxcat(tmp->info, " ", (padding[i] - ft_strlen(split[i])));
-				if (i == 2 || i == 3)
-					ft_strcat(tmp->info, " "); // double espace apres string
-			}
-			else
-			{
-				ft_strxcat(tmp->info, " ", (padding[i] - ft_strlen(split[i])));
-				ft_strcat(tmp->info, split[i]);
-			}
-			ft_strcat(tmp->info, " "); // espace entre chaque tab
-			++i;
-		}
-		if (tmp->info[10] == '|')
-			tmp->info[10] = ' ';
-		tmp = tmp->next;
-		ft_2d_tab_free(split);
-	}
-}
-
-void	padding_l(t_ctrl *ctrl)
-{
-	t_file		*tmp;
-	char		**split;
-	size_t			padding[8];
-	int				i;
-
-	i = -1;
-	ft_memset(&padding, 0, sizeof(padding));
-	while (++i < 8)
-	{
-		tmp = ctrl->first;
-		while (tmp)
-		{
-			split = ft_strsplit(tmp->info, ' ');
-			if (ft_strlen(split[i]) > padding[i])
-			padding[i] = ft_strlen(split[i]);
-			ft_2d_tab_free(split);
-			tmp = tmp->next;
-		}
-	}
-	rewrite_info_padded(ctrl, padding);
-	(void)ctrl;
 }
 
 void	print_directory(char *directory, t_env *env)
