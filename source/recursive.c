@@ -15,7 +15,7 @@ static void		print_all_directory(char *path)
 	{
 		if (check_minus_a(entry) == true)
 			continue ;
-		sort_lst(&lst, entry);
+		sort_lst(&lst, entry, NULL);
 	}
 	if (g_argp[MINUS_T].active == 1)
 	{

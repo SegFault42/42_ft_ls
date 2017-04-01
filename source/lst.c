@@ -16,6 +16,32 @@ extern t_argp	g_argp[];
 extern char		g_info[255];
 extern size_t	g_nb_blocks;
 
+void	fill_node(t_ctrl *ctrl, int node, char *link)
+{
+	t_file	*tmp;
+	int		i;
+
+	i = 0;
+	tmp = ctrl->first;
+	if (node == -1)
+	{
+		while (tmp->next)
+			tmp = tmp->next;
+	}
+	else
+		while (i < node)
+		{
+			if (tmp->next == NULL)
+			{
+				ft_dprintf(2, RED"Error fill_node\n"END);
+				exit(EXIT_FAILURE);
+			}
+			tmp = tmp->next;
+			++i;
+		}
+	tmp->link = ft_strdup(link);
+}
+
 size_t	count_nb_node(t_ctrl *ctrl)
 {
 	size_t	i;
@@ -53,7 +79,11 @@ void			print_list(t_ctrl *ctrl)
 	{
 		if (g_argp[MINUS_L]. active == 1)
 			ft_dprintf(1, "%s", tmp->info);
-		ft_dprintf(1, "%s\n", tmp->name);
+		ft_dprintf(1, "%s", tmp->name);
+		if (tmp->link != NULL)
+			ft_dprintf(1, " -> %s\n", tmp->link);
+		else
+			ft_dprintf(1, "\n");
 		tmp = tmp->next;
 	}
 	g_nb_blocks = 0;
@@ -155,6 +185,7 @@ t_file	*create_maillon()
 	if ((new = (t_file *)malloc(sizeof(t_file))) == NULL)
 		error(MALLOC_ERROR);
 	ft_memset(new, 0, sizeof(t_file));
+	/*new->link = NULL;*/
 	return (new);
 }
 

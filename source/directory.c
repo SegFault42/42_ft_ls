@@ -75,8 +75,10 @@ void	rewrite_info_padded(t_ctrl *ctrl, size_t *padding)
 		ft_memset(tmp->info, 0, sizeof(tmp->info));
 		while (split[i])
 		{
-			if (i == 2 || i == 3)
+			if (i == 2 || i == 3 || i == 6)
 			{
+				if (i == 6 && ft_strlen(split[6]) == 1)
+					ft_strcat(tmp->info, " ");
 				ft_strcat(tmp->info, split[i]);
 				ft_strxcat(tmp->info, " ", (padding[i] - ft_strlen(split[i])));
 				if (i == 2 || i == 3)
@@ -151,15 +153,15 @@ void	print_directory(char *directory, t_env *env)
 			lstat(file, &file_stat);
 			if (g_argp[MINUS_L].active == 1)
 				minus_l(file, env);
-			if (file_stat.st_mode & S_IFLNK)
+			/*if (file_stat.st_mode & S_IFLNK)*/
+			if (content_dir->d_type == DT_LNK)
 			{
 				if ((size_buf = readlink(file, buf, sizeof(buf) - 1)) != -1)
-				{
 					buf[size_buf] = '\0';
-					ft_dprintf(1, "%s\n", buf);
-				}
+				sort_lst(&ctrl, content_dir, buf);
 			}
-			sort_lst(&ctrl, content_dir);
+			else
+				sort_lst(&ctrl, content_dir, NULL);
 			if (file)
 				ft_strdel(&file);
 			/*ft_strdel(&env->file.info);*/

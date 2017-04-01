@@ -119,7 +119,7 @@ void	sort_lst_dir_rev(t_ctrl *ctrl, char *path)
 	}
 }
 
-void	sort_lst(t_ctrl *ctrl, struct dirent *content_dir)
+void	sort_lst(t_ctrl *ctrl, struct dirent *content_dir, char *link)
 {
 	t_file	*tmp;
 	int		node;
@@ -131,6 +131,8 @@ void	sort_lst(t_ctrl *ctrl, struct dirent *content_dir)
 	if (tmp == NULL)
 	{
 		add_head(ctrl, content_dir->d_name, 0);
+		if (link != NULL)
+			fill_node(ctrl, node, link);
 		return ;
 	}
 	while (tmp)
@@ -140,11 +142,15 @@ void	sort_lst(t_ctrl *ctrl, struct dirent *content_dir)
 		if (content_dir->d_name[i] < tmp->name[i])
 		{
 			add_before(ctrl, node, content_dir->d_name, 0);
+			if (link != NULL)
+				fill_node(ctrl, node, link);
 			return ;
 		}
 		else if (tmp->next == NULL)
 		{
 			add_tail(ctrl, content_dir->d_name, 0);
+			if (link != NULL)
+				fill_node(ctrl, -1, link);
 			return ;
 		}
 		i = 0;
@@ -153,6 +159,8 @@ void	sort_lst(t_ctrl *ctrl, struct dirent *content_dir)
 		if (content_dir->d_name[i] < tmp->next->name[i])
 		{
 			add_after(ctrl, node, content_dir->d_name, 0);
+			if (link != NULL)
+				fill_node(ctrl, node, link);
 			return ;
 		}
 		tmp = tmp->next;

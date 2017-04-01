@@ -134,11 +134,12 @@ void				recursive(char *directory);
 void				sort_lst_dir(t_ctrl *ctrl, char *path);
 void				sort_by_time(t_ctrl *ctrl, size_t value, char *name);
 void				sort_lst_dir_rev(t_ctrl *ctrl, char *path);
-void				sort_lst(t_ctrl *ctrl, struct dirent *content_dir);
+void				sort_lst(t_ctrl *ctrl, struct dirent *content_dir, char *link);
 /*
 ** **********************************minus_l.c*********************************
 */
 void				minus_l(char *file, t_env *env);
 void				padding_l(t_ctrl *ctrl);
+void				fill_node(t_ctrl *ctrl, int node, char *link);
 
 #endif
