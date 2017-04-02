@@ -48,6 +48,8 @@ static int		count_where_is_first_file(char **argv)
 	{
 		if (argv[i][0] != '-')
 			break ;
+		if (ft_strlen(argv[i]) == 1 && argv[i][0] == '-')
+			break ;
 		++i;
 	}
 	if (argv[i] != NULL && ft_strcmp(argv[i], "--") == 0)
