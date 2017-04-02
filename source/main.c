@@ -6,7 +6,7 @@
 /*   By: rabougue <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/12 05:48:29 by rabougue          #+#    #+#             */
-/*   Updated: 2017/03/04 21:14:17 by rabougue         ###   ########.fr       */
+/*   Updated: 2017/04/02 17:28:11 by rabougue         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,14 +28,11 @@ int	main(int argc, char **argv)
 {
 	t_ctrl	ctrl;
 	t_env	env;
-	int		i;
 
-	i = 0;
 	init(&ctrl, &env);
 	get_option(argv);
 	sort_argv(&env, argv, argc);
 	print(&env);
 	quit(&env, argc);
 	return (EXIT_SUCCESS);
-	(void)argc;
 }

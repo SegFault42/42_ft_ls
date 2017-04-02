@@ -6,7 +6,7 @@
 /*   By: rabougue <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/12 05:46:45 by rabougue          #+#    #+#             */
-/*   Updated: 2017/04/02 05:02:21 by rabougue         ###   ########.fr       */
+/*   Updated: 2017/04/02 17:30:40 by rabougue         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,6 +64,7 @@ typedef struct		s_env
 	char			**directory;
 	t_file			file;
 	size_t			nb_blocks;
+	bool			nb_args;
 }					t_env;
 
 typedef struct		s_argp

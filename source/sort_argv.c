@@ -25,6 +25,20 @@ void	sort_param(char **arguments)
 	}
 }
 
+static int		count_where_is_first_file_2(char **argv)
+{
+	int	i;
+
+	i = 1;
+	while (argv[i] && argv[i][0] == '-')
+	{
+		if (ft_strcmp(argv[i], "--") == '0')
+			break ;
+		++i;
+	}
+	return (i);
+}
+
 static int		count_where_is_first_file(char **argv)
 {
 	int	i;
@@ -76,13 +90,20 @@ static void	stock_reg_and_dir(t_env *env, char **argv, int argc)
 
 void		sort_argv(t_env *env, char **argv, int argc)
 {
+	int	first_file;
+
+	first_file = count_where_is_first_file_2(argv);
+	if (argc - first_file > 1)
+		env->nb_args = 1;
 	if ((count_where_is_first_file(argv) - argc) == 0)
 	{
 		stock_reg_and_dir(env, argv, argc + 1);
 		env->directory[0] = ft_strdup(".");
 	}
 	else
+	{
 		stock_reg_and_dir(env, argv, argc);
+	}
 	if (env->files[0] != NULL)
 		sort_param(env->files);
 	if (env->directory[0] != NULL)

@@ -6,7 +6,7 @@
 /*   By: rabougue <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/28 17:52:21 by rabougue          #+#    #+#             */
-/*   Updated: 2017/04/02 05:11:41 by rabougue         ###   ########.fr       */
+/*   Updated: 2017/04/02 17:20:25 by rabougue         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,6 +100,8 @@ void			print_list_reverse(t_ctrl *ctrl)
 	i = 0;
 	j = 0;
 	tmp = ctrl->first;
+	if (g_argp[MINUS_L]. active == 1 && g_total == 1)
+		ft_dprintf(1, "total %d\n", g_nb_blocks);
 	while (tmp)
 	{
 		tmp = tmp->next;
