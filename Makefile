@@ -6,7 +6,7 @@
 #    By: rabougue <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2015/12/10 19:16:51 by rabougue          #+#    #+#              #
-#    Updated: 2017/04/01 20:19:15 by rabougue         ###   ########.fr        #
+#    Updated: 2017/04/02 01:52:36 by rabougue         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,7 +18,7 @@ END = \033[0m
 ##################################_COMPILATION_#################################
 NAME = ft_ls
 CC = gcc
-FLAG = -Wall -Wextra -Werror
+FLAG =# -Wall -Wextra -Werror
 LFT = ./libft/libft.a
 SRCS =	./source/lst.c\
 		./source/check.c\

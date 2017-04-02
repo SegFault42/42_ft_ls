@@ -70,7 +70,6 @@ void	print_directory(char *directory, t_env *env)
 	t_ctrl			ctrl;
 	struct stat		file_stat;
 	char			*file = NULL;
-
 	char	buf[PATH_MAX];
 	int		size_buf;
 
@@ -80,7 +79,7 @@ void	print_directory(char *directory, t_env *env)
 	if (open_directory(&dir, directory) == EXIT_ERROR)
 		return ;
 	if (g_argp[UPPER_R].active == 1)
-		recursive(directory);
+		recursive(directory, env);
 	else
 	{
 		while ((content_dir = readdir(dir)) != NULL)
@@ -92,7 +91,6 @@ void	print_directory(char *directory, t_env *env)
 			lstat(file, &file_stat);
 			if (g_argp[MINUS_L].active == 1)
 				minus_l(file, env);
-			/*if (file_stat.st_mode & S_IFLNK)*/
 			if (content_dir->d_type == DT_LNK)
 			{
 				if ((size_buf = readlink(file, buf, sizeof(buf) - 1)) != -1)
