@@ -5,7 +5,7 @@ extern t_argp g_argp[];
 static void	usage(char option)
 {
 	ft_dprintf(STDERR_FILENO,
-	"ft_ls: illegal option -- %c\nusage: ./ft_ls [-Ralrt1] [file ...]\n",
+	"ls: illegal option -- %c\nusage: ./ft_ls [-Ralrt1] [file ...]\n",
 	option);
 	exit(EXIT_FAILURE);
 }

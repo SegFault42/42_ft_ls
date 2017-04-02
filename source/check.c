@@ -8,7 +8,7 @@ uint8_t	is_reg_or_dir(char *argument)
 
 	if (stat(argument, &file_stat) < 0)
 	{
-		ft_dprintf(1, "ft_ls: %s: %s\n", argument, strerror(errno));
+		ft_dprintf(2, "ls: %s: %s\n", argument, strerror(errno));
 		return (-1);
 	}
 	if (S_ISDIR(file_stat.st_mode))
