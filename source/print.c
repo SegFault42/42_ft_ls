@@ -66,7 +66,8 @@ void	browse_directory(t_env *env)
 	else
 		while (env->directory[i])
 		{
-			if (len_tab > 1)
+			if (env->nb_args == 1)
+			/*if (len_tab > 1)*/
 			{
 				ft_dprintf(1, "%s:\n", env->directory[i]);
 				print_directory(env->directory[i], env);
