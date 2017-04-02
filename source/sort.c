@@ -37,6 +37,47 @@ void	sort_by_time(t_ctrl *ctrl, size_t value, char *name)
 	
 }
 
+void	sort_lst_file(t_ctrl *ctrl, char *name)
+{
+	t_file	*tmp;
+	int	i;
+	int	node;
+
+	node = 1;
+	i = 0;
+	tmp = ctrl->first;
+	if (tmp == NULL)
+	{
+		add_head(ctrl, name, 0);
+		return ;
+	}
+	while (tmp)
+	{
+		while (name[i] && name[i] == tmp->name[i])
+			++i;
+		if (name[i] < tmp->name[i])
+		{
+			add_before(ctrl, node, name, 0);
+			return ;
+		}
+		else if (tmp->next == NULL)
+		{
+			add_tail(ctrl, name, 0);
+			return ;
+		}
+		i = 0;
+		while (name[i] && name[i] == tmp->next->name[i])
+			++i;
+		if (name[i] < tmp->next->name[i])
+		{
+			add_after(ctrl, node, name, 0);
+			return ;
+		}
+		tmp = tmp->next;
+		++node;
+	}
+}
+
 void	sort_lst_dir(t_ctrl *ctrl, char *path)
 {
 	t_file	*tmp;

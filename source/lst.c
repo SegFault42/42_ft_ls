@@ -6,7 +6,7 @@
 /*   By: rabougue <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/28 17:52:21 by rabougue          #+#    #+#             */
-/*   Updated: 2017/04/01 23:18:21 by rabougue         ###   ########.fr       */
+/*   Updated: 2017/04/02 05:11:41 by rabougue         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 extern t_argp	g_argp[];
 extern char		g_info[255];
 extern size_t	g_nb_blocks;
+bool			g_total = 0;
 
 void	fill_node(t_ctrl *ctrl, int node, char *link)
 {
@@ -74,7 +75,7 @@ void			print_list(t_ctrl *ctrl)
 	t_file	*tmp;
 
 	tmp = ctrl->first;
-	if (g_argp[MINUS_L]. active == 1)
+	if (g_argp[MINUS_L]. active == 1 && g_total == 1)
 		ft_dprintf(1, "total %d\n", g_nb_blocks);
 	while (tmp)
 	{
@@ -89,35 +90,6 @@ void			print_list(t_ctrl *ctrl)
 	}
 	g_nb_blocks = 0;
 }
-
-/*void			print_list_reverse(t_ctrl *ctrl)*/
-/*{*/
-	/*t_file	*tmp;*/
-	/*int		nb_node = 0;*/
-	/*char	**path;*/
-	/*int		i = 0;*/
-
-	/*tmp = ctrl->first;*/
-	/*while (tmp)*/
-	/*{*/
-		/*tmp = tmp->next;*/
-		/*++nb_node;*/
-	/*}*/
-	/*path = (char **)ft_memalloc(sizeof(char *) * nb_node + 1);*/
-	/*tmp = ctrl->first;*/
-	/*while (tmp)*/
-	/*{*/
-		/*path[i] = tmp->name;*/
-		/*++i;*/
-		/*tmp = tmp->next;*/
-	/*}*/
-	/*path[i] = NULL;*/
-	/*while (--nb_node >= 0)*/
-	/*{*/
-		/*ft_dprintf(1, "%s\n", path[nb_node]);*/
-	/*}*/
-	/*ft_2d_tab_free(path);*/
-/*}*/
 
 void			print_list_reverse(t_ctrl *ctrl)
 {

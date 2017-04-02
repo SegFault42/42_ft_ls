@@ -6,7 +6,7 @@
 /*   By: rabougue <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/12 05:46:45 by rabougue          #+#    #+#             */
-/*   Updated: 2017/04/02 02:23:21 by rabougue         ###   ########.fr       */
+/*   Updated: 2017/04/02 05:02:21 by rabougue         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,8 +42,6 @@
 # define DIRE			(1)
 
 # define TIMESTAMP		(0)
-
-//char	g_info[255] = {0};
 
 typedef struct		s_file
 {
@@ -146,5 +144,7 @@ void				fill_node(t_ctrl *ctrl, int node, char *link);
 */
 void				padding_l(t_ctrl *ctrl);
 void				rewrite_info_padded(t_ctrl *ctrl, size_t *padding);
+
+void				sort_lst_file(t_ctrl *ctrl, char *name);
 
 #endif

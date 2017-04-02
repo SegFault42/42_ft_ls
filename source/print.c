@@ -1,6 +1,7 @@
 #include "../include/ft_ls.h"
 
 extern t_argp	g_argp[];
+extern bool		g_total;
 
 static void	print_regular_files(t_env *env)
 {
@@ -9,6 +10,7 @@ static void	print_regular_files(t_env *env)
 	struct stat		file_stat;
 	/*char			*file;*/
 
+	g_total = 0;
 	ft_memset(&ctrl, 0, sizeof(t_ctrl));
 	if (g_argp[MINUS_R].active == 1)
 	{
@@ -21,28 +23,17 @@ static void	print_regular_files(t_env *env)
 		i = 0;
 		while (env->files[i])
 		{
-			/*if (g_argp[MINUS_L].active == 1)*/
-			/*{*/
-				/*file = ft_strjoin("./", env->files[i]);*/
-				/*ft_dprintf(1, "%s\n", file);*/
-				/*minus_l(file, env);*/
-			/*}*/
-			/*ft_dprintf(1, "%s = %d\n", env->files[i], file_stat.st_mtimespec.tv_sec);*/
-			if (file_stat.st_mode & S_IFLNK)
-				lstat(env->files[i], &file_stat);
-			else
-				stat(env->files[i], &file_stat);
+			lstat(env->files[i], &file_stat);
+			if (g_argp[MINUS_L].active == 1)
+				minus_l(env->files[i], env);
 			if (g_argp[MINUS_T].active == 1)
 				sort_by_time(&ctrl, file_stat.st_mtimespec.tv_sec, env->files[i]);
 			else
-			{
-				/*sort_lst_dir(&ctrl, env->files[i]);*/
-				ft_dprintf(1, "%s\n", env->files[i]);
-			}
+				sort_lst_file(&ctrl, env->files[i]);
 			++i;
 		}
-		/*if (g_argp[MINUS_L].active == 1)*/
-			/*padding_l(&ctrl);*/
+		if (g_argp[MINUS_L].active == 1)
+			padding_l(&ctrl);
 		print_lst(&ctrl);
 		free_list(&ctrl);
 	}
@@ -56,6 +47,7 @@ void	browse_directory(t_env *env)
 	int	len_tab;
 
 	i = 0;
+	g_total = 1;
 	len_tab = ft_count_2d_tab(env->directory);
 	if (g_argp[MINUS_R].active == 1)
 	{
@@ -69,8 +61,6 @@ void	browse_directory(t_env *env)
 			}
 			else
 				print_directory(env->directory[i], env);
-			/*if (env->directory[i] != NULL)*/
-				/*RC;*/
 		}
 	}
 	else
