@@ -3,7 +3,30 @@
 char	g_info[255] = {0};
 size_t	g_nb_blocks = 0;
 
-static void	get_chmod(char **info, struct stat *file_stat)
+static void	get_chmod_2(char **info, struct stat *file_stat)
+{
+	ft_strcat(*info, (file_stat->st_mode & S_IRUSR) ? "r" : "-");
+	ft_strcat(*info, (file_stat->st_mode & S_IWUSR) ? "w" : "-");
+	if (file_stat->st_mode & S_IXUSR)
+		ft_strcat(*info, "x");
+	else if (file_stat->st_mode & S_ISUID)
+		ft_strcat(*info, "S");
+	else
+		ft_strcat(*info, "-");
+	ft_strcat(*info, (file_stat->st_mode & S_IRGRP) ? "r" : "-");
+	ft_strcat(*info, (file_stat->st_mode & S_IWGRP) ? "w" : "-");
+	ft_strcat(*info, (file_stat->st_mode & S_IXGRP) ? "x" : "-");
+	ft_strcat(*info, (file_stat->st_mode & S_IROTH) ? "r" : "-");
+	ft_strcat(*info, (file_stat->st_mode & S_IWOTH) ? "w" : "-");
+	if (file_stat->st_mode & S_IXOTH)
+		ft_strcat(*info, "x");
+	else if (file_stat->st_mode & S_ISVTX)
+		ft_strcat(*info, "T");
+	else
+		ft_strcat(*info, "-");
+}
+
+static void	get_chmod_1(char **info, struct stat *file_stat)
 {
 	if (S_ISDIR(file_stat->st_mode))
 		ft_strcat(*info, "d");
@@ -19,15 +42,6 @@ static void	get_chmod(char **info, struct stat *file_stat)
 		ft_strcat(*info, "p");
 	else
 		ft_strcat(*info, "-");
-	ft_strcat(*info, (file_stat->st_mode & S_IRUSR)  ? "r" : "-");
-	ft_strcat(*info, (file_stat->st_mode & S_IWUSR) ? "w" : "-");
-	ft_strcat(*info, (file_stat->st_mode & S_IXUSR) ? "x" : "-");
-	ft_strcat(*info, (file_stat->st_mode & S_IRGRP) ? "r" : "-");
-	ft_strcat(*info, (file_stat->st_mode & S_IWGRP) ? "w" : "-");
-	ft_strcat(*info, (file_stat->st_mode & S_IXGRP) ? "x" : "-");
-	ft_strcat(*info, (file_stat->st_mode & S_IROTH) ? "r" : "-");
-	ft_strcat(*info, (file_stat->st_mode & S_IWOTH) ? "w" : "-");
-	ft_strcat(*info, (file_stat->st_mode & S_IXOTH) ? "x" : "-");
 }
 
 static void	get_acl(char *file, char **info)
@@ -86,7 +100,8 @@ void	minus_l(char *file, t_env *env)
 		ft_critical_error(MALLOC_ERROR);
 	ft_memset(g_info, 0, 255);
 	lstat(file, &file_stat);
-	get_chmod(&env->file.info, &file_stat);
+	get_chmod_1(&env->file.info, &file_stat);
+	get_chmod_2(&env->file.info, &file_stat);
 	get_acl(file, &env->file.info);
 	get_link_groupe(&env->file.info, &file_stat);
 	ft_memcpy(g_info, env->file.info, 255);
