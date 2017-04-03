@@ -97,6 +97,42 @@ static void	stock_reg_and_dir(t_env *env, char **argv, int argc)
 	}
 }
 
+void	print_no_such_file_or_directory(char **argv)
+{
+	struct stat	file_stat;
+	t_ctrl		*ctrl;
+	int			i;
+
+	i = 1;
+	ctrl = (t_ctrl *)malloc(sizeof(t_ctrl));
+	ft_memset(ctrl, 0, sizeof(t_ctrl));
+	while (argv[i])
+	{
+		if (ft_strlen(argv[i]) == 2 && ft_strcmp(argv[i], "--") == 0)
+		{
+			++i;
+			break ;
+		}
+		else if (argv[i][0] == '-')
+			++i;
+		else
+			break ;
+	}
+	while (argv[i])
+	{
+		if (ft_strlen(argv[i]) == 2 && ft_strcmp(argv[i], "--") == 0)
+		{
+			++i;
+			continue ;
+		}
+		if (stat(argv[i], &file_stat) < 0)
+			sort_lst_file(ctrl, argv[i]);
+		++i;
+	}
+	print_list_no_such(ctrl);
+	free_list(ctrl);
+}
+
 static void	fts_open(char **argv)
 {
 	int	i;

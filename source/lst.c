@@ -6,7 +6,7 @@
 /*   By: rabougue <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/28 17:52:21 by rabougue          #+#    #+#             */
-/*   Updated: 2017/04/02 17:20:25 by rabougue         ###   ########.fr       */
+/*   Updated: 2017/04/03 01:15:40 by rabougue         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,6 +67,18 @@ void	print_lst(t_ctrl *ctrl)
 			print_list_reverse(ctrl);
 		else
 			print_list(ctrl);
+	}
+}
+
+void			print_list_no_such(t_ctrl *ctrl)
+{
+	t_file	*tmp;
+
+	tmp = ctrl->first;
+	while (tmp)
+	{
+		ft_dprintf(2, "ls: %s: No such file or directory\n", tmp->name);
+		tmp = tmp->next;
 	}
 }
 

@@ -6,7 +6,7 @@
 /*   By: rabougue <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/12 05:46:45 by rabougue          #+#    #+#             */
-/*   Updated: 2017/04/02 17:30:40 by rabougue         ###   ########.fr       */
+/*   Updated: 2017/04/03 01:16:45 by rabougue         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -147,5 +147,7 @@ void				padding_l(t_ctrl *ctrl);
 void				rewrite_info_padded(t_ctrl *ctrl, size_t *padding);
 
 void				sort_lst_file(t_ctrl *ctrl, char *name);
+void				print_no_such_file_or_directory(char **argv);
+void				print_list_no_such(t_ctrl *ctrl);
 
 #endif
