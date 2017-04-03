@@ -7,23 +7,19 @@ static void	get_chmod_2(char **info, struct stat *file_stat)
 {
 	ft_strcat(*info, (file_stat->st_mode & S_IRUSR) ? "r" : "-");
 	ft_strcat(*info, (file_stat->st_mode & S_IWUSR) ? "w" : "-");
-	if (file_stat->st_mode & S_IXUSR)
-		ft_strcat(*info, "x");
-	else if (file_stat->st_mode & S_ISUID)
-		ft_strcat(*info, "S");
+	if (file_stat->st_mode & S_ISUID)
+		ft_strcat(*info, (file_stat->st_mode & S_IXUSR) ? "s" : "S");
 	else
-		ft_strcat(*info, "-");
+		ft_strcat(*info, (file_stat->st_mode & S_IXUSR) ? "x" : "-");
 	ft_strcat(*info, (file_stat->st_mode & S_IRGRP) ? "r" : "-");
 	ft_strcat(*info, (file_stat->st_mode & S_IWGRP) ? "w" : "-");
 	ft_strcat(*info, (file_stat->st_mode & S_IXGRP) ? "x" : "-");
 	ft_strcat(*info, (file_stat->st_mode & S_IROTH) ? "r" : "-");
 	ft_strcat(*info, (file_stat->st_mode & S_IWOTH) ? "w" : "-");
-	if (file_stat->st_mode & S_IXOTH)
-		ft_strcat(*info, "x");
-	else if (file_stat->st_mode & S_ISVTX)
-		ft_strcat(*info, "T");
+	if (file_stat->st_mode & S_ISVTX)
+		ft_strcat(*info, (file_stat->st_mode & S_IXOTH) ? "t" : "T");
 	else
-		ft_strcat(*info, "-");
+		ft_strcat(*info, (file_stat->st_mode & S_IXOTH) ? "x" : "-");
 }
 
 static void	get_chmod_1(char **info, struct stat *file_stat)
