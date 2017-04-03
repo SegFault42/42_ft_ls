@@ -6,7 +6,7 @@
 /*   By: rabougue <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/12 05:48:29 by rabougue          #+#    #+#             */
-/*   Updated: 2017/04/03 01:20:29 by rabougue         ###   ########.fr       */
+/*   Updated: 2017/04/03 02:43:39 by rabougue         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@ t_argp	g_argp[] =
 	{"--", 0, "end getting option"},
 	{0, 0, 0}
 };
+
 
 int	main(int argc, char **argv)
 {

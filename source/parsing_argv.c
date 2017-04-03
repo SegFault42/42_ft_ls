@@ -2,6 +2,16 @@
 
 extern t_argp g_argp[];
 
+static void	fts_open(char *argv)
+{
+	if (ft_strcmp(argv, "") == 0)
+	{
+		ft_dprintf(STDERR_FILENO,
+				"ls: fts_open: No such file or directory\n");
+		exit(-1);
+	}
+}
+
 static void	usage(char option)
 {
 	ft_dprintf(STDERR_FILENO,
@@ -78,6 +88,7 @@ void		get_option(char **argv)
 	while (argv[arg])
 	{
 		i = 0;
+		fts_open(argv[arg]);
 		if (argv[arg][0] == '-' && g_argp[END_OPTION].active == 0)
 		{
 			check_if_option_exist(argv[arg]);

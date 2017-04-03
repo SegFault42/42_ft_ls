@@ -133,28 +133,10 @@ void	print_no_such_file_or_directory(char **argv)
 	free_list(ctrl);
 }
 
-static void	fts_open(char **argv)
-{
-	int	i;
-
-	i = 0;
-	while (argv[i])
-	{
-		if (ft_strcmp(argv[i], "") == 0)
-		{
-			ft_dprintf(STDERR_FILENO,
-					"ls: fts_open: No such file or directory\n");
-			exit(-1);
-		}
-		++i;
-	}
-}
-
 void		sort_argv(t_env *env, char **argv, int argc)
 {
 	int	first_file;
 
-	fts_open(argv);
 	first_file = count_where_is_first_file_2(argv);
 	if (argc - first_file > 1)
 		env->nb_args = 1;
