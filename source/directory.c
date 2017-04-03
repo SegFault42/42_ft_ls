@@ -22,13 +22,14 @@ void	close_directory(DIR **dir)
 	}
 }
 
-void	particular_minus_t(t_ctrl *ctrl)
+void	particular_minus_t(t_ctrl *ctrl, char *directory, t_env *env)
 {
 	int		i;
 	char	**tab;
 	t_file	*tmp;
 	t_ctrl	ctr;
 	struct stat		file_stat;
+	char			*file = NULL;
 
 	ft_memset(&ctr, 0, sizeof(t_ctrl));
 	i = count_nb_node(ctrl);
@@ -49,11 +50,14 @@ void	particular_minus_t(t_ctrl *ctrl)
 	i = 0;
 	while (tab[i])
 	{
-		if (file_stat.st_mode & S_IFLNK)
-			lstat(tab[i], &file_stat);
-		else
-			stat(tab[i], &file_stat);
-		sort_by_time(&ctr, file_stat.st_atimespec.tv_sec, tab[i]);
+		file = ft_strjoin(directory, "/");
+		file = ft_strjoin(file, tab[i]);
+		lstat(file, &file_stat);
+		if (g_argp[MINUS_L].active == 1)
+			minus_l(file, env);
+		sort_by_time(&ctr, file_stat.st_mtimespec.tv_sec, file);
+		if (file)
+			ft_strdel(&file);
 		++i;
 	}
 	if (g_argp[MINUS_L].active == 1)
@@ -106,7 +110,7 @@ void	print_directory(char *directory, t_env *env)
 		if (g_argp[MINUS_L].active == 1)
 			padding_l(&ctrl);
 		if (g_argp[MINUS_T].active == 1)
-			particular_minus_t(&ctrl);
+			particular_minus_t(&ctrl, directory, env);
 		else
 			print_lst(&ctrl);
 		/*free_list(&ctrl);*/

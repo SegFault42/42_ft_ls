@@ -6,7 +6,7 @@
 /*   By: rabougue <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/12 05:46:45 by rabougue          #+#    #+#             */
-/*   Updated: 2017/04/03 01:16:45 by rabougue         ###   ########.fr       */
+/*   Updated: 2017/04/03 20:12:21 by rabougue         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -116,7 +116,7 @@ size_t				count_nb_node(t_ctrl *ctrl);
 void				close_directory(DIR **dir);
 int8_t				open_directory(DIR **dir, char *directory);
 void				print_directory(char *directory, t_env *env);
-void				particular_minus_t(t_ctrl *ctrl);
+void				particular_minus_t(t_ctrl *ctrl, char *directory, t_env *env);
 /*
 ** ************************************check.c*********************************
 */

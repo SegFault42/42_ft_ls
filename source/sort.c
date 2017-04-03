@@ -5,10 +5,13 @@ void	sort_by_time(t_ctrl *ctrl, size_t value, char *name)
 	t_file	*tmp;
 	int	i;
 	int	node;
+	char *name_tmp;
 
 	node = 1;
 	i = 0;
 	tmp = ctrl->first;
+	name_tmp = strrchr(name, '/');
+	name = &name_tmp[1];
 	if (tmp == NULL)
 	{
 		add_head(ctrl, name, value);

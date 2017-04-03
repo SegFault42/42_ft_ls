@@ -36,7 +36,7 @@ static void		print_all_directory(char *path, t_env *env)
 	if (g_argp[MINUS_L].active == 1)
 		padding_l(&lst);
 	if (g_argp[MINUS_T].active == 1)
-		particular_minus_t(&lst);
+		particular_minus_t(&lst, path, env);
 	else
 		print_lst(&lst);
 	close_directory(&dir);
