@@ -13,7 +13,10 @@ static void	get_chmod_2(char **info, struct stat *file_stat)
 		ft_strcat(*info, (file_stat->st_mode & S_IXUSR) ? "x" : "-");
 	ft_strcat(*info, (file_stat->st_mode & S_IRGRP) ? "r" : "-");
 	ft_strcat(*info, (file_stat->st_mode & S_IWGRP) ? "w" : "-");
-	ft_strcat(*info, (file_stat->st_mode & S_IXGRP) ? "x" : "-");
+	if (file_stat->st_mode & S_ISGID)
+		ft_strcat(*info, (file_stat->st_mode & S_IXGRP) ? "s" : "S");
+	else
+		ft_strcat(*info, (file_stat->st_mode & S_IXGRP) ? "x" : "-");
 	ft_strcat(*info, (file_stat->st_mode & S_IROTH) ? "r" : "-");
 	ft_strcat(*info, (file_stat->st_mode & S_IWOTH) ? "w" : "-");
 	if (file_stat->st_mode & S_ISVTX)
