@@ -44,17 +44,15 @@ static void	print_regular_files(t_env *env)
 void	browse_directory(t_env *env)
 {
 	int	i;
-	int	len_tab;
 
 	i = 0;
 	g_total = 1;
-	len_tab = ft_count_2d_tab(env->directory);
 	if (g_argp[MINUS_R].active == 1)
 	{
 		i = ft_count_2d_tab(env->directory);
 		while (--i >= 0)
 		{
-			if (len_tab > 1)
+			if (env->nb_args == 1)
 			{
 				ft_dprintf(1, "%s:\n", env->directory[i]);
 				print_directory(env->directory[i], env);
@@ -67,7 +65,6 @@ void	browse_directory(t_env *env)
 		while (env->directory[i])
 		{
 			if (env->nb_args == 1)
-			/*if (len_tab > 1)*/
 			{
 				ft_dprintf(1, "%s:\n", env->directory[i]);
 				print_directory(env->directory[i], env);

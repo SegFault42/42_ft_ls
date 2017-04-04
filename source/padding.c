@@ -6,7 +6,7 @@
 /*   By: rabougue <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/01 20:16:26 by rabougue          #+#    #+#             */
-/*   Updated: 2017/04/04 04:15:02 by rabougue         ###   ########.fr       */
+/*   Updated: 2017/04/04 06:01:22 by rabougue         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,7 @@ void	padding_hour(t_file *tmp, char *split, size_t padding)
 {
 	if (ft_strcmp(split, "10000") == 0)
 		ft_strcat(tmp->info, " ");
-	if (ft_strlen(split) == 4 && padding != 5)
+	if (ft_strlen(split) == 4)
 		ft_strcat(tmp->info, " ");
 	ft_strxcat(tmp->info, " ", padding - ft_strlen(split));
 	ft_strcat(tmp->info, split);
@@ -81,8 +81,8 @@ void	padding_l(t_ctrl *ctrl)
 {
 	t_file		*tmp;
 	char		**split;
-	size_t			padding[8];
-	int				i;
+	size_t		padding[8];
+	int			i;
 
 	i = -1;
 	ft_memset(&padding, 0, sizeof(padding));
@@ -93,7 +93,7 @@ void	padding_l(t_ctrl *ctrl)
 		{
 			split = ft_strsplit(tmp->info, ' ');
 			if (ft_strlen(split[i]) > padding[i])
-			padding[i] = ft_strlen(split[i]);
+				padding[i] = ft_strlen(split[i]);
 			ft_2d_tab_free(split);
 			tmp = tmp->next;
 		}

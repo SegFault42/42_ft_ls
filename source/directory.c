@@ -5,9 +5,15 @@ extern char		g_info[255];
 
 int8_t	open_directory(DIR **dir, char *directory)
 {
+	char	*name;
+
+	name = ft_strrchr(directory, '/');
 	if ((*dir = opendir(directory)) == NULL)
 	{
-		ft_dprintf(2, "ls: %s: %s\n", directory, strerror(errno));
+		if (name != NULL)
+			ft_dprintf(2, "ls: %s: %s\n", &ft_strrchr(directory, '/')[1], strerror(errno));
+		else
+			ft_dprintf(2, "ls: %s: %s\n", directory, strerror(errno));
 		return (EXIT_ERROR);
 	}
 	return (EXIT_SUCCESS);
@@ -84,6 +90,16 @@ void	print_directory(char *directory, t_env *env)
 	content_dir = NULL;
 	dir = NULL;
 	ft_memset(&ctrl, 0, sizeof(t_ctrl));
+	lstat(directory, &file_stat);
+	if (g_argp[MINUS_L].active == 1 && S_ISLNK(file_stat.st_mode) == 1)
+	{
+		sort_lst_file(&ctrl, directory);
+		minus_l(directory, env);
+		ctrl.first->info = g_info;
+		padding_l(&ctrl);
+		print_list(&ctrl);
+		return ;
+	}
 	if (open_directory(&dir, directory) == EXIT_ERROR)
 		return ;
 	if (g_argp[UPPER_R].active == 1)
