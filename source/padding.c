@@ -6,7 +6,7 @@
 /*   By: rabougue <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/01 20:16:26 by rabougue          #+#    #+#             */
-/*   Updated: 2017/04/04 06:01:22 by rabougue         ###   ########.fr       */
+/*   Updated: 2017/04/04 23:12:49 by rabougue         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,8 @@ void	padding_hour(t_file *tmp, char *split, size_t padding)
 		ft_strcat(tmp->info, " ");
 	if (ft_strlen(split) == 4)
 		ft_strcat(tmp->info, " ");
-	ft_strxcat(tmp->info, " ", padding - ft_strlen(split));
+	else
+		ft_strxcat(tmp->info, " ", padding - ft_strlen(split));
 	ft_strcat(tmp->info, split);
 	ft_strcat(tmp->info, " ");
 }

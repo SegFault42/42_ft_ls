@@ -2,6 +2,7 @@
 
 extern t_argp	g_argp[];
 extern char		g_info[255];
+extern bool		g_total;
 
 int8_t	open_directory(DIR **dir, char *directory)
 {
@@ -77,6 +78,39 @@ void	particular_minus_t(t_ctrl *ctrl, char *directory, t_env *env)
 	/*free_list(&ctr);*/
 }
 
+void	print_single_link(char *directory, t_env *env, t_ctrl *ctrl)
+{
+	char	buf[PATH_MAX];
+	int		size_buf;
+	char	**split;
+	uint8_t	i;
+
+	g_total = 0;
+	i = 0;
+	if ((size_buf = readlink(directory, buf, sizeof(buf) - 1)) != -1)
+		buf[size_buf] = '\0';
+	sort_lst_file(ctrl, buf);
+	minus_l(directory, env);
+	ctrl->first->info = g_info;
+	split = ft_strsplit(ctrl->first->info, ' ');
+	ft_memset(ctrl->first->info, 0, 256);
+	while (split[i])
+	{
+		ft_strcat(ctrl->first->info, split[i]);
+		ft_strcat(ctrl->first->info, " ");
+		if (i == 7)
+		{
+		
+		ft_strcat(ctrl->first->info, directory);
+		ft_strcat(ctrl->first->info, " ");
+		}
+		++i;
+	}
+	ft_dprintf(1, "%s\n", ctrl->first->info);
+	padding_l(ctrl);
+	print_list(ctrl);
+}
+
 void	print_directory(char *directory, t_env *env)
 {
 	struct dirent	*content_dir;
@@ -91,15 +125,11 @@ void	print_directory(char *directory, t_env *env)
 	dir = NULL;
 	ft_memset(&ctrl, 0, sizeof(t_ctrl));
 	lstat(directory, &file_stat);
-	if (g_argp[MINUS_L].active == 1 && S_ISLNK(file_stat.st_mode) == 1)
-	{
-		sort_lst_file(&ctrl, directory);
-		minus_l(directory, env);
-		ctrl.first->info = g_info;
-		padding_l(&ctrl);
-		print_list(&ctrl);
-		return ;
-	}
+	/*if (g_argp[MINUS_L].active == 1 && S_ISLNK(file_stat.st_mode) == 1)*/
+	/*{*/
+		/*print_single_link(directory, env, &ctrl);*/
+		/*return ;*/
+	/*}*/
 	if (open_directory(&dir, directory) == EXIT_ERROR)
 		return ;
 	if (g_argp[UPPER_R].active == 1)
@@ -110,6 +140,7 @@ void	print_directory(char *directory, t_env *env)
 		{
 			if (check_minus_a(content_dir) == true)
 				continue ;
+			/*if (ft_strcmp(directory, "/") != 0)*/
 			file = ft_strjoin(directory, "/");
 			file = ft_strjoin(file, content_dir->d_name);
 			if (lstat(file, &file_stat) < 0)

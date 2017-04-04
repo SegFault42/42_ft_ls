@@ -71,7 +71,7 @@ void	shutdown_option(char **argv)
 			++i;
 		}
 	}
-	ft_dprintf(1, "%d\n", i);
+	/*ft_dprintf(1, "%d\n", i);*/
 }
 
 /*
