@@ -10,8 +10,9 @@ void	sort_by_time(t_ctrl *ctrl, size_t value, char *name)
 	node = 1;
 	i = 0;
 	tmp = ctrl->first;
-	name_tmp = strrchr(name, '/');
-	name = &name_tmp[1];
+	name_tmp = ft_strrchr(name, '/');
+	if (name_tmp != NULL)
+		name = &name_tmp[1];
 	if (tmp == NULL)
 	{
 		add_head(ctrl, name, value);

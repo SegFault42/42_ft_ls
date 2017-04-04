@@ -47,7 +47,7 @@ static void	get_acl(char *file, char **info)
 {
 	if (listxattr(file, NULL, 0, XATTR_NOFOLLOW) > 0)
 		ft_strcat(*info, "@ ");
-	else if (acl_get_file(file, ACL_TYPE_EXTENDED))
+	else if (acl_get_file(file, ACL_TYPE_EXTENDED) > 0)
 		ft_strcat(*info, "+ ");
 	else
 		ft_strcat(*info, "| ");// le pipe sera remplacer par un espace.
@@ -68,7 +68,14 @@ static void	get_link_groupe(char **info, struct stat *file_stat)
 	ft_strcat(*info, itoa);
 	ft_strdel(&itoa);
 	ft_strcat(*info, " ");
-	ft_strcat(*info, name->pw_name);
+	if (name == NULL)
+	{
+		itoa = ft_itoa(file_stat->st_uid);
+		ft_strcat(*info, itoa);
+		ft_strdel(&itoa);
+	}
+	else
+		ft_strcat(*info, name->pw_name);
 	ft_strcat(*info, " ");
 	ft_strcat(*info, groupe->gr_name);
 	ft_strcat(*info, " ");
@@ -98,7 +105,11 @@ void	minus_l(char *file, t_env *env)
 	if ((env->file.info = (char *)ft_memalloc(sizeof(char) * 256)) == NULL)
 		ft_critical_error(MALLOC_ERROR);
 	ft_memset(g_info, 0, 255);
-	lstat(file, &file_stat);
+	if (lstat(file, &file_stat) < 0)
+	{
+		ft_dprintf(1, "ls: %s: %s\n", &ft_strrchr(file, '/')[1], strerror(errno));
+		return ;
+	}
 	get_chmod_1(&env->file.info, &file_stat);
 	get_chmod_2(&env->file.info, &file_stat);
 	get_acl(file, &env->file.info);

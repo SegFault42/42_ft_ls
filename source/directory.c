@@ -52,7 +52,11 @@ void	particular_minus_t(t_ctrl *ctrl, char *directory, t_env *env)
 	{
 		file = ft_strjoin(directory, "/");
 		file = ft_strjoin(file, tab[i]);
-		lstat(file, &file_stat);
+		if (lstat(file, &file_stat) < 0)
+		{
+			ft_dprintf(1, "ls: %s: %s\n", &ft_strrchr(file, '/')[1], strerror(errno));
+			continue ;
+		}
 		if (g_argp[MINUS_L].active == 1)
 			minus_l(file, env);
 		sort_by_time(&ctr, file_stat.st_mtimespec.tv_sec, file);
@@ -92,7 +96,12 @@ void	print_directory(char *directory, t_env *env)
 				continue ;
 			file = ft_strjoin(directory, "/");
 			file = ft_strjoin(file, content_dir->d_name);
-			lstat(file, &file_stat);
+			if (lstat(file, &file_stat) < 0)
+			{
+				ft_dprintf(1, "ls: %s: %s\n", &ft_strrchr(file, '/')[1], strerror(errno));
+				ft_strdel(&file);
+				continue ;
+			}
 			if (g_argp[MINUS_L].active == 1)
 				minus_l(file, env);
 			if (content_dir->d_type == DT_LNK)

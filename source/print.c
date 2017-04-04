@@ -8,7 +8,6 @@ static void	print_regular_files(t_env *env)
 	int				i;
 	t_ctrl			ctrl;
 	struct stat		file_stat;
-	/*char			*file;*/
 
 	g_total = 0;
 	ft_memset(&ctrl, 0, sizeof(t_ctrl));
@@ -23,7 +22,8 @@ static void	print_regular_files(t_env *env)
 		i = 0;
 		while (env->files[i])
 		{
-			lstat(env->files[i], &file_stat);
+			if (lstat(env->files[i], &file_stat) < 0)
+				continue ;
 			if (g_argp[MINUS_L].active == 1)
 				minus_l(env->files[i], env);
 			if (g_argp[MINUS_T].active == 1)

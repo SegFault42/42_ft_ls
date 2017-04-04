@@ -6,7 +6,7 @@
 /*   By: rabougue <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/01 20:16:26 by rabougue          #+#    #+#             */
-/*   Updated: 2017/04/03 16:43:51 by rabougue         ###   ########.fr       */
+/*   Updated: 2017/04/04 04:15:02 by rabougue         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,7 @@ void	padding_hour(t_file *tmp, char *split, size_t padding)
 {
 	if (ft_strcmp(split, "10000") == 0)
 		ft_strcat(tmp->info, " ");
-	if (ft_strlen(split) == 4)
+	if (ft_strlen(split) == 4 && padding != 5)
 		ft_strcat(tmp->info, " ");
 	ft_strxcat(tmp->info, " ", padding - ft_strlen(split));
 	ft_strcat(tmp->info, split);

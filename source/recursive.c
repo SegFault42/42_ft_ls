@@ -21,7 +21,11 @@ static void		print_all_directory(char *path, t_env *env)
 			continue ;
 		file = ft_strjoin(path, "/");
 		file = ft_strjoin(file, entry->d_name);
-		lstat(file, &file_stat);
+		if (lstat(file, &file_stat) < 0)
+		{
+			ft_dprintf(1, "ls: %s: %s\n", &ft_strrchr(file, '/')[1], strerror(errno));
+			continue ;
+		}
 		if (g_argp[MINUS_L].active == 1)
 			minus_l(file, env);
 		if (entry->d_type == DT_LNK)
