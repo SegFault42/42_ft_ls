@@ -2,7 +2,7 @@
 
 extern t_argp	g_argp[];
 extern char		g_info[255];
-extern bool		g_total;
+extern int		g_total;
 
 int8_t	open_directory(DIR **dir, char *directory)
 {
@@ -78,37 +78,34 @@ void	particular_minus_t(t_ctrl *ctrl, char *directory, t_env *env)
 	/*free_list(&ctr);*/
 }
 
-void	print_single_link(char *directory, t_env *env, t_ctrl *ctrl)
+void	insert_string(t_ctrl *ctrl, char *directory)
 {
-	char	buf[PATH_MAX];
-	int		size_buf;
-	char	**split;
-	uint8_t	i;
+	/*char	tmp[256];*/
+	int		i;
+	int		len_directory;
+	int		j;
 
+	j = 0;
+	i = ft_strlen(ctrl->first->info);
+	len_directory = ft_strlen(directory);
 	g_total = 0;
-	i = 0;
-	if ((size_buf = readlink(directory, buf, sizeof(buf) - 1)) != -1)
-		buf[size_buf] = '\0';
-	sort_lst_file(ctrl, buf);
-	minus_l(directory, env);
-	ctrl->first->info = g_info;
-	split = ft_strsplit(ctrl->first->info, ' ');
-	ft_memset(ctrl->first->info, 0, 256);
-	while (split[i])
+	while (ctrl->first->info[i] != ' ')
+		--i;
+	ctrl->first->info[i++] = ' ';
+	while (len_directory > 0)
 	{
-		ft_strcat(ctrl->first->info, split[i]);
-		ft_strcat(ctrl->first->info, " ");
-		if (i == 7)
-		{
-		
-		ft_strcat(ctrl->first->info, directory);
-		ft_strcat(ctrl->first->info, " ");
-		}
+		ctrl->first->info[i] = directory[j];
 		++i;
+		++j;
+		--len_directory;
 	}
-	ft_dprintf(1, "%s\n", ctrl->first->info);
-	padding_l(ctrl);
-	print_list(ctrl);
+	ctrl->first->info[i++] = ' ';
+	ctrl->first->info[i++] = '-';
+	ctrl->first->info[i++] = '>';
+	ctrl->first->info[i++] = ' ';
+	/*ft_memset(tmp, 0, 256);*/
+	/*ft_memmove(tmp, ctrl->first->info, 256);*/
+	/*ft_dprintf(1, "%d\n", i);*/
 }
 
 void	print_directory(char *directory, t_env *env)
@@ -118,18 +115,25 @@ void	print_directory(char *directory, t_env *env)
 	t_ctrl			ctrl;
 	struct stat		file_stat;
 	char			*file = NULL;
-	char	buf[PATH_MAX];
-	int		size_buf;
+	char			buf[PATH_MAX];
+	int				size_buf;
 
 	content_dir = NULL;
 	dir = NULL;
 	ft_memset(&ctrl, 0, sizeof(t_ctrl));
 	lstat(directory, &file_stat);
-	/*if (g_argp[MINUS_L].active == 1 && S_ISLNK(file_stat.st_mode) == 1)*/
-	/*{*/
-		/*print_single_link(directory, env, &ctrl);*/
-		/*return ;*/
-	/*}*/
+	if (g_argp[MINUS_L].active == 1 && S_ISLNK(file_stat.st_mode) == 1)
+	{
+		if ((size_buf = readlink(directory, buf, sizeof(buf) - 1)) != -1)
+			buf[size_buf] = '\0';
+		sort_lst_file(&ctrl, buf);
+		minus_l(directory, env);
+		ctrl.first->info = g_info;
+		padding_l(&ctrl);
+		insert_string(&ctrl, directory);
+		print_list(&ctrl);
+		return ;
+	}
 	if (open_directory(&dir, directory) == EXIT_ERROR)
 		return ;
 	if (g_argp[UPPER_R].active == 1)
