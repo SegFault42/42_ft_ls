@@ -80,7 +80,6 @@ void	particular_minus_t(t_ctrl *ctrl, char *directory, t_env *env)
 
 void	insert_string(t_ctrl *ctrl, char *directory)
 {
-	/*char	tmp[256];*/
 	int		i;
 	int		len_directory;
 	int		j;
@@ -103,9 +102,6 @@ void	insert_string(t_ctrl *ctrl, char *directory)
 	ctrl->first->info[i++] = '-';
 	ctrl->first->info[i++] = '>';
 	ctrl->first->info[i++] = ' ';
-	/*ft_memset(tmp, 0, 256);*/
-	/*ft_memmove(tmp, ctrl->first->info, 256);*/
-	/*ft_dprintf(1, "%d\n", i);*/
 }
 
 void	print_directory(char *directory, t_env *env)
@@ -144,7 +140,6 @@ void	print_directory(char *directory, t_env *env)
 		{
 			if (check_minus_a(content_dir) == true)
 				continue ;
-			/*if (ft_strcmp(directory, "/") != 0)*/
 			file = ft_strjoin(directory, "/");
 			file = ft_strjoin(file, content_dir->d_name);
 			if (lstat(file, &file_stat) < 0)
@@ -153,6 +148,7 @@ void	print_directory(char *directory, t_env *env)
 				ft_strdel(&file);
 				continue ;
 			}
+			ft_dprintf(1, "%s = %d, %d\n", content_dir->d_name, major(file_stat.st_rdev), minor(file_stat.st_rdev));
 			if (g_argp[MINUS_L].active == 1)
 				minus_l(file, env);
 			if (content_dir->d_type == DT_LNK)
