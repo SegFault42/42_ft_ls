@@ -58,10 +58,6 @@ static void	get_link_groupe(char **info, struct stat *file_stat)
 	struct passwd	*name;
 	struct group	*groupe;
 	char			*itoa;
-	char			**split;
-	int				six_month;
-
-	six_month = 15778476; // 6 month in second
 	name = getpwuid(file_stat->st_uid);
 	groupe = getgrgid(file_stat->st_gid);
 	itoa = ft_itoa(file_stat->st_nlink);
@@ -79,10 +75,26 @@ static void	get_link_groupe(char **info, struct stat *file_stat)
 	ft_strcat(*info, " ");
 	ft_strcat(*info, groupe->gr_name);
 	ft_strcat(*info, " ");
+}
+
+void	get_size(char **info, struct stat *file_stat)
+{
+	int		six_month;
+	char	*itoa;
+
+	six_month = 15778476; // 6 month in second
 	itoa = ft_itoa(file_stat->st_size);
 	ft_strcat(*info, itoa);
 	ft_strdel(&itoa);
 	ft_strcat(*info, " ");
+}
+
+void	get_time(char **info, struct stat *file_stat)
+{
+	char	**split;
+	int		six_month;
+
+	six_month = 15778476; // 6 month in second
 	split = ft_strsplit(ctime(&file_stat->st_mtime), ' ');
 	ft_strcat(*info, split[1]);
 	ft_strcat(*info, " ");
@@ -98,22 +110,43 @@ static void	get_link_groupe(char **info, struct stat *file_stat)
 	ft_2d_tab_free(split);
 }
 
+void	get_major_minor(char **info, struct stat *file_stat)
+{
+	char *itoa;
+	itoa = ft_itoa(major(file_stat->st_rdev));
+	ft_strcat(*info, itoa);
+	ft_strdel(&itoa);
+	ft_strcat(*info, ", ");
+	itoa = ft_itoa(minor(file_stat->st_rdev));
+	ft_strcat(*info, itoa);
+	ft_strdel(&itoa);
+	ft_strcat(*info, " ");
+}
+
 void	minus_l(char *file, t_env *env)
 {
-	struct stat		file_stat;
+	struct stat	file_stat;
+	static bool		dev = 0;
 
 	if ((env->file.info = (char *)ft_memalloc(sizeof(char) * 256)) == NULL)
 		ft_critical_error(MALLOC_ERROR);
 	ft_memset(g_info, 0, 255);
 	if (lstat(file, &file_stat) < 0)
 	{
-		ft_dprintf(1, "ls: %s: %s\n", &ft_strrchr(file, '/')[1], strerror(errno));
+		ft_dprintf(2, "ls: %s: %s\n", &ft_strrchr(file, '/')[1], strerror(errno));
 		return ;
 	}
+	if (major(file_stat.st_rdev) != 0 || minor(file_stat.st_rdev) != 0)
+		dev = 1;
 	get_chmod_1(&env->file.info, &file_stat);
 	get_chmod_2(&env->file.info, &file_stat);
 	get_acl(file, &env->file.info);
 	get_link_groupe(&env->file.info, &file_stat);
+	if (dev == 1)
+		get_major_minor(&env->file.info, &file_stat);
+	else
+		get_size(&env->file.info, &file_stat);
+	get_time(&env->file.info, &file_stat);
 	ft_memcpy(g_info, env->file.info, 255);
 	if (env->file.info != NULL)
 		free(env->file.info);

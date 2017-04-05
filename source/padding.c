@@ -6,7 +6,7 @@
 /*   By: rabougue <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/01 20:16:26 by rabougue          #+#    #+#             */
-/*   Updated: 2017/04/04 23:12:49 by rabougue         ###   ########.fr       */
+/*   Updated: 2017/04/05 03:28:49 by rabougue         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,7 +100,6 @@ void	padding_l(t_ctrl *ctrl)
 		}
 	}
 	rewrite_info_padded(ctrl, padding);
-	(void)ctrl;
 }
 
 void	rewrite_info_padded(t_ctrl *ctrl, size_t *padding)

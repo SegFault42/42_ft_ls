@@ -6,7 +6,7 @@
 /*   By: rabougue <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/28 17:52:21 by rabougue          #+#    #+#             */
-/*   Updated: 2017/04/04 19:27:21 by rabougue         ###   ########.fr       */
+/*   Updated: 2017/04/05 01:00:20 by rabougue         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,6 @@ void	fill_node(t_ctrl *ctrl, int node, char *link)
 	else if (node > 1)
 		while (i < node)
 		{
-			/*ft_dprintf(1, "%d\n", node);*/
 			if (tmp->next == NULL)
 			{
 				ft_dprintf(2, RED"Error fill_node\n"END);

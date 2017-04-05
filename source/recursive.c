@@ -23,7 +23,7 @@ static void		print_all_directory(char *path, t_env *env)
 		file = ft_strjoin(file, entry->d_name);
 		if (lstat(file, &file_stat) < 0)
 		{
-			ft_dprintf(1, "ls: %s: %s\n", &ft_strrchr(file, '/')[1], strerror(errno));
+			ft_dprintf(2, "ls: %s: %s\n", &ft_strrchr(file, '/')[1], strerror(errno));
 			continue ;
 		}
 		if (g_argp[MINUS_L].active == 1)

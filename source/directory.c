@@ -24,7 +24,7 @@ void	close_directory(DIR **dir)
 {
 	if (closedir(*dir) == -1)
 	{
-		ft_dprintf(STDERR_FILENO, RED"%s\n"END, strerror(errno));
+		ft_dprintf(2, RED"%s\n"END, strerror(errno));
 		exit(EXIT_FAILURE);
 	}
 }
@@ -61,7 +61,7 @@ void	particular_minus_t(t_ctrl *ctrl, char *directory, t_env *env)
 		file = ft_strjoin(file, tab[i]);
 		if (lstat(file, &file_stat) < 0)
 		{
-			ft_dprintf(1, "ls: %s: %s\n", &ft_strrchr(file, '/')[1], strerror(errno));
+			ft_dprintf(2, "ls: %s: %s\n", &ft_strrchr(file, '/')[1], strerror(errno));
 			continue ;
 		}
 		if (g_argp[MINUS_L].active == 1)
@@ -144,11 +144,10 @@ void	print_directory(char *directory, t_env *env)
 			file = ft_strjoin(file, content_dir->d_name);
 			if (lstat(file, &file_stat) < 0)
 			{
-				ft_dprintf(1, "ls: %s: %s\n", &ft_strrchr(file, '/')[1], strerror(errno));
+				ft_dprintf(2, "ls: %s: %s\n", &ft_strrchr(file, '/')[1], strerror(errno));
 				ft_strdel(&file);
 				continue ;
 			}
-			ft_dprintf(1, "%s = %d, %d\n", content_dir->d_name, major(file_stat.st_rdev), minor(file_stat.st_rdev));
 			if (g_argp[MINUS_L].active == 1)
 				minus_l(file, env);
 			if (content_dir->d_type == DT_LNK)
