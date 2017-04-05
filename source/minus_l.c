@@ -116,7 +116,7 @@ void	get_major_minor(char **info, struct stat *file_stat)
 	itoa = ft_itoa(major(file_stat->st_rdev));
 	ft_strcat(*info, itoa);
 	ft_strdel(&itoa);
-	ft_strcat(*info, ", ");
+	ft_strcat(*info, ",|");
 	itoa = ft_itoa(minor(file_stat->st_rdev));
 	ft_strcat(*info, itoa);
 	ft_strdel(&itoa);
@@ -127,6 +127,7 @@ void	minus_l(char *file, t_env *env)
 {
 	struct stat	file_stat;
 	static bool		dev = 0;
+	int				ret;
 
 	if ((env->file.info = (char *)ft_memalloc(sizeof(char) * 256)) == NULL)
 		ft_critical_error(MALLOC_ERROR);
@@ -136,7 +137,7 @@ void	minus_l(char *file, t_env *env)
 		ft_dprintf(2, "ls: %s: %s\n", &ft_strrchr(file, '/')[1], strerror(errno));
 		return ;
 	}
-	if (major(file_stat.st_rdev) != 0 || minor(file_stat.st_rdev) != 0)
+	if ((ret = major(file_stat.st_rdev)) != 0/* || minor(file_stat.st_rdev) != 0*/)
 		dev = 1;
 	get_chmod_1(&env->file.info, &file_stat);
 	get_chmod_2(&env->file.info, &file_stat);
