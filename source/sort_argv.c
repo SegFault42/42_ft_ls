@@ -90,7 +90,9 @@ static void	stock_reg_and_dir(t_env *env, char **argv, int argc)
 	while (argv[cp_first_file])
 	{
 		if ((ret = is_reg_or_dir(argv[cp_first_file])) == REG)
+		{
 			env->files[++i] = argv[cp_first_file];
+		}
 		else if (ret == DIRE)
 			env->directory[++j] = argv[cp_first_file];
 		++cp_first_file;
@@ -102,9 +104,11 @@ void	print_no_such_file_or_directory(char **argv)
 	struct stat	file_stat;
 	t_ctrl		*ctrl;
 	int			i;
+	int			ret;
 
 	i = 1;
-	ctrl = (t_ctrl *)malloc(sizeof(t_ctrl));
+	if ((ctrl = (t_ctrl *)malloc(sizeof(t_ctrl))) == NULL)
+		ft_critical_error(MALLOC_ERROR);
 	ft_memset(ctrl, 0, sizeof(t_ctrl));
 	while (argv[i])
 	{
@@ -125,7 +129,7 @@ void	print_no_such_file_or_directory(char **argv)
 			++i;
 			continue ;
 		}
-		if (stat(argv[i], &file_stat) < 0)
+		if ((ret = lstat(argv[i], &file_stat)) < 0)
 			sort_lst_file(ctrl, argv[i]);
 		++i;
 	}
@@ -147,9 +151,7 @@ void		sort_argv(t_env *env, char **argv, int argc)
 		env->directory[0] = ft_strdup(".");
 	}
 	else
-	{
 		stock_reg_and_dir(env, argv, argc);
-	}
 	if (env->files[0] != NULL)
 		sort_param(env->files);
 	if (env->directory[0] != NULL)

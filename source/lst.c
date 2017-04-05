@@ -6,7 +6,7 @@
 /*   By: rabougue <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/28 17:52:21 by rabougue          #+#    #+#             */
-/*   Updated: 2017/04/05 01:00:20 by rabougue         ###   ########.fr       */
+/*   Updated: 2017/04/05 22:39:04 by rabougue         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -269,10 +269,8 @@ bool	add_after(t_ctrl *ctrl, int node, char *name, int value)
 
 void	add_before(t_ctrl *ctrl, int node, char *name, int value)
 {
-	/*t_file	*tmp;*/
 	t_file	*new;
 
-	/*tmp = ctrl->first;*/
 	if (node == 1)
 	{
 		new = create_maillon();
@@ -289,15 +287,4 @@ void	add_before(t_ctrl *ctrl, int node, char *name, int value)
 		new->next = ctrl->first;
 		ctrl->first = new;
 	}
-	/*while (i < node - 1 || node <= 0)*/
-	/*{*/
-		/*if (tmp->next == NULL || node <= 0)*/
-		/*{*/
-			/*ft_dprintf(STDIN_FILENO, "node index to big or to small");*/
-			/*return (FALSE);*/
-		/*}*/
-		/*tmp = tmp->next;*/
-		/*++i;*/
-	/*}*/
-
 }

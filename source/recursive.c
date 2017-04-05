@@ -53,7 +53,7 @@ void	recursive(char *directory, t_env *env)
 	DIR				*dir;
 	char			*d_name;
 	int				 path_length;
-	char			 path[PATH_MAX];
+	char			 *path;
 	t_ctrl			lst;
 	t_file			*tmp;
 
@@ -70,7 +70,9 @@ void	recursive(char *directory, t_env *env)
 		{
 			if (ft_strcmp(d_name, "..") != 0 && ft_strcmp(d_name, ".") != 0)
 			{
-				path_length = snprintf(path, PATH_MAX, "%s/%s", directory, d_name);
+				path = ft_strjoin(directory, "/");
+				path = ft_strjoin(path, d_name);
+				path_length = ft_strlen(path);
 				if (g_argp[MINUS_R].active == 1)
 					sort_lst_dir_rev(&lst, path);
 				else
@@ -78,6 +80,7 @@ void	recursive(char *directory, t_env *env)
 				if (path_length >= PATH_MAX)
 					exit (EXIT_FAILURE);
 			}
+			ft_strdel(&path);
 		}
 	}
 	tmp = lst.first;

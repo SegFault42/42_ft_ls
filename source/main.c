@@ -6,7 +6,7 @@
 /*   By: rabougue <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/12 05:48:29 by rabougue          #+#    #+#             */
-/*   Updated: 2017/04/05 04:07:04 by rabougue         ###   ########.fr       */
+/*   Updated: 2017/04/05 21:29:33 by rabougue         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,11 +30,6 @@ int	main(int argc, char **argv)
 	t_ctrl	ctrl;
 	t_env	env;
 
-	/*if (ft_strcmp(argv[1], "-lR") == 0 && ft_strcmp(argv[2], "/usr/bin") == 0)*/
-	/*{*/
-		/*system("/bin/ls -lR /usr/bin");*/
-		/*return (0);*/
-	/*}*/
 	init(&ctrl, &env);
 	get_option(argv);
 	sort_argv(&env, argv, argc);

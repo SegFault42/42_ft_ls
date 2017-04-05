@@ -6,7 +6,7 @@ uint8_t	is_reg_or_dir(char *argument)
 {
 	struct stat	file_stat;
 
-	if (stat(argument, &file_stat) < 0)
+	if (lstat(argument, &file_stat) < 0 || stat(argument, &file_stat) < 0)
 	{
 		/*ft_dprintf(2, "ls: %s: %s\n", argument, strerror(errno));*/
 		return (-1);
@@ -29,9 +29,7 @@ bool	check_minus_a(struct dirent *content_dir)
 
 uint8_t	check_file_type(char *argument)
 {
-	uint8_t	ret;
-
-	if ((ret = is_reg_or_dir(argument)) == REG)
+	if (is_reg_or_dir(argument) == REG)
 		return (REG);
 	return (DIRE);
 }
