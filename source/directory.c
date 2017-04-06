@@ -37,6 +37,7 @@ void	particular_minus_t(t_ctrl *ctrl, char *directory, t_env *env)
 	t_ctrl	ctr;
 	struct stat		file_stat;
 	char			*file = NULL;
+	char			*tmp_join;
 
 	ft_memset(&ctr, 0, sizeof(t_ctrl));
 	i = count_nb_node(ctrl);
@@ -58,7 +59,10 @@ void	particular_minus_t(t_ctrl *ctrl, char *directory, t_env *env)
 	while (tab[i])
 	{
 		file = ft_strjoin(directory, "/");
-		file = ft_strjoin(file, tab[i]);
+		tmp_join = ft_strdup(file);
+		ft_strdel(&file);
+		file = ft_strjoin(tmp_join, tab[i]);
+		ft_strdel(&tmp_join);
 		if (lstat(file, &file_stat) < 0)
 		{
 			ft_dprintf(2, "ls: %s: %s\n", &ft_strrchr(file, '/')[1], strerror(errno));
@@ -67,14 +71,13 @@ void	particular_minus_t(t_ctrl *ctrl, char *directory, t_env *env)
 		if (g_argp[MINUS_L].active == 1)
 			minus_l(file, env);
 		sort_by_time(&ctr, file_stat.st_mtimespec.tv_sec, file);
-		if (file)
-			ft_strdel(&file);
+		ft_strdel(&file);
 		++i;
 	}
+	free(tab);
 	if (g_argp[MINUS_L].active == 1)
 		padding_l(&ctr);
 	print_lst(&ctr);
-	/*ft_2d_tab_free(tab);*/
 	/*free_list(&ctr);*/
 }
 
@@ -113,6 +116,7 @@ void	print_directory(char *directory, t_env *env)
 	char			*file = NULL;
 	char			buf[PATH_MAX];
 	int				size_buf;
+	char			*tmp;
 
 	content_dir = NULL;
 	dir = NULL;
@@ -145,7 +149,10 @@ void	print_directory(char *directory, t_env *env)
 			if ((check_minus_a(content_dir) == true) && (g_argp[UPPER_A]. active == 0))
 				continue ;
 			file = ft_strjoin(directory, "/");
-			file = ft_strjoin(file, content_dir->d_name);
+			tmp = ft_strdup(file);
+			ft_strdel(&file);
+			file = ft_strjoin(tmp, content_dir->d_name);
+			ft_strdel(&tmp);
 			if (lstat(file, &file_stat) < 0)
 			{
 				ft_dprintf(2, "ls: %s: %s\n", &ft_strrchr(file, '/')[1], strerror(errno));
@@ -164,7 +171,6 @@ void	print_directory(char *directory, t_env *env)
 				sort_lst(&ctrl, content_dir, NULL);
 			if (file)
 				ft_strdel(&file);
-			/*ft_strdel(&env->file.info);*/
 		}
 		if (g_argp[MINUS_L].active == 1)
 			padding_l(&ctrl);

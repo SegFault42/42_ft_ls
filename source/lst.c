@@ -6,7 +6,7 @@
 /*   By: rabougue <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/28 17:52:21 by rabougue          #+#    #+#             */
-/*   Updated: 2017/04/06 06:04:07 by rabougue         ###   ########.fr       */
+/*   Updated: 2017/04/06 20:33:31 by rabougue         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -160,6 +160,8 @@ void	free_maillon(t_ctrl *ctrl)
 	while (tmp->next->next)
 		tmp = tmp->next;
 	ft_strdel(&tmp->next->name);
+	ft_strdel(&tmp->next->info);
+	ft_strdel(&tmp->next->link);
 	free(tmp->next);
 	tmp->next = NULL;
 }

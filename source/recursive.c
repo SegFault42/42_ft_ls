@@ -70,8 +70,13 @@ void	recursive(char *directory, t_env *env)
 		{
 			if (ft_strcmp(d_name, "..") != 0 && ft_strcmp(d_name, ".") != 0)
 			{
-				path = ft_strjoin(directory, "/");
-				path = ft_strjoin(path, d_name);
+				if (ft_strcmp(directory, "/") == 0)
+					path = ft_strjoin("/", entry->d_name);
+				else
+				{
+					path = ft_strjoin(directory, "/");
+					path = ft_strjoin(path, entry->d_name);
+				}
 				path_length = ft_strlen(path);
 				if (g_argp[MINUS_R].active == 1)
 					sort_lst_dir_rev(&lst, path);
