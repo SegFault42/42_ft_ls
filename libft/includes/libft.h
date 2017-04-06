@@ -6,7 +6,7 @@
 /*   By: rabougue <rabougue@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/11/24 18:34:24 by rabougue          #+#    #+#             */
-/*   Updated: 2017/04/06 03:59:51 by rabougue         ###   ########.fr       */
+/*   Updated: 2017/04/06 19:12:23 by rabougue         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,8 +24,6 @@
 # include "./colors.h"
 
 # define BUFF_SIZE (1)
-//# define TRUE (1)
-//# define FALSE (0)
 # define EXIT_ERROR (-1)
 # define RC ft_putchar('\n');
 
@@ -110,7 +108,6 @@ char				*ft_strrev(char *str);
 char				*ft_crypt(char *str);
 char				*ft_decrypt(char *str);
 void				ft_debug();
-int					get_next_line_lseek(int const fd, char **line, int *nb_char);
 int					get_next_line(int const fd, char **line);
 void				ft_2d_tab_free(char **tab);
 int					ft_tab_len(char **tab);
@@ -144,6 +141,5 @@ void				*ft_trymalloc(size_t size);
 void				ft_critical_error(uint8_t error);
 void				ft_set_2d_tab(char **tab, int size);
 void				ft_strxcat(char *dest, char *src, int x);
-void				ft_replace_charactere(char **str, char old_c, char new_c);
 
 #endif

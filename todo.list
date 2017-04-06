@@ -1,9 +1,0 @@
-1) recuperation des option | ok
-2) Trier les arguments, puis afficher en premier les fichier regulier et ensuite les dossiers
-
-
-
-
-
-
-Tout stocker puis trier et verifier avec stat si sa exist

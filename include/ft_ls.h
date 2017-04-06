@@ -6,12 +6,12 @@
 /*   By: rabougue <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/12 05:46:45 by rabougue          #+#    #+#             */
-/*   Updated: 2017/04/06 06:25:37 by rabougue         ###   ########.fr       */
+/*   Updated: 2017/04/06 19:20:02 by rabougue         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef FT_LS
-# define FT_LS
+#ifndef FT_LS_H
+# define FT_LS_H
 
 # include <dirent.h>
 # include <unistd.h>
@@ -47,7 +47,7 @@
 
 typedef struct		s_file
 {
-	char			*name; // stock le nom du fichier
+	char			*name;
 	size_t			timestamp;
 	char			*info;
 	char			*link;
@@ -61,7 +61,6 @@ typedef struct		s_ctrl
 
 typedef struct		s_env
 {
-	//char			**arguments;
 	char			**files;
 	char			**directory;
 	t_file			file;
@@ -71,9 +70,9 @@ typedef struct		s_env
 
 typedef struct		s_argp
 {
-	char			*sign; // option
-	bool			active; // present ou non
-	char			*description; // description de l'option
+	char			*sign;
+	bool			active;
+	char			*description;
 }					t_argp;
 
 /*
@@ -118,7 +117,7 @@ size_t				count_nb_node(t_ctrl *ctrl);
 void				close_directory(DIR **dir);
 int8_t				open_directory(DIR **dir, char *directory);
 void				print_directory(char *directory, t_env *env);
-void				particular_minus_t(t_ctrl *ctrl, char *directory, t_env *env);
+void				particular_minus_t(t_ctrl *ctrl, char *directo, t_env *env);
 /*
 ** ************************************check.c*********************************
 */
@@ -135,7 +134,7 @@ void				recursive(char *directory, t_env *env);
 void				sort_lst_dir(t_ctrl *ctrl, char *path);
 void				sort_by_time(t_ctrl *ctrl, size_t value, char *name);
 void				sort_lst_dir_rev(t_ctrl *ctrl, char *path);
-void				sort_lst(t_ctrl *ctrl, struct dirent *content_dir, char *link);
+void				sort_lst(t_ctrl *ctrl, struct dirent *content, char *link);
 /*
 ** **********************************minus_l.c*********************************
 */
@@ -151,6 +150,6 @@ void				rewrite_info_padded(t_ctrl *ctrl, size_t *padding);
 void				sort_lst_file(t_ctrl *ctrl, char *name);
 void				print_no_such_file_or_directory(char **argv);
 void				print_list_no_such(t_ctrl *ctrl);
-bool	check_minus_f(struct dirent *content_dir);
+bool				check_minus_f(struct dirent *content_dir);
 
 #endif

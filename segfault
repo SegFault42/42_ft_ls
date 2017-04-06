@@ -1,3 +1,0 @@
-ft_ls -l private/etc/ (si name est a null print itoa de st_uid)
-
-

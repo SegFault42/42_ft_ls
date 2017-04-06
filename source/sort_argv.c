@@ -144,7 +144,6 @@ void		sort_argv(t_env *env, char **argv, int argc)
 	first_file = count_where_is_first_file_2(argv);
 	if (argc - first_file > 1)
 		env->nb_args = 1;
-	/*ft_dprintf(1, "%d\n", argc - first_file);*/
 	if ((count_where_is_first_file(argv) - argc) == 0)
 	{
 		stock_reg_and_dir(env, argv, argc + 1);

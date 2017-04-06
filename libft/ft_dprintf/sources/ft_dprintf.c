@@ -6,13 +6,27 @@
 /*   By: rabougue <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/06/29 15:44:19 by rabougue          #+#    #+#             */
-/*   Updated: 2017/03/03 18:55:30 by rabougue         ###   ########.fr       */
+/*   Updated: 2017/04/06 19:49:47 by rabougue         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/ft_dprintf.h"
 
-void	count_buff_size(t_printf *print, const char *format, va_list pa)
+static void	count_buff_size2(t_printf *print, const char *format, va_list pa)
+{
+	if (*format == 'p')
+		percent_p(print, pa);
+	else if (*format == 'o' || *format == 'O')
+		percent_o(print, pa);
+	else if (*format == 'x')
+		percent_x(print, pa, 0);
+	else if (*format == 'X')
+		percent_x(print, pa, 1);
+	else
+		++print->buff_size;
+}
+
+void		count_buff_size(t_printf *print, const char *format, va_list pa)
 {
 	while (*format)
 	{
@@ -28,16 +42,8 @@ void	count_buff_size(t_printf *print, const char *format, va_list pa)
 				percent_d(print, pa, *format);
 			else if (*format == 's')
 				percent_s(print, pa);
-			else if (*format == 'p')
-				percent_p(print, pa);
-			else if (*format == 'o' || *format == 'O')
-				percent_o(print, pa);
-			else if (*format == 'x')
-				percent_x(print, pa, 0);
-			else if (*format == 'X')
-				percent_x(print, pa, 1);
 			else
-				++print->buff_size;
+				count_buff_size2(print, format, pa);
 		}
 		else
 			++print->buff_size;
@@ -45,7 +51,7 @@ void	count_buff_size(t_printf *print, const char *format, va_list pa)
 	}
 }
 
-void	specifier(const char *format, va_list pa, t_printf *print)
+void		specifier(const char *format, va_list pa, t_printf *print)
 {
 	if (*format == 'c')
 		percent_c(print, pa);
@@ -69,7 +75,7 @@ void	specifier(const char *format, va_list pa, t_printf *print)
 	}
 }
 
-void	write_string(t_printf *print, const char *format, va_list pa)
+void		write_string(t_printf *print, const char *format, va_list pa)
 {
 	if ((print->buff = ft_memalloc(print->buff_size + 1)) == NULL)
 		error(MALLOC_ERROR);
@@ -97,17 +103,7 @@ void	write_string(t_printf *print, const char *format, va_list pa)
 	}
 }
 
-void	set_specifier(t_printf *print)
-{
-	print->is_percent_s = 1;
-	print->is_percent_d = 1;
-	print->is_percent_c = 1;
-	print->is_percent_p = 1;
-	print->is_percent_x = 1;
-	print->is_percent_o = 1;
-}
-
-int		ft_dprintf(int fd, const char *format, ...)
+int			ft_dprintf(int fd, const char *format, ...)
 {
 	t_printf	print;
 	va_list		pa;
@@ -118,7 +114,12 @@ int		ft_dprintf(int fd, const char *format, ...)
 	va_start(pa, format);
 	count_buff_size(&print, format, pa);
 	va_end(pa);
-	set_specifier(&print);
+	print.is_percent_s = 1;
+	print.is_percent_d = 1;
+	print.is_percent_c = 1;
+	print.is_percent_p = 1;
+	print.is_percent_x = 1;
+	print.is_percent_o = 1;
 	va_start(pa, format);
 	write_string(&print, format, pa);
 	print_buff(&print, fd);

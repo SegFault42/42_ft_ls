@@ -6,7 +6,7 @@
 #    By: rabougue <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2015/12/10 19:16:51 by rabougue          #+#    #+#              #
-#    Updated: 2017/04/06 03:47:12 by rabougue         ###   ########.fr        #
+#    Updated: 2017/04/06 19:34:35 by rabougue         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -42,15 +42,13 @@ SRC = ft_memset.c ft_bzero.c ft_memcpy.c ft_memccpy.c ft_memmove.c ft_memchr.c \
 	  $(PRE)percent_d.c $(PRE)percent_s.c $(PRE)percent_p.c\
 	  $(PRE)tools.c $(PRE)percent_x.c $(PRE)percent_o.c\
 	  ft_print_2d_tab.c ft_check_int_overflow.c ft_count_char.c ft_strccmp.c \
-	  ft_strcdup.c ft_strclen.c ft_strccat.c get_next_line_lseek.c ft_isspace.c \
+	  ft_strcdup.c ft_strclen.c ft_strccat.c ft_isspace.c \
 	  ft_trymalloc.c ft_error.c ft_set_2d_tab.c ft_strxcat.c \
-	  ft_replace_charactere.c
 
 OBJS = $(SRC:.c=.o)
 
 CC = clang
 
-#FLAG = -Weverything -O3
 FLAG = -Wall -Wextra -Werror -O3
 
 HEAD = ./includes/ ./ft_dprintf/includes/ft_dprintf.h
