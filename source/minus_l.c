@@ -112,7 +112,10 @@ void	get_time(char **info, struct stat *file_stat)
 
 void	get_major_minor(char **info, struct stat *file_stat)
 {
-	char *itoa;
+	char	*itoa;
+
+	/*ft_dprintf(1, RED"%d, ", major(file_stat->st_rdev));*/
+	/*ft_dprintf(1, GREEN"%d\n"END, minor(file_stat->st_rdev));*/
 	itoa = ft_itoa(major(file_stat->st_rdev));
 	ft_strcat(*info, itoa);
 	ft_strdel(&itoa);
@@ -127,7 +130,6 @@ void	minus_l(char *file, t_env *env)
 {
 	struct stat	file_stat;
 	static bool		dev = 0;
-	int				ret;
 
 	if ((env->file.info = (char *)ft_memalloc(sizeof(char) * 256)) == NULL)
 		ft_critical_error(MALLOC_ERROR);
@@ -137,16 +139,16 @@ void	minus_l(char *file, t_env *env)
 		ft_dprintf(2, "ls: %s: %s\n", &ft_strrchr(file, '/')[1], strerror(errno));
 		return ;
 	}
-	if ((ret = major(file_stat.st_rdev)) != 0/* || minor(file_stat.st_rdev) != 0*/)
+	if (major(file_stat.st_rdev) != 0)
 		dev = 1;
 	get_chmod_1(&env->file.info, &file_stat);
 	get_chmod_2(&env->file.info, &file_stat);
 	get_acl(file, &env->file.info);
 	get_link_groupe(&env->file.info, &file_stat);
-	if (dev == 1)
+	/*if (dev == 1)*/
 		get_major_minor(&env->file.info, &file_stat);
-	else
-		get_size(&env->file.info, &file_stat);
+	/*else*/
+		/*get_size(&env->file.info, &file_stat);*/
 	get_time(&env->file.info, &file_stat);
 	ft_memcpy(g_info, env->file.info, 255);
 	if (env->file.info != NULL)
