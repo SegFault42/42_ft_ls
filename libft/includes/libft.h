@@ -6,7 +6,7 @@
 /*   By: rabougue <rabougue@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/11/24 18:34:24 by rabougue          #+#    #+#             */
-/*   Updated: 2017/03/02 15:18:43 by rabougue         ###   ########.fr       */
+/*   Updated: 2017/04/06 03:59:51 by rabougue         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -144,5 +144,6 @@ void				*ft_trymalloc(size_t size);
 void				ft_critical_error(uint8_t error);
 void				ft_set_2d_tab(char **tab, int size);
 void				ft_strxcat(char *dest, char *src, int x);
+void				ft_replace_charactere(char **str, char old_c, char new_c);
 
 #endif

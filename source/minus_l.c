@@ -114,12 +114,15 @@ void	get_major_minor(char **info, struct stat *file_stat)
 {
 	char	*itoa;
 
-	/*ft_dprintf(1, RED"%d, ", major(file_stat->st_rdev));*/
-	/*ft_dprintf(1, GREEN"%d\n"END, minor(file_stat->st_rdev));*/
-	itoa = ft_itoa(major(file_stat->st_rdev));
-	ft_strcat(*info, itoa);
-	ft_strdel(&itoa);
-	ft_strcat(*info, ",|");
+	if (S_ISLNK(file_stat->st_mode) != 1)
+	{
+		itoa = ft_itoa(major(file_stat->st_rdev));
+		ft_strcat(*info, itoa);
+		ft_strdel(&itoa);
+		ft_strcat(*info, ",|");
+	}
+	else
+		ft_strxcat(*info, " ", 7);
 	itoa = ft_itoa(minor(file_stat->st_rdev));
 	ft_strcat(*info, itoa);
 	ft_strdel(&itoa);
@@ -145,10 +148,10 @@ void	minus_l(char *file, t_env *env)
 	get_chmod_2(&env->file.info, &file_stat);
 	get_acl(file, &env->file.info);
 	get_link_groupe(&env->file.info, &file_stat);
-	/*if (dev == 1)*/
+	if (dev == 1 && S_ISDIR(file_stat.st_mode) != 1 && S_ISLNK(file_stat.st_mode) != 1)
 		get_major_minor(&env->file.info, &file_stat);
-	/*else*/
-		/*get_size(&env->file.info, &file_stat);*/
+	else
+		get_size(&env->file.info, &file_stat);
 	get_time(&env->file.info, &file_stat);
 	ft_memcpy(g_info, env->file.info, 255);
 	if (env->file.info != NULL)

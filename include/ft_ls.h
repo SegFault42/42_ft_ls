@@ -6,7 +6,7 @@
 /*   By: rabougue <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/12 05:46:45 by rabougue          #+#    #+#             */
-/*   Updated: 2017/04/05 00:42:11 by rabougue         ###   ########.fr       */
+/*   Updated: 2017/04/06 04:15:11 by rabougue         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,7 @@
 # define MINUS_T		(4)
 # define MINUS_L		(5)
 # define END_OPTION		(6)
+# define UPPER_A		(7)
 
 # define SIZE_ARGP		(7)
 

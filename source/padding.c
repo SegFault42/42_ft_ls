@@ -6,7 +6,7 @@
 /*   By: rabougue <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/01 20:16:26 by rabougue          #+#    #+#             */
-/*   Updated: 2017/04/06 01:37:02 by rabougue         ###   ########.fr       */
+/*   Updated: 2017/04/06 03:59:56 by rabougue         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -157,9 +157,13 @@ void	rewrite_info_padded(t_ctrl *ctrl, size_t *padding)
 			else if (i == 4)
 			{
 				if (ft_strchr(split[i], '|') != NULL)
-					padding_minus_major(tmp,split[i], padding[i]);
+				{
+					padding_minus_major(tmp, split[i], padding[i]);
+					/*ft_replace_charactere(&tmp->info, '!', ' ');*/
+				}
 				else
 					padding_size(tmp, split[i], padding[i]);
+				
 			}
 			else if (i == 5)
 				padding_month(tmp, split[i], padding[i]);

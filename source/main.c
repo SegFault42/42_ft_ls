@@ -6,7 +6,7 @@
 /*   By: rabougue <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/12 05:48:29 by rabougue          #+#    #+#             */
-/*   Updated: 2017/04/05 21:29:33 by rabougue         ###   ########.fr       */
+/*   Updated: 2017/04/06 04:31:24 by rabougue         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@ t_argp	g_argp[] =
 	{"t", 0, "sort by time (new first)"},
 	{"l", 0, "print full info"},
 	{"--", 0, "end getting option"},
+	{"A", 0, "don't print '.' and '..'"},
 	{0, 0, 0}
 };
 
