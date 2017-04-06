@@ -1,45 +1,16 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   sort.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: rabougue <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2017/04/07 00:03:15 by rabougue          #+#    #+#             */
+/*   Updated: 2017/04/07 00:03:59 by rabougue         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../include/ft_ls.h"
-
-void	sort_by_time(t_ctrl *ctrl, size_t value, char *name)
-{
-	t_file	*tmp;
-	int	i;
-	int	node;
-	char *name_tmp;
-
-	node = 1;
-	i = 0;
-	tmp = ctrl->first;
-	name_tmp = ft_strrchr(name, '/');
-	if (name_tmp != NULL)
-		name = &name_tmp[1];
-	if (tmp == NULL)
-	{
-		add_head(ctrl, name, value);
-		return ;
-	}
-	while (tmp)
-	{
-		if (value > tmp->timestamp)
-		{
-			add_before(ctrl, node, name, value);
-			return ;
-		}
-		else if (tmp->next == NULL)
-		{
-			add_tail(ctrl, name, value);
-			return ;
-		}
-		if (value > tmp->next->timestamp)
-		{
-			add_after(ctrl, node, name, value);
-			return ;
-		}
-		tmp = tmp->next;
-		++node;
-	}
-	
-}
 
 void	sort_lst_file(t_ctrl *ctrl, char *name)
 {

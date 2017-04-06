@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   parsing_argv.c                                     :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: rabougue <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2017/04/06 23:56:56 by rabougue          #+#    #+#             */
+/*   Updated: 2017/04/07 00:01:56 by rabougue         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../include/ft_ls.h"
 
 extern t_argp g_argp[];
@@ -14,9 +26,11 @@ static void	fts_open(char *argv)
 
 static void	usage(char option)
 {
-	ft_dprintf(STDERR_FILENO,
-	"ls: illegal option -- %c\nusage: ls [-ABCFGHLOPRSTUWabcdefghiklmnopqrstuwx1] [file ...]\n",
-	option);
+	const char	*error = "usage: ls [-ABCFGHLOPRSTUWabcdefghiklmnopqrstuwx1] ";
+	const char	*error_2 = "[file ...]";
+
+	ft_dprintf(STDERR_FILENO, "ls: illegal option -- %c\n%s%s\n", option, error,
+			error_2);
 	exit(EXIT_FAILURE);
 }
 

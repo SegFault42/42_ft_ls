@@ -6,7 +6,7 @@
 /*   By: rabougue <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/06 22:19:00 by rabougue          #+#    #+#             */
-/*   Updated: 2017/04/06 22:23:48 by rabougue         ###   ########.fr       */
+/*   Updated: 2017/04/06 22:55:22 by rabougue         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,9 +91,12 @@ static void	get_link_groupe(char **info, struct stat *file_stat)
 	ft_strcat(*info, " ");
 }
 
+#define ERR errno
+#define FS_ST_MODE file_stat.st_mode
+
 void		minus_l(char *file, t_env *env)
 {
-	struct stat	file_stat;
+	struct stat		file_stat;
 	static bool		dev = 0;
 
 	if ((env->file.info = (char *)ft_memalloc(sizeof(char) * 256)) == NULL)
@@ -101,7 +104,7 @@ void		minus_l(char *file, t_env *env)
 	ft_memset(g_info, 0, 255);
 	if (lstat(file, &file_stat) < 0)
 	{
-		ft_dprintf(2, "ls: %s: %s\n", &ft_strrchr(file, '/')[1], strerror(errno));
+		ft_dprintf(2, "ls: %s: %s\n", &ft_strrchr(file, '/')[1], strerror(ERR));
 		return ;
 	}
 	if (major(file_stat.st_rdev) != 0)
@@ -109,7 +112,7 @@ void		minus_l(char *file, t_env *env)
 	get_chmod_1(&env->file.info, &file_stat);
 	get_acl(file, &env->file.info);
 	get_link_groupe(&env->file.info, &file_stat);
-	if (dev == 1 && S_ISDIR(file_stat.st_mode) != 1 && S_ISLNK(file_stat.st_mode) != 1)
+	if (dev == 1 && S_ISDIR(FS_ST_MODE) != 1 && S_ISLNK(file_stat.st_mode) != 1)
 		get_major_minor(&env->file.info, &file_stat);
 	else
 		get_size(&env->file.info, &file_stat);

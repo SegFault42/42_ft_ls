@@ -6,7 +6,7 @@
 /*   By: rabougue <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/12 05:46:45 by rabougue          #+#    #+#             */
-/*   Updated: 2017/04/06 22:20:04 by rabougue         ###   ########.fr       */
+/*   Updated: 2017/04/06 23:18:40 by rabougue         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -155,5 +155,16 @@ bool				check_minus_f(struct dirent *content_dir);
 void				get_size(char **info, struct stat *file_stat);
 void				get_time(char **info, struct stat *file_stat);
 void				get_major_minor(char **info, struct stat *file_stat);
+
+void				padding_user(t_file *tmp, char *split, size_t padding);
+void				padding_group(t_file *tmp, char *split, size_t padding);
+void				padding_size(t_file *tmp, char *split, size_t padding);
+void				padding_month(t_file *tmp, char *split, size_t padding);
+void				padding_day(t_file *tmp, char *split, size_t padding);
+
+void				padding_minus_major(t_file *tmp, char *split);
+void				padding_hour(t_file *tmp, char *split, size_t padding);
+void				padding_nb_links(t_file *tmp, char *split, size_t padding);
+void				padding_permissions(t_file *tmp, char *split);
 
 #endif
