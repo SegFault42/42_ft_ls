@@ -6,7 +6,7 @@
 /*   By: rabougue <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/12 05:48:29 by rabougue          #+#    #+#             */
-/*   Updated: 2017/04/06 20:48:47 by rabougue         ###   ########.fr       */
+/*   Updated: 2017/04/06 22:16:54 by rabougue         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,6 @@ t_argp	g_argp[] =
 	{0, 0, 0}
 };
 
-
 int	main(int argc, char **argv)
 {
 	t_ctrl	ctrl;
@@ -37,6 +36,5 @@ int	main(int argc, char **argv)
 	print_no_such_file_or_directory(argv);
 	print(&env);
 	quit(&env, argc);
-	/*while (1){}*/
 	return (EXIT_SUCCESS);
 }

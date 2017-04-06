@@ -6,7 +6,7 @@
 /*   By: rabougue <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/12 05:46:45 by rabougue          #+#    #+#             */
-/*   Updated: 2017/04/06 19:20:02 by rabougue         ###   ########.fr       */
+/*   Updated: 2017/04/06 22:20:04 by rabougue         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -151,5 +151,9 @@ void				sort_lst_file(t_ctrl *ctrl, char *name);
 void				print_no_such_file_or_directory(char **argv);
 void				print_list_no_such(t_ctrl *ctrl);
 bool				check_minus_f(struct dirent *content_dir);
+
+void				get_size(char **info, struct stat *file_stat);
+void				get_time(char **info, struct stat *file_stat);
+void				get_major_minor(char **info, struct stat *file_stat);
 
 #endif

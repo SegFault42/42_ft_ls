@@ -6,7 +6,7 @@
 #    By: rabougue <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2015/12/10 19:16:51 by rabougue          #+#    #+#              #
-#    Updated: 2017/04/02 03:28:39 by rabougue         ###   ########.fr        #
+#    Updated: 2017/04/06 22:24:52 by rabougue         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -21,6 +21,9 @@ CC = gcc
 FLAG = -Wall -Wextra -Werror
 LFT = ./libft/libft.a
 SRCS =	./source/lst.c\
+		./source/lst1.c\
+		./source/lst2.c\
+		./source/lst3.c\
 		./source/check.c\
 		./source/directory.c\
 		./source/init.c\
@@ -32,6 +35,7 @@ SRCS =	./source/lst.c\
 		./source/sort.c\
 		./source/sort_argv.c\
 		./source/minus_l.c\
+		./source/minus_l_2.c\
 		./source/padding.c\
 
 OBJS = $(SRCS:.c=.o)

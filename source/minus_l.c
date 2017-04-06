@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   minus_l.c                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: rabougue <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2017/04/06 22:19:00 by rabougue          #+#    #+#             */
+/*   Updated: 2017/04/06 22:23:48 by rabougue         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../include/ft_ls.h"
 
 char	g_info[255] = {0};
@@ -41,6 +53,7 @@ static void	get_chmod_1(char **info, struct stat *file_stat)
 		ft_strcat(*info, "p");
 	else
 		ft_strcat(*info, "-");
+	get_chmod_2(info, file_stat);
 }
 
 static void	get_acl(char *file, char **info)
@@ -50,7 +63,7 @@ static void	get_acl(char *file, char **info)
 	else if (acl_get_file(file, ACL_TYPE_EXTENDED) > 0)
 		ft_strcat(*info, "+ ");
 	else
-		ft_strcat(*info, "| ");// le pipe sera remplacer par un espace.
+		ft_strcat(*info, "| ");
 }
 
 static void	get_link_groupe(char **info, struct stat *file_stat)
@@ -58,6 +71,7 @@ static void	get_link_groupe(char **info, struct stat *file_stat)
 	struct passwd	*name;
 	struct group	*groupe;
 	char			*itoa;
+
 	name = getpwuid(file_stat->st_uid);
 	groupe = getgrgid(file_stat->st_gid);
 	itoa = ft_itoa(file_stat->st_nlink);
@@ -77,59 +91,7 @@ static void	get_link_groupe(char **info, struct stat *file_stat)
 	ft_strcat(*info, " ");
 }
 
-void	get_size(char **info, struct stat *file_stat)
-{
-	int		six_month;
-	char	*itoa;
-
-	six_month = 15778476; // 6 month in second
-	itoa = ft_itoa(file_stat->st_size);
-	ft_strcat(*info, itoa);
-	ft_strdel(&itoa);
-	ft_strcat(*info, " ");
-}
-
-void	get_time(char **info, struct stat *file_stat)
-{
-	char	**split;
-	int		six_month;
-
-	six_month = 15778476; // 6 month in second
-	split = ft_strsplit(ctime(&file_stat->st_mtime), ' ');
-	ft_strcat(*info, split[1]);
-	ft_strcat(*info, " ");
-	ft_strcat(*info, split[2]);
-	ft_strcat(*info, " ");
-	if (file_stat->st_mtime > time(0))
-		ft_strccat(*info, split[4], '\n');
-	else if (file_stat->st_mtime < (time(0) - six_month))
-		ft_strccat(*info, split[4], '\n');
-	else
-		ft_strncat(*info, split[3], 5);
-	ft_strcat(*info, " ");
-	ft_2d_tab_free(split);
-}
-
-void	get_major_minor(char **info, struct stat *file_stat)
-{
-	char	*itoa;
-
-	if (S_ISLNK(file_stat->st_mode) != 1)
-	{
-		itoa = ft_itoa(major(file_stat->st_rdev));
-		ft_strcat(*info, itoa);
-		ft_strdel(&itoa);
-		ft_strcat(*info, ",|");
-	}
-	else
-		ft_strxcat(*info, " ", 7);
-	itoa = ft_itoa(minor(file_stat->st_rdev));
-	ft_strcat(*info, itoa);
-	ft_strdel(&itoa);
-	ft_strcat(*info, " ");
-}
-
-void	minus_l(char *file, t_env *env)
+void		minus_l(char *file, t_env *env)
 {
 	struct stat	file_stat;
 	static bool		dev = 0;
@@ -145,7 +107,6 @@ void	minus_l(char *file, t_env *env)
 	if (major(file_stat.st_rdev) != 0)
 		dev = 1;
 	get_chmod_1(&env->file.info, &file_stat);
-	get_chmod_2(&env->file.info, &file_stat);
 	get_acl(file, &env->file.info);
 	get_link_groupe(&env->file.info, &file_stat);
 	if (dev == 1 && S_ISDIR(file_stat.st_mode) != 1 && S_ISLNK(file_stat.st_mode) != 1)
