@@ -16,7 +16,6 @@ uint8_t	is_reg_or_dir(char *argument)
 	return (REG);
 }
 
-
 bool	check_minus_a(struct dirent *content_dir)
 {
 	if (g_argp[MINUS_A].active == 0)

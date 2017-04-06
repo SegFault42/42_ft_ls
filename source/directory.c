@@ -138,12 +138,12 @@ void	print_directory(char *directory, t_env *env)
 	{
 		while ((content_dir = readdir(dir)) != NULL)
 		{
-			if (g_argp[UPPER_A].active == 1 && (ft_strcmp(content_dir->d_name, ".") == 0 || ft_strcmp(content_dir->d_name, "..") == 0))
+			if (g_argp[UPPER_A].active == 1 && g_argp[MINUS_A].active == 0 &&
+				(ft_strcmp(content_dir->d_name, ".") == 0 ||
+				 ft_strcmp(content_dir->d_name, "..") == 0))
 				continue ;
-			if (check_minus_a(content_dir) == true && g_argp[UPPER_A]. active == 0)
-			{
+			if ((check_minus_a(content_dir) == true) && (g_argp[UPPER_A]. active == 0))
 				continue ;
-			}
 			file = ft_strjoin(directory, "/");
 			file = ft_strjoin(file, content_dir->d_name);
 			if (lstat(file, &file_stat) < 0)

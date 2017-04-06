@@ -77,10 +77,10 @@ void	recursive(char *directory, t_env *env)
 					sort_lst_dir_rev(&lst, path);
 				else
 					sort_lst_dir(&lst, path);
+				ft_strdel(&path);
 				if (path_length >= PATH_MAX)
 					exit (EXIT_FAILURE);
 			}
-			ft_strdel(&path);
 		}
 	}
 	tmp = lst.first;

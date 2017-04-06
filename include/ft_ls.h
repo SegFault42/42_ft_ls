@@ -6,7 +6,7 @@
 /*   By: rabougue <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/12 05:46:45 by rabougue          #+#    #+#             */
-/*   Updated: 2017/04/06 04:15:11 by rabougue         ###   ########.fr       */
+/*   Updated: 2017/04/06 06:25:37 by rabougue         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,7 @@
 # define MINUS_L		(5)
 # define END_OPTION		(6)
 # define UPPER_A		(7)
+# define MINUS_P		(8)
 
 # define SIZE_ARGP		(7)
 
@@ -150,5 +151,6 @@ void				rewrite_info_padded(t_ctrl *ctrl, size_t *padding);
 void				sort_lst_file(t_ctrl *ctrl, char *name);
 void				print_no_such_file_or_directory(char **argv);
 void				print_list_no_such(t_ctrl *ctrl);
+bool	check_minus_f(struct dirent *content_dir);
 
 #endif
