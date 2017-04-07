@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   directory.c                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: rabougue <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2017/04/07 02:04:30 by rabougue          #+#    #+#             */
+/*   Updated: 2017/04/07 02:08:44 by rabougue         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../include/ft_ls.h"
 
 extern t_argp	g_argp[];
@@ -12,7 +24,8 @@ int8_t	open_directory(DIR **dir, char *directory)
 	if ((*dir = opendir(directory)) == NULL)
 	{
 		if (name != NULL)
-			ft_dprintf(2, "ls: %s: %s\n", &ft_strrchr(directory, '/')[1], strerror(errno));
+			ft_dprintf(2, "ls: %s: %s\n", &ft_strrchr(directory, '/')[1],
+					strerror(errno));
 		else
 			ft_dprintf(2, "ls: %s: %s\n", directory, strerror(errno));
 		return (EXIT_ERROR);
@@ -31,11 +44,11 @@ void	close_directory(DIR **dir)
 
 void	particular_minus_t(t_ctrl *ctrl, char *directory, t_env *env)
 {
-	int		i;
-	char	**tab;
-	t_file	*tmp;
-	t_ctrl	ctr;
 	struct stat		file_stat;
+	int				i;
+	char			**tab;
+	t_file			*tmp;
+	t_ctrl			ctr;
 	char			*file = NULL;
 	char			*tmp_join;
 
@@ -78,7 +91,6 @@ void	particular_minus_t(t_ctrl *ctrl, char *directory, t_env *env)
 	if (g_argp[MINUS_L].active == 1)
 		padding_l(&ctr);
 	print_lst(&ctr);
-	/*free_list(&ctr);*/
 }
 
 void	insert_string(t_ctrl *ctrl, char *directory)
@@ -105,80 +117,4 @@ void	insert_string(t_ctrl *ctrl, char *directory)
 	ctrl->first->info[i++] = '-';
 	ctrl->first->info[i++] = '>';
 	ctrl->first->info[i++] = ' ';
-}
-
-void	print_directory(char *directory, t_env *env)
-{
-	struct dirent	*content_dir;
-	DIR				*dir;
-	t_ctrl			ctrl;
-	struct stat		file_stat;
-	char			*file = NULL;
-	char			buf[PATH_MAX];
-	int				size_buf;
-	char			*tmp;
-
-	content_dir = NULL;
-	dir = NULL;
-	ft_memset(&ctrl, 0, sizeof(t_ctrl));
-	lstat(directory, &file_stat);
-	if (g_argp[MINUS_L].active == 1 && S_ISLNK(file_stat.st_mode) == 1)
-	{
-		if ((size_buf = readlink(directory, buf, sizeof(buf) - 1)) != -1)
-			buf[size_buf] = '\0';
-		sort_lst_file(&ctrl, buf);
-		minus_l(directory, env);
-		ctrl.first->info = g_info;
-		padding_l(&ctrl);
-		insert_string(&ctrl, directory);
-		print_list(&ctrl);
-		return ;
-	}
-	if (open_directory(&dir, directory) == EXIT_ERROR)
-		return ;
-	if (g_argp[UPPER_R].active == 1)
-		recursive(directory, env);
-	else
-	{
-		while ((content_dir = readdir(dir)) != NULL)
-		{
-			if (g_argp[UPPER_A].active == 1 && g_argp[MINUS_A].active == 0 &&
-				(ft_strcmp(content_dir->d_name, ".") == 0 ||
-				 ft_strcmp(content_dir->d_name, "..") == 0))
-				continue ;
-			if ((check_minus_a(content_dir) == true) && (g_argp[UPPER_A]. active == 0))
-				continue ;
-			file = ft_strjoin(directory, "/");
-			tmp = ft_strdup(file);
-			ft_strdel(&file);
-			file = ft_strjoin(tmp, content_dir->d_name);
-			ft_strdel(&tmp);
-			if (lstat(file, &file_stat) < 0)
-			{
-				ft_dprintf(2, "ls: %s: %s\n", &ft_strrchr(file, '/')[1], strerror(errno));
-				ft_strdel(&file);
-				continue ;
-			}
-			if (g_argp[MINUS_L].active == 1)
-				minus_l(file, env);
-			if (content_dir->d_type == DT_LNK)
-			{
-				if ((size_buf = readlink(file, buf, sizeof(buf) - 1)) != -1)
-					buf[size_buf] = '\0';
-				sort_lst(&ctrl, content_dir, buf);
-			}
-			else
-				sort_lst(&ctrl, content_dir, NULL);
-			if (file)
-				ft_strdel(&file);
-		}
-		if (g_argp[MINUS_L].active == 1)
-			padding_l(&ctrl);
-		if (g_argp[MINUS_T].active == 1)
-			particular_minus_t(&ctrl, directory, env);
-		else
-			print_lst(&ctrl);
-		/*free_list(&ctrl);*/
-	}
-	close_directory(&dir);
 }

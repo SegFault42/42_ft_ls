@@ -6,7 +6,7 @@
 /*   By: rabougue <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/28 17:52:21 by rabougue          #+#    #+#             */
-/*   Updated: 2017/04/06 23:35:56 by rabougue         ###   ########.fr       */
+/*   Updated: 2017/04/07 01:21:44 by rabougue         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,14 +73,14 @@ static t_file	*add_after_2(int node, t_ctrl *ctrl)
 	return (tmp);
 }
 
-bool			add_after(t_ctrl *ctrl, int node, char *name, int value)
+void			add_after(t_ctrl *ctrl, int node, char *name, int value)
 {
 	t_file	*tmp;
 	t_file	*new;
 
 	tmp = add_after_2(node, ctrl);
 	if (tmp == NULL)
-		return (FALSE);
+		return ;
 	new = create_maillon();
 	if (tmp->next == NULL)
 		new->next = NULL;
@@ -97,7 +97,6 @@ bool			add_after(t_ctrl *ctrl, int node, char *name, int value)
 		new->info = (char *)ft_memalloc(sizeof(char) * 255);
 		ft_memcpy(new->info, g_info, 255);
 	}
-	return (TRUE);
 }
 
 void			add_before(t_ctrl *ctrl, int node, char *name, int value)

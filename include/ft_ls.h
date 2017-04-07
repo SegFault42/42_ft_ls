@@ -6,7 +6,7 @@
 /*   By: rabougue <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/12 05:46:45 by rabougue          #+#    #+#             */
-/*   Updated: 2017/04/06 23:18:40 by rabougue         ###   ########.fr       */
+/*   Updated: 2017/04/07 04:53:23 by rabougue         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,7 +107,7 @@ void				free_maillon(t_ctrl *ctrl);
 t_file				*create_maillon();
 void				add_tail(t_ctrl *ctrl, char *str, int value);
 void				add_head(t_ctrl *ctrl, char *str, int value);
-bool				add_after(t_ctrl *ctrl, int node, char *name, int value);
+void				add_after(t_ctrl *ctrl, int node, char *name, int value);
 void				add_before(t_ctrl *ctrl, int node, char *name, int value);
 void				sort_lst_dir(t_ctrl *ctrl, char *path);
 size_t				count_nb_node(t_ctrl *ctrl);
@@ -166,5 +166,12 @@ void				padding_minus_major(t_file *tmp, char *split);
 void				padding_hour(t_file *tmp, char *split, size_t padding);
 void				padding_nb_links(t_file *tmp, char *split, size_t padding);
 void				padding_permissions(t_file *tmp, char *split);
+
+void				insert_string(t_ctrl *ctrl, char *directory);
+char				*join(char *directory, char *d_name);
+
+void				sort_param(char **arguments);
+void				directory_2(char **argv, t_ctrl *ctrl, int j);
+void				print_no_such_file_or_directory(char **argv);
 
 #endif

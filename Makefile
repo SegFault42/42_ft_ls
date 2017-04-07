@@ -6,7 +6,7 @@
 #    By: rabougue <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2015/12/10 19:16:51 by rabougue          #+#    #+#              #
-#    Updated: 2017/04/07 00:04:21 by rabougue         ###   ########.fr        #
+#    Updated: 2017/04/07 04:53:44 by rabougue         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -34,12 +34,15 @@ SRCS =	./source/lst.c\
 		./source/recursive.c\
 		./source/sort.c\
 		./source/sort_argv.c\
+		./source/sort_argv_2.c\
 		./source/minus_l.c\
 		./source/minus_l_2.c\
 		./source/padding.c\
 		./source/padding_2.c\
 		./source/padding_3.c\
 		./source/sort_by_time.c\
+		./source/print_directory.c\
+		./source/print_directory_2.c\
 
 OBJS = $(SRCS:.c=.o)
 
