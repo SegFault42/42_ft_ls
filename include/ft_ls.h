@@ -6,7 +6,7 @@
 /*   By: rabougue <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/12 05:46:45 by rabougue          #+#    #+#             */
-/*   Updated: 2017/04/07 04:53:23 by rabougue         ###   ########.fr       */
+/*   Updated: 2017/04/07 06:04:26 by rabougue         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -173,5 +173,7 @@ char				*join(char *directory, char *d_name);
 void				sort_param(char **arguments);
 void				directory_2(char **argv, t_ctrl *ctrl, int j);
 void				print_no_such_file_or_directory(char **argv);
+bool				print_error(char *file);
+bool				minus_t_2(char *file, t_env *env);
 
 #endif

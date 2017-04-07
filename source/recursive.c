@@ -1,16 +1,46 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   recursive.c                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: rabougue <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2017/04/07 06:39:15 by rabougue          #+#    #+#             */
+/*   Updated: 2017/04/07 06:41:17 by rabougue         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../include/ft_ls.h"
 
 extern t_argp	g_argp[];
 
+bool	print_all_directory_2(struct dirent *e, char *f, t_ctrl *lst, t_env *en)
+{
+	char			buf[PATH_MAX];
+	int				size_buf;
+	struct stat		file_stat;
+
+	if (lstat(f, &file_stat) < 0 && print_error(f) == true)
+		return (true);
+	if (g_argp[MINUS_L].active == 1)
+		minus_l(f, en);
+	if (e->d_type == DT_LNK)
+	{
+		if ((size_buf = readlink(f, buf, sizeof(buf) - 1)) != -1)
+			buf[size_buf] = '\0';
+		sort_lst(lst, e, buf);
+	}
+	else
+		sort_lst(lst, e, NULL);
+	return (false);
+}
+
 static void		print_all_directory(char *path, t_env *env)
 {
 	struct dirent	*entry;
-	struct stat		file_stat;
 	DIR				*dir;
 	t_ctrl			lst;
-	char			buf[PATH_MAX];
-	int				size_buf;
-	char			*file = NULL;
+	char			*file;
 
 	ft_memset(&lst, 0, sizeof(t_ctrl));
 	if (open_directory(&dir, path) == EXIT_ERROR)
@@ -19,23 +49,9 @@ static void		print_all_directory(char *path, t_env *env)
 	{
 		if (check_minus_a(entry) == true)
 			continue ;
-		file = ft_strjoin(path, "/");
-		file = ft_strjoin(file, entry->d_name);
-		if (lstat(file, &file_stat) < 0)
-		{
-			ft_dprintf(2, "ls: %s: %s\n", &ft_strrchr(file, '/')[1], strerror(errno));
+		file = join(path, entry->d_name);
+		if (print_all_directory_2(entry, file, &lst, env) == true)
 			continue ;
-		}
-		if (g_argp[MINUS_L].active == 1)
-			minus_l(file, env);
-		if (entry->d_type == DT_LNK)
-		{
-			if ((size_buf = readlink(file, buf, sizeof(buf) - 1)) != -1)
-				buf[size_buf] = '\0';
-			sort_lst(&lst, entry, buf);
-		}
-		else
-			sort_lst(&lst, entry, NULL);
 	}
 	if (g_argp[MINUS_L].active == 1)
 		padding_l(&lst);
@@ -52,8 +68,8 @@ void	recursive(char *directory, t_env *env)
 	struct dirent	*entry;
 	DIR				*dir;
 	char			*d_name;
-	int				 path_length;
-	char			 *path;
+	int				path_length;
+	char			*path;
 	t_ctrl			lst;
 	t_file			*tmp;
 
@@ -73,10 +89,7 @@ void	recursive(char *directory, t_env *env)
 				if (ft_strcmp(directory, "/") == 0)
 					path = ft_strjoin("/", entry->d_name);
 				else
-				{
-					path = ft_strjoin(directory, "/");
-					path = ft_strjoin(path, entry->d_name);
-				}
+					path = join(directory, entry->d_name);
 				path_length = ft_strlen(path);
 				if (g_argp[MINUS_R].active == 1)
 					sort_lst_dir_rev(&lst, path);
@@ -84,7 +97,7 @@ void	recursive(char *directory, t_env *env)
 					sort_lst_dir(&lst, path);
 				ft_strdel(&path);
 				if (path_length >= PATH_MAX)
-					exit (EXIT_FAILURE);
+					exit(EXIT_FAILURE);
 			}
 		}
 	}
@@ -94,7 +107,7 @@ void	recursive(char *directory, t_env *env)
 		RC;
 		ft_dprintf(1, "%s:\n", tmp->name);
 		recursive(tmp->name, env);
-		tmp= tmp->next;
+		tmp = tmp->next;
 	}
 	closedir(dir);
 	free_list(&lst);

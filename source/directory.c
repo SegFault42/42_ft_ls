@@ -6,7 +6,7 @@
 /*   By: rabougue <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/07 02:04:30 by rabougue          #+#    #+#             */
-/*   Updated: 2017/04/07 02:08:44 by rabougue         ###   ########.fr       */
+/*   Updated: 2017/04/07 06:05:36 by rabougue         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,22 +42,13 @@ void	close_directory(DIR **dir)
 	}
 }
 
-void	particular_minus_t(t_ctrl *ctrl, char *directory, t_env *env)
+void	minus_t_1(t_ctrl *ctrl, char **tab)
 {
-	struct stat		file_stat;
-	int				i;
-	char			**tab;
-	t_file			*tmp;
-	t_ctrl			ctr;
-	char			*file = NULL;
-	char			*tmp_join;
+	t_file	*tmp;
+	int		i;
 
-	ft_memset(&ctr, 0, sizeof(t_ctrl));
-	i = count_nb_node(ctrl);
-	tab = (char **)ft_memalloc(sizeof(char *) * i + 1);
-	tmp = ctrl->first;
-	ft_set_2d_tab(tab, i + 1);
 	i = 0;
+	tmp = ctrl->first;
 	if (tmp != NULL)
 	{
 		while (tmp)
@@ -68,24 +59,30 @@ void	particular_minus_t(t_ctrl *ctrl, char *directory, t_env *env)
 		}
 		sort_param(tab);
 	}
-	i = 0;
-	while (tab[i])
+}
+
+void	particular_minus_t(t_ctrl *ctrl, char *directory, t_env *env)
+{
+	struct stat		file_stat;
+	int				i;
+	char			**tab;
+	t_ctrl			ctr;
+	char			*file;
+
+	ft_memset(&ctr, 0, sizeof(t_ctrl));
+	i = count_nb_node(ctrl);
+	tab = (char **)ft_memalloc(sizeof(char *) * i + 1);
+	ft_set_2d_tab(tab, i + 1);
+	i = -1;
+	minus_t_1(ctrl, tab);
+	while (tab[++i])
 	{
-		file = ft_strjoin(directory, "/");
-		tmp_join = ft_strdup(file);
-		ft_strdel(&file);
-		file = ft_strjoin(tmp_join, tab[i]);
-		ft_strdel(&tmp_join);
-		if (lstat(file, &file_stat) < 0)
-		{
-			ft_dprintf(2, "ls: %s: %s\n", &ft_strrchr(file, '/')[1], strerror(errno));
+		file = join(directory, tab[i]);
+		if (lstat(file, &file_stat) < 0 && print_error(file) == true)
 			continue ;
-		}
-		if (g_argp[MINUS_L].active == 1)
-			minus_l(file, env);
+		minus_t_2(file, env);
 		sort_by_time(&ctr, file_stat.st_mtimespec.tv_sec, file);
 		ft_strdel(&file);
-		++i;
 	}
 	free(tab);
 	if (g_argp[MINUS_L].active == 1)

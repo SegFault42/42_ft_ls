@@ -1,26 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   print_directory_2.c                                :+:      :+:    :+:   */
+/*   directory_2.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: rabougue <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/04/07 03:58:36 by rabougue          #+#    #+#             */
-/*   Updated: 2017/04/07 06:10:25 by rabougue         ###   ########.fr       */
+/*   Created: 2017/04/07 06:03:17 by rabougue          #+#    #+#             */
+/*   Updated: 2017/04/07 06:06:41 by rabougue         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/ft_ls.h"
 
-char	*join(char *directory, char *d_name)
-{
-	char	*file;
-	char	*tmp;
+extern t_argp	g_argp[];
 
-	file = ft_strjoin(directory, "/");
-	tmp = ft_strdup(file);
-	ft_strdel(&file);
-	file = ft_strjoin(tmp, d_name);
-	ft_strdel(&tmp);
-	return (file);
+bool	print_error(char *file)
+{
+	ft_dprintf(2, "ls: %s: %s\n", &ft_strrchr(file, '/')[1], strerror(errno));
+	return (true);
+}
+
+bool	minus_t_2(char *file, t_env *env)
+{
+	if (g_argp[MINUS_L].active == 1)
+		minus_l(file, env);
+	return (false);
 }
