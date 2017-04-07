@@ -6,7 +6,7 @@
 /*   By: rabougue <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/07 00:03:15 by rabougue          #+#    #+#             */
-/*   Updated: 2017/04/07 05:14:02 by rabougue         ###   ########.fr       */
+/*   Updated: 2017/04/07 19:59:17 by rabougue         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,49 +94,6 @@ void	sort_lst_dir_rev(t_ctrl *ctrl, char *path)
 			++i;
 		if (path[i] > tmp->next->name[i])
 			return (add_after(ctrl, node, path, 0));
-		tmp = tmp->next;
-		++node;
-	}
-}
-
-void	sort_lst(t_ctrl *ctrl, struct dirent *content_dir, char *link)
-{
-	t_file	*tmp;
-	int		node;
-	int		i;
-	void	*test;
-
-	test = NULL;
-	tmp = ctrl->first;
-	node = 1;
-	i = 0;
-	if (tmp == NULL)
-	{
-		add_head(ctrl, content_dir->d_name, 0);
-		return (link != NULL ? fill_node(ctrl, node, link) : test);
-	}
-	while (tmp)
-	{
-		while (content_dir->d_name[i] && content_dir->d_name[i] == tmp->name[i])
-			++i;
-		if (content_dir->d_name[i] < tmp->name[i])
-		{
-			add_before(ctrl, node, content_dir->d_name, 0);
-			return (link != NULL ? fill_node(ctrl, node, link) : test);
-		}
-		else if (tmp->next == NULL)
-		{
-			add_tail(ctrl, content_dir->d_name, 0);
-			return (link != NULL ? fill_node(ctrl, -1, link) : test);
-		}
-		i = 0;
-		while (content_dir->d_name[i] && content_dir->d_name[i] == tmp->next->name[i])
-			++i;
-		if (content_dir->d_name[i] < tmp->next->name[i])
-		{
-			add_after(ctrl, node, content_dir->d_name, 0);
-			return (link != NULL ? fill_node(ctrl, node, link) : test);
-		}
 		tmp = tmp->next;
 		++node;
 	}

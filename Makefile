@@ -6,7 +6,7 @@
 #    By: rabougue <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2015/12/10 19:16:51 by rabougue          #+#    #+#              #
-#    Updated: 2017/04/07 06:04:43 by rabougue         ###   ########.fr        #
+#    Updated: 2017/04/07 19:58:14 by rabougue         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -44,6 +44,7 @@ SRCS =	./source/lst.c\
 		./source/print_directory.c\
 		./source/print_directory_2.c\
 		./source/directory_2.c\
+		./source/sort_lst.c\
 
 OBJS = $(SRCS:.c=.o)
 
