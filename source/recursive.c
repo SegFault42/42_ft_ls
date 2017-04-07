@@ -35,7 +35,7 @@ bool	print_all_directory_2(struct dirent *e, char *f, t_ctrl *lst, t_env *en)
 	return (false);
 }
 
-static void		print_all_directory(char *path, t_env *env)
+void	print_all_directory(char *path, t_env *env)
 {
 	struct dirent	*entry;
 	DIR				*dir;
@@ -63,15 +63,45 @@ static void		print_all_directory(char *path, t_env *env)
 	free_list(&lst);
 }
 
+void	split_recursive(char *directory, t_ctrl *lst, struct dirent *entry)
+{
+	int				path_length;
+	char			*path;
+
+	if (ft_strcmp(directory, "/") == 0)
+		path = ft_strjoin("/", entry->d_name);
+	else
+		path = join(directory, entry->d_name);
+	path_length = ft_strlen(path);
+	if (g_argp[MINUS_R].active == 1)
+		sort_lst_dir_rev(lst, path);
+	else
+		sort_lst_dir(lst, path);
+	ft_strdel(&path);
+	if (path_length >= PATH_MAX)
+		exit(EXIT_FAILURE);
+}
+
+void	while_recursive(t_ctrl *lst, t_env *env)
+{
+	t_file	*tmp;
+
+	tmp = lst->first;
+	while (tmp)
+	{
+		RC;
+		ft_dprintf(1, "%s:\n", tmp->name);
+		recursive(tmp->name, env);
+		tmp = tmp->next;
+	}
+}
+
 void	recursive(char *directory, t_env *env)
 {
 	struct dirent	*entry;
 	DIR				*dir;
 	char			*d_name;
-	int				path_length;
-	char			*path;
 	t_ctrl			lst;
-	t_file			*tmp;
 
 	ft_memset(&lst, 0, sizeof(t_ctrl));
 	if (open_directory(&dir, directory) == EXIT_ERROR)
@@ -83,32 +113,10 @@ void	recursive(char *directory, t_env *env)
 		if (check_minus_a(entry) == true)
 			continue ;
 		if (entry->d_type & DT_DIR)
-		{
 			if (ft_strcmp(d_name, "..") != 0 && ft_strcmp(d_name, ".") != 0)
-			{
-				if (ft_strcmp(directory, "/") == 0)
-					path = ft_strjoin("/", entry->d_name);
-				else
-					path = join(directory, entry->d_name);
-				path_length = ft_strlen(path);
-				if (g_argp[MINUS_R].active == 1)
-					sort_lst_dir_rev(&lst, path);
-				else
-					sort_lst_dir(&lst, path);
-				ft_strdel(&path);
-				if (path_length >= PATH_MAX)
-					exit(EXIT_FAILURE);
-			}
-		}
+				split_recursive(directory, &lst, entry);
 	}
-	tmp = lst.first;
-	while (tmp)
-	{
-		RC;
-		ft_dprintf(1, "%s:\n", tmp->name);
-		recursive(tmp->name, env);
-		tmp = tmp->next;
-	}
+	while_recursive(&lst, env);
 	closedir(dir);
 	free_list(&lst);
 }
